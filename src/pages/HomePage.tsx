@@ -20,11 +20,7 @@ import {
   Award,
   Layers,
   FileCheck2,
-  CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
-  Play,
-  Pause
+  CheckCircle2
 } from "lucide-react";
 import { Product, Vessel } from "../types";
 
@@ -117,17 +113,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
     }, 4000);
 
     return () => clearInterval(timer);
-  }, [activeSlide]);
+  }, []);
 
   const currentSlide = HERO_SLIDES[activeSlide];
-
-  const handlePrevSlide = () => {
-    setActiveSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
-  };
-
-  const handleNextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-  };
 
   const getSectorIcon = (name: string) => {
     switch (name) {
@@ -226,55 +214,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   <FileCheck2 className="size-4 text-amber-signal" />
                   <span>Launch Tender RFQ</span>
                 </Button>
-              </div>
-
-              {/* Slide Navigation Controller (Matches User Screenshot: • • • [▬▬] • • < 04 / 06 >) */}
-              <div className="flex items-center gap-6 pt-4 font-mono">
-                {/* Circular Dots with Active Pill */}
-                <div className="flex items-center gap-2">
-                  {HERO_SLIDES.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setActiveSlide(i)}
-                      className={`transition-all duration-300 focus:outline-none ${
-                        i === activeSlide
-                          ? "h-2.5 w-9 rounded-full bg-amber-signal shadow-amber"
-                          : "size-2.5 rounded-full bg-slate-600/60 hover:bg-slate-400"
-                      }`}
-                      aria-label={`Go to slide ${i + 1}`}
-                    />
-                  ))}
-                </div>
-
-                {/* Numeric Counter & Directional Chevrons */}
-                <div className="flex items-center gap-2.5 text-slate-300 text-sm">
-                  <button
-                    type="button"
-                    onClick={handlePrevSlide}
-                    className="p-1 rounded text-slate-400 hover:text-white transition-colors focus:outline-none"
-                    title="Previous Slide"
-                    aria-label="Previous Slide"
-                  >
-                    <ChevronLeft className="size-4" />
-                  </button>
-
-                  <span className="font-mono text-sm tracking-wider text-slate-200">
-                    <span className="text-sky-400 font-semibold">0{activeSlide + 1}</span>{" "}
-                    <span className="text-amber-signal font-bold">/</span>{" "}
-                    <span className="text-sky-400 font-semibold">0{HERO_SLIDES.length}</span>
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={handleNextSlide}
-                    className="p-1 rounded text-slate-400 hover:text-white transition-colors focus:outline-none"
-                    title="Next Slide"
-                    aria-label="Next Slide"
-                  >
-                    <ChevronRight className="size-4" />
-                  </button>
-                </div>
               </div>
             </div>
 
