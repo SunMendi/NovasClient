@@ -28,17 +28,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-navy-950/80 backdrop-blur-xl transition-all">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Identity */}
-        <Link to="/" className="flex items-center gap-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-signal rounded-lg p-1">
-          <span className="grid size-11 place-items-center rounded-xl bg-gradient-to-br from-amber-signal to-amber-600 font-display text-xl font-black text-navy-950 shadow-amber">
+        <Link to="/" className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-signal rounded-lg p-1">
+          <span className="grid size-9 place-items-center rounded-lg bg-gradient-to-br from-amber-signal to-amber-600 font-display text-lg font-black text-navy-950 shadow-amber">
             N
           </span>
           <div className="flex flex-col">
-            <span className="font-display text-xl font-extrabold tracking-tight text-ink">
+            <span className="font-display text-lg font-extrabold tracking-tight text-ink leading-tight">
               NOVAS
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-amber-signal -mt-1 font-semibold">
+            <span className="font-mono text-[9px] uppercase tracking-widest text-amber-signal font-semibold">
               Defence & Maritime
             </span>
           </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SECTORS } from "../data/sectors";
 import { PRODUCTS } from "../data/products";
@@ -21,6 +21,10 @@ import {
   Layers,
   FileCheck2,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause
 } from "lucide-react";
 import { Product, Vessel } from "../types";
 
@@ -28,7 +32,96 @@ interface HomePageProps {
   onOpenRfq: (item?: Product | Vessel) => void;
 }
 
+interface HeroSlide {
+  id: string;
+  tag: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  link: string;
+  imageUrl: string;
+}
+
+const HERO_SLIDES: HeroSlide[] = [
+  {
+    id: "slide-1",
+    tag: "DEFENCE-GRADE PROCUREMENT",
+    title: "Defence-grade procurement for mission critical operations.",
+    subtitle: "Novas supplies certified defense, tactical and protective systems for armed forces, law enforcement and security operators across South Asia.",
+    category: "Defence",
+    link: "/catalogue?sector=defence",
+    imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1920&q=80"
+  },
+  {
+    id: "slide-2",
+    tag: "TACTICAL & LAW ENFORCEMENT",
+    title: "Equipping the operators who go first.",
+    subtitle: "Personal protection, less-lethal systems, tactical communications, and breaching tools for rapid response and elite tactical units.",
+    category: "Tactical",
+    link: "/catalogue?category=Tactical",
+    imageUrl: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?auto=format&fit=crop&w=1920&q=80"
+  },
+  {
+    id: "slide-3",
+    tag: "MEDICAL & HUMANITARIAN SUPPLY",
+    title: "Frontline medical kits when seconds count.",
+    subtitle: "TCCC-aligned trauma kits, field patient monitors and deployable hospital casualty response equipment for armed forces and disaster relief.",
+    category: "Medical",
+    link: "/catalogue?category=Medical",
+    imageUrl: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1920&q=80"
+  },
+  {
+    id: "slide-4",
+    tag: "MARITIME & NAVAL PLATFORMS",
+    title: "Commanding the littoral waters and ports.",
+    subtitle: "Naval workboats, high-speed patrol interceptors, SOLAS life rafts, and high-definition X-band surveillance radar arrays for blue-water operators.",
+    category: "Maritime",
+    link: "/catalogue?sector=maritime",
+    imageUrl: "https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=1920&q=80"
+  },
+  {
+    id: "slide-5",
+    tag: "CYBER & C4ISR",
+    title: "Defending the digital battlespace, 24/7.",
+    subtitle: "Sovereign cyber defence, secure tactical communications, hardened data centers and mission-critical intelligence infrastructure.",
+    category: "ICT",
+    link: "/sectors/ict",
+    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80"
+  },
+  {
+    id: "slide-6",
+    tag: "HEAVY INDUSTRY & AUTOMATION",
+    title: "Powering strategic national infrastructure.",
+    subtitle: "Heavy industrial fabrication machinery, automated CNC cutting lines, and high-capacity turnkey power systems for strategic EPC megaprojects.",
+    category: "Industry",
+    link: "/sectors/industry",
+    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80"
+  }
+];
+
 export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const currentSlide = HERO_SLIDES[activeSlide];
+
+  const handlePrevSlide = () => {
+    setActiveSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
+  };
+
+  const handleNextSlide = () => {
+    setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  };
+
   const getSectorIcon = (name: string) => {
     switch (name) {
       case "Shield": return <Shield className="size-6 text-amber-signal" />;
@@ -44,68 +137,176 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
   const featuredVessel = VESSELS[0];
 
   return (
-    <div className="flex flex-col space-y-24 pb-24">
-      {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950 py-20 lg:py-32 bg-grid-pattern bg-radar-glow">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-signal/40 bg-amber-signal/10 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-amber-signal">
-              <span className="size-2 rounded-full bg-amber-signal animate-ping" />
-              <span>DEFENCE-GRADE PROCUREMENT & NAVAL SHIPYARD</span>
+    <div className="flex flex-col space-y-20 pb-24">
+      {/* 1. EXACT NOVAS BD HERO SECTION (With minimum top gap & auto-sliding backgrounds) */}
+      <section
+        className="relative overflow-hidden border-b border-border/70 bg-navy-950 pt-3 sm:pt-4 lg:pt-6 pb-10 sm:pb-14 min-h-[540px] sm:min-h-[580px] lg:min-h-[620px] flex items-center"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Dynamic Background Image Layers with Smooth Cross-Fade */}
+        {HERO_SLIDES.map((slide, idx) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              idx === activeSlide ? "opacity-100 z-0" : "opacity-0 -z-10 pointer-events-none"
+            }`}
+          >
+            <img
+              src={slide.imageUrl}
+              alt={slide.title}
+              className="h-full w-full object-cover object-center"
+            />
+            {/* Dark Tactical Vignette Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/60" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/40" />
+          </div>
+        ))}
+
+        {/* Tactical Ambient Grid Overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-novas-grid opacity-30 z-0" />
+        <div className="pointer-events-none absolute inset-0 bg-radar-glow opacity-50 z-0" />
+
+        {/* Content Container (Compact Padding for Immediate Visibility) */}
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+            {/* Left Column: Pill Tag, Punchy Headline, Subtitle, CTAs */}
+            <div className="space-y-4 sm:space-y-5 lg:col-span-7">
+              {/* Category Pill with Glowing Bullet */}
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-signal/40 bg-navy-950/80 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-amber-signal backdrop-blur-md">
+                <span className="size-1.5 rounded-full bg-amber-signal animate-ping" />
+                <span className="font-bold">• {currentSlide.tag}</span>
+              </div>
+
+              {/* Dynamic Animated Headline */}
+              <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight">
+                {currentSlide.title}
+              </h1>
+
+              {/* Dynamic Subtitle */}
+              <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl leading-relaxed font-sans">
+                {currentSlide.subtitle}
+              </p>
+
+              {/* CTA Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <Button
+                  asChild
+                  size="default"
+                  variant="default"
+                  className="gap-2 font-bold shadow-amber text-xs sm:text-sm h-11 px-6"
+                >
+                  <Link to={currentSlide.link}>
+                    <span>Explore Catalogue</span>
+                    <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+
+                <Button
+                  onClick={() => onOpenRfq()}
+                  size="default"
+                  variant="outline"
+                  className="gap-2 font-semibold text-xs sm:text-sm h-11 px-5 border-border/80 bg-navy-950/60 backdrop-blur-md"
+                >
+                  <FileCheck2 className="size-4 text-amber-signal" />
+                  <span>Request a Quote</span>
+                </Button>
+              </div>
+
+              {/* Slide Navigation Dots / Interactive Indicators */}
+              <div className="flex items-center gap-3 pt-4 font-mono text-xs">
+                <div className="flex items-center gap-1.5">
+                  {HERO_SLIDES.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setActiveSlide(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === activeSlide
+                          ? "w-8 bg-amber-signal shadow-amber"
+                          : "w-2 bg-white/20 hover:bg-white/40"
+                      }`}
+                      aria-label={`Go to slide ${i + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1 text-metal/70 ml-2">
+                  <button
+                    type="button"
+                    onClick={handlePrevSlide}
+                    className="p-1 rounded hover:bg-navy-850 hover:text-white transition-colors"
+                    title="Previous Slide"
+                  >
+                    <ChevronLeft className="size-4" />
+                  </button>
+                  <span className="text-[11px] font-mono text-metal">
+                    0{activeSlide + 1} / 0{HERO_SLIDES.length}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleNextSlide}
+                    className="p-1 rounded hover:bg-navy-850 hover:text-white transition-colors"
+                    title="Next Slide"
+                  >
+                    <ChevronRight className="size-4" />
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-ink">
-              Institutional Defence, <br />
-              <span className="bg-gradient-to-r from-amber-signal via-amber-400 to-marine bg-clip-text text-transparent">
-                Maritime & Heavy Supply.
-              </span>
-            </h1>
-
-            <p className="max-w-2xl text-lg sm:text-xl text-metal leading-relaxed">
-              Novas supplies certified defense systems, naval workboats, and mission-critical engineering solutions for armed forces, port authorities, and industrial operators across South Asia.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Button
-                asChild
-                size="lg"
-                variant="default"
-                className="gap-2 font-bold shadow-amber text-sm sm:text-base"
-              >
-                <Link to="/catalogue">
-                  <span>Explore Equipment Catalogue</span>
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-
-              <Button
-                onClick={() => onOpenRfq()}
-                size="lg"
-                variant="outline"
-                className="gap-2 font-semibold text-sm sm:text-base"
-              >
-                <FileCheck2 className="size-4 text-amber-signal" />
-                <span>Launch Tender RFQ</span>
-              </Button>
-            </div>
-
-            {/* Live Metrics Counter HUD */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-12 border-t border-border/60 font-mono">
-              <div className="rounded-xl border border-border/60 bg-navy-900/60 p-4">
-                <span className="text-2xl sm:text-3xl font-bold text-ink">6</span>
-                <p className="text-xs text-metal uppercase tracking-wider mt-1">Mission Sectors</p>
+            {/* Right Column: 2x2 "CAPABILITY SNAPSHOT" Widget (Identical to reference site) */}
+            <div className="lg:col-span-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-amber-signal">
+                  CAPABILITY SNAPSHOT
+                </span>
+                <span className="font-mono text-[10px] text-metal/80">
+                  LIVE TELEMETRY
+                </span>
               </div>
-              <div className="rounded-xl border border-border/60 bg-navy-900/60 p-4">
-                <span className="text-2xl sm:text-3xl font-bold text-amber-signal">MIL-STD</span>
-                <p className="text-xs text-metal uppercase tracking-wider mt-1">NIJ & SOLAS Certified</p>
-              </div>
-              <div className="rounded-xl border border-border/60 bg-navy-900/60 p-4">
-                <span className="text-2xl sm:text-3xl font-bold text-marine">40+ Yrs</span>
-                <p className="text-xs text-metal uppercase tracking-wider mt-1">Shipyard Heritage</p>
-              </div>
-              <div className="rounded-xl border border-border/60 bg-navy-900/60 p-4">
-                <span className="text-2xl sm:text-3xl font-bold text-sonar">100%</span>
-                <p className="text-xs text-metal uppercase tracking-wider mt-1">Verified Chain of Custody</p>
+
+              {/* 2x2 Grid of Frosted Capability Cards */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                {/* Metric 1 */}
+                <div className="rounded-2xl border border-white/10 bg-navy-950/70 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-amber-signal/40 hover:-translate-y-0.5">
+                  <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
+                    120+
+                  </div>
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                    ACTIVE CONTRACTS
+                  </div>
+                </div>
+
+                {/* Metric 2 */}
+                <div className="rounded-2xl border border-white/10 bg-navy-950/70 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-amber-signal/40 hover:-translate-y-0.5">
+                  <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
+                    5
+                  </div>
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                    SECTORS SERVED
+                  </div>
+                </div>
+
+                {/* Metric 3 */}
+                <div className="rounded-2xl border border-white/10 bg-navy-950/70 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-amber-signal/40 hover:-translate-y-0.5">
+                  <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
+                    40+
+                  </div>
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                    GLOBAL PARTNERS
+                  </div>
+                </div>
+
+                {/* Metric 4 */}
+                <div className="rounded-2xl border border-white/10 bg-navy-950/70 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-amber-signal/40 hover:-translate-y-0.5">
+                  <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
+                    21 d
+                  </div>
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                    AVG. LEAD TIME
+                  </div>
+                </div>
               </div>
             </div>
           </div>
