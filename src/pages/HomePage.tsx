@@ -45,9 +45,9 @@ interface HeroSlide {
 const HERO_SLIDES: HeroSlide[] = [
   {
     id: "slide-1",
-    tag: "DEFENCE-GRADE PROCUREMENT",
-    title: "Defence-grade procurement for mission critical operations.",
-    subtitle: "Novas supplies certified defense, tactical and protective systems for armed forces, law enforcement and security operators across South Asia.",
+    tag: "DEFENCE-GRADE PROCUREMENT & NAVAL SHIPYARD",
+    title: "Institutional Defence, Maritime & Heavy Supply.",
+    subtitle: "Novas supplies certified defense systems, naval workboats, and mission-critical engineering solutions for armed forces, port authorities, and industrial operators across South Asia.",
     category: "Defence",
     link: "/catalogue?sector=defence",
     imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1920&q=80"
@@ -101,16 +101,23 @@ const HERO_SLIDES: HeroSlide[] = [
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
-  // Auto-slide every 5 seconds
+  // Preload all 6 slide images for instantaneous cross-fading
   useEffect(() => {
-    if (isPaused) return;
+    HERO_SLIDES.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.imageUrl;
+    });
+  }, []);
+
+  // Unconditional auto-rotation every 4 seconds (Professional standard)
+  useEffect(() => {
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 5000);
+    }, 4000);
+
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [activeSlide]);
 
   const currentSlide = HERO_SLIDES[activeSlide];
 
@@ -138,11 +145,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
 
   return (
     <div className="flex flex-col space-y-20 pb-24">
-      {/* 1. EXACT NOVAS BD HERO SECTION (With minimum top gap & auto-sliding backgrounds) */}
+      {/* 1. EXACT NOVAS BD HERO SECTION (Unconditional 4s Auto-Rotation with matching controller) */}
       <section
         className="relative overflow-hidden border-b border-border/70 bg-navy-950 pt-3 sm:pt-4 lg:pt-6 pb-10 sm:pb-14 min-h-[540px] sm:min-h-[580px] lg:min-h-[620px] flex items-center"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
       >
         {/* Dynamic Background Image Layers with Smooth Cross-Fade */}
         {HERO_SLIDES.map((slide, idx) => (
@@ -156,6 +161,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
               src={slide.imageUrl}
               alt={slide.title}
               className="h-full w-full object-cover object-center"
+              loading="eager"
             />
             {/* Dark Tactical Vignette Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/60" />
@@ -174,17 +180,26 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
             <div className="space-y-4 sm:space-y-5 lg:col-span-7">
               {/* Category Pill with Glowing Bullet */}
               <div className="inline-flex items-center gap-2 rounded-full border border-amber-signal/40 bg-navy-950/80 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-amber-signal backdrop-blur-md">
-                <span className="size-1.5 rounded-full bg-amber-signal animate-ping" />
-                <span className="font-bold">• {currentSlide.tag}</span>
+                <span className="size-1.5 rounded-full bg-amber-signal" />
+                <span className="font-bold">{currentSlide.tag}</span>
               </div>
 
               {/* Dynamic Animated Headline */}
               <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight">
-                {currentSlide.title}
+                {activeSlide === 0 ? (
+                  <>
+                    Institutional Defence,<br />
+                    <span className="bg-gradient-to-r from-amber-signal via-emerald-400 to-sky-400 bg-clip-text text-transparent">
+                      Maritime &amp; Heavy Supply.
+                    </span>
+                  </>
+                ) : (
+                  currentSlide.title
+                )}
               </h1>
 
               {/* Dynamic Subtitle */}
-              <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl leading-relaxed font-sans">
+              <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl leading-relaxed font-sans min-h-[48px]">
                 {currentSlide.subtitle}
               </p>
 
@@ -194,10 +209,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   asChild
                   size="default"
                   variant="default"
-                  className="gap-2 font-bold shadow-amber text-xs sm:text-sm h-11 px-6"
+                  className="gap-2 font-bold shadow-amber text-xs sm:text-sm h-11 px-6 rounded-lg bg-amber-signal text-navy-950 hover:bg-amber-400"
                 >
                   <Link to={currentSlide.link}>
-                    <span>Explore Catalogue</span>
+                    <span>Explore Equipment Catalogue</span>
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -206,48 +221,56 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   onClick={() => onOpenRfq()}
                   size="default"
                   variant="outline"
-                  className="gap-2 font-semibold text-xs sm:text-sm h-11 px-5 border-border/80 bg-navy-950/60 backdrop-blur-md"
+                  className="gap-2 font-semibold text-xs sm:text-sm h-11 px-5 rounded-lg border-border/80 bg-navy-950/60 backdrop-blur-md text-white hover:bg-navy-900"
                 >
                   <FileCheck2 className="size-4 text-amber-signal" />
-                  <span>Request a Quote</span>
+                  <span>Launch Tender RFQ</span>
                 </Button>
               </div>
 
-              {/* Slide Navigation Dots / Interactive Indicators */}
-              <div className="flex items-center gap-3 pt-4 font-mono text-xs">
-                <div className="flex items-center gap-1.5">
+              {/* Slide Navigation Controller (Matches User Screenshot: • • • [▬▬] • • < 04 / 06 >) */}
+              <div className="flex items-center gap-6 pt-4 font-mono">
+                {/* Circular Dots with Active Pill */}
+                <div className="flex items-center gap-2">
                   {HERO_SLIDES.map((_, i) => (
                     <button
                       key={i}
                       type="button"
                       onClick={() => setActiveSlide(i)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                      className={`transition-all duration-300 focus:outline-none ${
                         i === activeSlide
-                          ? "w-8 bg-amber-signal shadow-amber"
-                          : "w-2 bg-white/20 hover:bg-white/40"
+                          ? "h-2.5 w-9 rounded-full bg-amber-signal shadow-amber"
+                          : "size-2.5 rounded-full bg-slate-600/60 hover:bg-slate-400"
                       }`}
                       aria-label={`Go to slide ${i + 1}`}
                     />
                   ))}
                 </div>
 
-                <div className="flex items-center gap-1 text-metal/70 ml-2">
+                {/* Numeric Counter & Directional Chevrons */}
+                <div className="flex items-center gap-2.5 text-slate-300 text-sm">
                   <button
                     type="button"
                     onClick={handlePrevSlide}
-                    className="p-1 rounded hover:bg-navy-850 hover:text-white transition-colors"
+                    className="p-1 rounded text-slate-400 hover:text-white transition-colors focus:outline-none"
                     title="Previous Slide"
+                    aria-label="Previous Slide"
                   >
                     <ChevronLeft className="size-4" />
                   </button>
-                  <span className="text-[11px] font-mono text-metal">
-                    0{activeSlide + 1} / 0{HERO_SLIDES.length}
+
+                  <span className="font-mono text-sm tracking-wider text-slate-200">
+                    <span className="text-sky-400 font-semibold">0{activeSlide + 1}</span>{" "}
+                    <span className="text-amber-signal font-bold">/</span>{" "}
+                    <span className="text-sky-400 font-semibold">0{HERO_SLIDES.length}</span>
                   </span>
+
                   <button
                     type="button"
                     onClick={handleNextSlide}
-                    className="p-1 rounded hover:bg-navy-850 hover:text-white transition-colors"
+                    className="p-1 rounded text-slate-400 hover:text-white transition-colors focus:outline-none"
                     title="Next Slide"
+                    aria-label="Next Slide"
                   >
                     <ChevronRight className="size-4" />
                   </button>
