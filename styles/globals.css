@@ -1,0 +1,54 @@
+@import "./tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: var(--bg-abyss);
+    color: var(--text-primary);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-ink;
+  }
+}
+
+/* Custom Scrollbar for Tactical Data & Tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-abyss);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(132, 155, 181, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-amber);
+}
+
+/* Tactical Background Grid Effect */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(132, 155, 181, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(132, 155, 181, 0.05) 1px, transparent 1px);
+}
+
+/* Ambient Radial Glow */
+.bg-radar-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+}
+
+.bg-marine-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
+}
