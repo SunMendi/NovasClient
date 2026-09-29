@@ -46,7 +46,7 @@ const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Novas supplies certified defense systems, naval workboats, and mission-critical engineering solutions for armed forces, port authorities, and industrial operators across South Asia.",
     category: "Defence",
     link: "/catalogue?sector=defence",
-    imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1920&q=80"
+    imageUrl: "/assets/hero/hero-defence-CzOJrdZI.jpg"
   },
   {
     id: "slide-2",
@@ -55,7 +55,7 @@ const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Personal protection, less-lethal systems, tactical communications, and breaching tools for rapid response and elite tactical units.",
     category: "Tactical",
     link: "/catalogue?category=Tactical",
-    imageUrl: "https://images.unsplash.com/photo-1595590424283-b8f17842773f?auto=format&fit=crop&w=1920&q=80"
+    imageUrl: "/assets/hero/hero-tactical-BSZNFcBk.jpg"
   },
   {
     id: "slide-3",
@@ -64,7 +64,7 @@ const HERO_SLIDES: HeroSlide[] = [
     subtitle: "TCCC-aligned trauma kits, field patient monitors and deployable hospital casualty response equipment for armed forces and disaster relief.",
     category: "Medical",
     link: "/catalogue?category=Medical",
-    imageUrl: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1920&q=80"
+    imageUrl: "/assets/hero/hero-medical-DBJtfXpF.jpg"
   },
   {
     id: "slide-4",
@@ -73,7 +73,7 @@ const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Naval workboats, high-speed patrol interceptors, SOLAS life rafts, and high-definition X-band surveillance radar arrays for blue-water operators.",
     category: "Maritime",
     link: "/catalogue?sector=maritime",
-    imageUrl: "https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=1920&q=80"
+    imageUrl: "/assets/hero/hero-maritime-Z9Kk4jOd.jpg"
   },
   {
     id: "slide-5",
@@ -82,7 +82,7 @@ const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Sovereign cyber defence, secure tactical communications, hardened data centers and mission-critical intelligence infrastructure.",
     category: "ICT",
     link: "/sectors/ict",
-    imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80"
+    imageUrl: "/assets/hero/hero-cyber-BQaYidYs.jpg"
   },
   {
     id: "slide-6",
@@ -91,14 +91,23 @@ const HERO_SLIDES: HeroSlide[] = [
     subtitle: "Heavy industrial fabrication machinery, automated CNC cutting lines, and high-capacity turnkey power systems for strategic EPC megaprojects.",
     category: "Industry",
     link: "/sectors/industry",
-    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1920&q=80"
+    imageUrl: "/assets/hero/hero-logistics-sV_p9M_H.jpg"
+  },
+  {
+    id: "slide-7",
+    tag: "AEROSPACE & SURVEILLANCE",
+    title: "Precision aerial sensors & unmanned solutions.",
+    subtitle: "Tactical UAVs, electro-optical sensor pods, and high-altitude mapping payloads for defense forces, coastal surveillance and border security.",
+    category: "Geospatial",
+    link: "/sectors/geospatial",
+    imageUrl: "/assets/hero/hero-aerospace-CdirWyJV.jpg"
   }
 ];
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
-  // Preload all 6 slide images for instantaneous cross-fading
+  // Preload all slide images for instantaneous cross-fading
   useEffect(() => {
     HERO_SLIDES.forEach((slide) => {
       const img = new Image();
@@ -106,7 +115,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
     });
   }, []);
 
-  // Unconditional auto-rotation every 4 seconds (Professional standard)
+  // Continuous auto-rotation every 4 seconds (Professional standard)
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % HERO_SLIDES.length);
@@ -133,47 +142,49 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
 
   return (
     <div className="flex flex-col space-y-20 pb-24">
-      {/* 1. EXACT NOVAS BD HERO SECTION (Unconditional 4s Auto-Rotation with matching controller) */}
+      {/* 1. EXACT NOVAS BD HERO SECTION (Dynamic Moving Image & 4s Auto-Rotation) */}
       <section
         className="relative overflow-hidden border-b border-border/70 bg-navy-950 pt-3 sm:pt-4 lg:pt-6 pb-10 sm:pb-14 min-h-[540px] sm:min-h-[580px] lg:min-h-[620px] flex items-center"
       >
-        {/* Dynamic Background Image Layers with Smooth Cross-Fade */}
-        {HERO_SLIDES.map((slide, idx) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              idx === activeSlide ? "opacity-100 z-0" : "opacity-0 -z-10 pointer-events-none"
-            }`}
-          >
-            <img
-              src={slide.imageUrl}
-              alt={slide.title}
-              className="h-full w-full object-cover object-center"
-              loading="eager"
-            />
-            {/* Dark Tactical Vignette Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/60" />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/40" />
-          </div>
-        ))}
+        {/* Dynamic Background Image Layers with Smooth Cross-Fade & Ken Burns Movement */}
+        {HERO_SLIDES.map((slide, idx) => {
+          const isActive = idx === activeSlide;
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out overflow-hidden ${
+                isActive ? "opacity-100 z-0" : "opacity-0 -z-10 pointer-events-none"
+              }`}
+            >
+              <div
+                key={isActive ? `kb-${activeSlide}` : `idle-${idx}`}
+                className={`absolute inset-0 bg-cover bg-center ${isActive ? "hero-kb" : "scale-105"}`}
+                style={{ backgroundImage: `url(${slide.imageUrl})` }}
+              />
+              {/* Dark Tactical Vignette Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/60 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/40 pointer-events-none" />
+            </div>
+          );
+        })}
 
-        {/* Tactical Ambient Grid Overlay */}
+        {/* Tactical Ambient Grid Overlay & Dynamic Glowing Radar */}
         <div className="pointer-events-none absolute inset-0 bg-novas-grid opacity-30 z-0" />
-        <div className="pointer-events-none absolute inset-0 bg-radar-glow opacity-50 z-0" />
+        <div className="pointer-events-none absolute inset-0 bg-radar-glow opacity-50 z-0 hero-glow" />
 
         {/* Content Container (Compact Padding for Immediate Visibility) */}
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
             {/* Left Column: Pill Tag, Punchy Headline, Subtitle, CTAs */}
-            <div className="space-y-4 sm:space-y-5 lg:col-span-7">
+            <div key={`content-${activeSlide}`} className="space-y-4 sm:space-y-5 lg:col-span-7">
               {/* Category Pill with Glowing Bullet */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-signal/40 bg-navy-950/80 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-amber-signal backdrop-blur-md">
+              <div className="hero-rise-1 inline-flex items-center gap-2 rounded-full border border-amber-signal/40 bg-navy-950/80 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-amber-signal backdrop-blur-md">
                 <span className="size-1.5 rounded-full bg-amber-signal" />
                 <span className="font-bold">{currentSlide.tag}</span>
               </div>
 
               {/* Dynamic Animated Headline */}
-              <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight">
+              <h1 className="hero-rise-2 font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.08] tracking-tight">
                 {activeSlide === 0 ? (
                   <>
                     Institutional Defence,<br />
@@ -187,12 +198,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
               </h1>
 
               {/* Dynamic Subtitle */}
-              <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl leading-relaxed font-sans min-h-[48px]">
+              <p className="hero-rise-3 text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl leading-relaxed font-sans min-h-[48px]">
                 {currentSlide.subtitle}
               </p>
 
               {/* CTA Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="hero-rise-3 flex flex-wrap items-center gap-3 pt-2">
                 <Button
                   asChild
                   size="default"

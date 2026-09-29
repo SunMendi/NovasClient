@@ -59,3 +59,61 @@
 .bg-marine-glow {
   background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
 }
+
+/* Dynamic Hero Cinematic Ken Burns Motion (From Novas Demo Site) */
+@keyframes heroKenBurns {
+  0% {
+    transform: scale(1.04) translate3d(-1.5%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.18) translate3d(1.5%, 1%, 0);
+  }
+}
+
+.hero-kb {
+  animation: heroKenBurns 8s cubic-bezier(0.25, 1, 0.5, 1) both;
+  will-change: transform;
+}
+
+@keyframes heroGlowDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.1);
+    opacity: 0.75;
+  }
+}
+
+.hero-glow {
+  animation: heroGlowDrift 10s ease-in-out infinite;
+}
+
+@keyframes heroRise {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-rise-1 {
+  animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.hero-rise-2 {
+  animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: 0.1s;
+}
+
+.hero-rise-3 {
+  animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: 0.2s;
+}
+
