@@ -74,7 +74,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="flex flex-col h-full overflow-y-auto">
         <SheetHeader className="text-left border-b border-border/70 pb-4">
-          <div className="flex items-center gap-2 text-amber-signal font-mono text-xs uppercase tracking-wider font-semibold">
+          <div className="flex items-center gap-2 text-[#ed145b] font-mono text-xs uppercase tracking-wider font-semibold">
             <ShieldCheck className="size-4" />
             <span>Procurement & Quotation Gateway</span>
           </div>
@@ -102,7 +102,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
             <div className="w-full rounded-xl border border-border/80 bg-navy-950 p-4 font-mono text-sm space-y-1">
               <span className="text-xs text-metal">OFFICIAL TRACKING REFERENCE</span>
               <div className="flex items-center justify-center gap-3">
-                <span className="text-lg font-bold text-amber-signal">{referenceCode}</span>
+                <span className="text-lg font-bold text-[#ed145b]">{referenceCode}</span>
                 <button
                   type="button"
                   onClick={handleCopyCode}
@@ -128,7 +128,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                   Target Equipment / Vessels ({selectedItems.length})
                 </span>
                 {selectedItems.length === 0 && (
-                  <span className="text-xs text-amber-signal">General inquiry</span>
+                  <span className="text-xs text-[#ed145b]">General inquiry</span>
                 )}
               </div>
 
@@ -254,7 +254,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                     id="port"
                     value={deliveryPort}
                     onChange={(e) => setDeliveryPort(e.target.value)}
-                    className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-amber-signal focus:outline-none"
+                    className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-[#ed145b] focus:outline-none"
                   >
                     <option value="Chattogram Port (Seaport)">Chattogram Port (Seaport)</option>
                     <option value="Mongla Port (Seaport)">Mongla Port (Seaport)</option>
@@ -272,7 +272,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                     id="timeframe"
                     value={timeframe}
                     onChange={(e) => setTimeframe(e.target.value)}
-                    className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-amber-signal focus:outline-none"
+                    className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-[#ed145b] focus:outline-none"
                   >
                     <option value="Immediate Urgent (30 Days)">Immediate Urgent (30 Days)</option>
                     <option value="60–90 Days (Standard)">60–90 Days (Standard)</option>
@@ -292,7 +292,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                   placeholder="Detail exact quantities, ballistic rating, propulsion options, or custom vessel modifications required..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full rounded-lg border border-border/80 bg-navy-950 p-3 text-xs text-ink placeholder:text-metal/60 focus:border-amber-signal focus:outline-none"
+                  className="w-full rounded-lg border border-border/80 bg-navy-950 p-3 text-xs text-ink placeholder:text-metal/60 focus:border-[#ed145b] focus:outline-none"
                 />
               </div>
 
@@ -304,7 +304,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                   checked={endUserConfirmed}
                   onChange={(e) => setEndUserConfirmed(e.target.checked)}
                   required
-                  className="mt-0.5 size-4 rounded border-border text-amber-signal focus:ring-amber-signal"
+                  className="mt-0.5 size-4 rounded border-border text-[#ed145b] focus:ring-[#ed145b]"
                 />
                 <label htmlFor="endUser" className="text-xs text-metal leading-relaxed cursor-pointer">
                   I certify that this inquiry is for legitimate institutional, government, or authorized corporate procurement, and agree to provide official End-User Certificates (EUC) if required.
@@ -316,7 +316,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
               type="submit"
               variant="default"
               size="lg"
-              className="w-full gap-2 font-bold shadow-amber"
+              className="w-full gap-2 font-bold bg-[#ed145b] hover:bg-[#d00f4e] text-white shadow-crimson"
             >
               <Send className="size-4" />
               <span>Submit RFQ for Commercial Scoping</span>

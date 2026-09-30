@@ -10,15 +10,27 @@
 
 :root {
   /* =========================================================================
-     1. COLOR SYSTEM (DARK-FIRST MISSION-CRITICAL / COMMAND BRIDGE PALETTE)
+     1. COLOR SYSTEM (NOVAS OFFICIAL BRAND PALETTE: ROYAL NAVY & CRIMSON RED)
      ========================================================================= */
 
-  /* Surface Bases (Deep Oceanic & Hull Charcoal) */
-  --bg-abyss: #040911;              /* Base document background */
-  --bg-deep-navy: #081322;          /* Primary section background */
-  --bg-bridge: #0d1e34;             /* Elevated cards & floating navigation */
-  --bg-surface-elevated: #132845;   /* Modals, popovers, active card states */
-  --bg-surface-highlight: #1a365d;  /* Hover states & selected row highlights */
+  /* Official Brand Colors (From Client Logo & novasbd.com) */
+  --brand-navy: #002e6e;            /* Official Novas Navy Blue */
+  --brand-navy-deep: #042e6f;       /* Logo letters N, O, V, S */
+  --brand-navy-dark: #02163b;       /* Deepest navy background */
+  --brand-navy-light: #133057;      /* Nav text & corporate headers */
+  
+  --brand-red: #ed145b;             /* Official Novas Crimson Red (Logo Chevron 'A') */
+  --brand-red-crimson: #ee4a5b;     /* Logo 'A' gradient highlight */
+  --brand-red-hover: #d00f4e;       /* Primary button hover */
+  --brand-red-glow: rgba(237, 20, 91, 0.35);
+  --brand-red-subtle: rgba(237, 20, 91, 0.12);
+
+  /* Surface Bases (Deep Oceanic & Royal Navy) */
+  --bg-abyss: #030a18;              /* Base document background */
+  --bg-deep-navy: #061833;          /* Primary section background */
+  --bg-bridge: #0a2142;             /* Elevated cards & floating navigation */
+  --bg-surface-elevated: #0f2c56;   /* Modals, popovers, active card states */
+  --bg-surface-highlight: #173d72;  /* Hover states & selected row highlights */
 
   /* Text & Contrast Hierarchy (Crisp, High-Legibility Titanium & Slate) */
   --text-primary: #f8fafc;          /* High-emphasis text, headers, primary data */
@@ -26,8 +38,14 @@
   --text-muted: #849bb5;            /* Secondary labels, breadcrumbs, timestamps */
   --text-dim: #546a85;              /* Disabled elements, inactive icons, subtle borders */
 
-  /* Mission Accents & Status Indicators */
-  /* Primary Action: Signal Amber (Alert, Authority, High Visibility) */
+  /* Primary Action: Novas Crimson Red */
+  --accent-crimson: #ed145b;
+  --accent-crimson-hover: #d00f4e;
+  --accent-crimson-glow: rgba(237, 20, 91, 0.35);
+  --accent-crimson-subtle: rgba(237, 20, 91, 0.12);
+  --accent-crimson-foreground: #ffffff;
+
+  /* Mission Secondary Accents & Status Indicators */
   --accent-amber: #f59e0b;
   --accent-amber-hover: #d97706;
   --accent-amber-glow: rgba(245, 158, 11, 0.25);
@@ -35,10 +53,10 @@
   --accent-amber-foreground: #040911;
 
   /* Maritime & Hydrographic Blue (Ocean Depth, Vessel Engineering) */
-  --accent-marine: #0284c7;
+  --accent-marine: #005f99;
   --accent-marine-hover: #0369a1;
-  --accent-marine-glow: rgba(2, 132, 199, 0.25);
-  --accent-marine-subtle: rgba(2, 132, 199, 0.12);
+  --accent-marine-glow: rgba(0, 95, 153, 0.25);
+  --accent-marine-subtle: rgba(0, 95, 153, 0.12);
 
   /* Sonar & Verification Green (Compliance, NIJ/MIL-STD Passed, Active Fleet) */
   --status-sonar-green: #10b981;
@@ -47,54 +65,54 @@
   --status-sonar-subtle: rgba(16, 185, 129, 0.12);
 
   /* Tactical & Ballistic Red (Critical Warning, Level IV, Urgent RFQ) */
-  --status-tactical-red: #ef4444;
-  --status-tactical-subtle: rgba(239, 68, 68, 0.14);
+  --status-tactical-red: #ed145b;
+  --status-tactical-subtle: rgba(237, 20, 91, 0.14);
 
   /* Sector-Specific Thematic Accents */
-  --sector-defence: #f59e0b;        /* Signal Amber */
-  --sector-maritime: #0ea5e9;       /* Deep Hydrographic Cyan */
-  --sector-industry: #f97316;       /* Industrial Foundry Orange */
+  --sector-defence: #ed145b;        /* Novas Crimson */
+  --sector-maritime: #005f99;       /* Deep Hydrographic Blue */
+  --sector-industry: #002e6e;       /* Novas Royal Navy */
   --sector-geospatial: #10b981;     /* GIS Topo Emerald */
   --sector-ict: #8b5cf6;            /* Mission Cyber Purple */
-  --sector-logistics: #ec4899;      /* Global Supply Rose */
+  --sector-logistics: #f59e0b;      /* Global Supply Amber */
 
   /* Structural Borders & Dividing Lines */
   --border-subtle: rgba(132, 155, 181, 0.12);
   --border-default: rgba(132, 155, 181, 0.22);
   --border-strong: rgba(132, 155, 181, 0.38);
-  --border-accent: rgba(245, 158, 11, 0.45);
-  --border-marine: rgba(2, 132, 199, 0.45);
+  --border-accent: rgba(237, 20, 91, 0.45);
+  --border-marine: rgba(0, 95, 153, 0.45);
 
   /* =========================================================================
      2. SHADCN/UI COMPATIBILITY MAP (Maps directly to shadcn CSS conventions)
      ========================================================================= */
-  --background: 218 55% 4%;         /* #040911 */
+  --background: 220 70% 5%;         /* #030a18 */
   --foreground: 210 40% 98%;        /* #f8fafc */
 
-  --card: 216 48% 9%;               /* #081322 */
+  --card: 218 55% 10%;              /* #07172e */
   --card-foreground: 210 40% 98%;   /* #f8fafc */
 
-  --popover: 215 50% 12%;           /* #0d1e34 */
+  --popover: 218 55% 12%;           /* #0a2142 */
   --popover-foreground: 210 40% 98%;/* #f8fafc */
 
-  --primary: 38 92% 50%;            /* #f59e0b (Amber Accent) */
-  --primary-foreground: 218 55% 4%; /* #040911 */
+  --primary: 341 87% 51%;           /* #ed145b (Novas Crimson Red) */
+  --primary-foreground: 0 0% 100%;  /* #ffffff */
 
-  --secondary: 215 45% 18%;         /* #132845 */
+  --secondary: 216 100% 22%;        /* #002e6e (Novas Royal Navy) */
   --secondary-foreground: 210 40% 98%;
 
-  --muted: 215 35% 15%;             /* #102138 */
+  --muted: 218 45% 15%;             /* #102138 */
   --muted-foreground: 214 25% 62%;  /* #849bb5 */
 
-  --accent: 215 45% 18%;            /* #132845 */
-  --accent-foreground: 38 92% 50%;  /* #f59e0b */
+  --accent: 218 45% 18%;            /* #132845 */
+  --accent-foreground: 341 87% 51%; /* #ed145b */
 
-  --destructive: 0 84% 60%;          /* #ef4444 */
+  --destructive: 341 87% 51%;       /* #ed145b */
   --destructive-foreground: 210 40% 98%;
 
   --border: 215 25% 18%;            /* rgba(132, 155, 181, 0.22) */
   --input: 215 25% 18%;
-  --ring: 38 92% 50%;               /* Focus Ring = Amber */
+  --ring: 341 87% 51%;              /* Focus Ring = Crimson Red */
   --radius: 0.625rem;               /* 10px baseline border radius */
 
   /* =========================================================================

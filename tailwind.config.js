@@ -55,6 +55,15 @@ export default {
         },
         
         /* Direct Semantic Defense & Maritime Tokens */
+        brand: {
+          navy: "var(--brand-navy)",
+          deep: "var(--brand-navy-deep)",
+          dark: "var(--brand-navy-dark)",
+          light: "var(--brand-navy-light)",
+          red: "var(--brand-red)",
+          crimson: "var(--brand-red-crimson)",
+          hover: "var(--brand-red-hover)",
+        },
         navy: {
           950: "var(--bg-abyss)",
           900: "var(--bg-deep-navy)",
@@ -94,6 +103,8 @@ export default {
         subtle: "var(--shadow-subtle)",
         card: "var(--shadow-card)",
         elevated: "var(--shadow-elevated)",
+        crimson: "var(--brand-red-glow)",
+        red: "var(--brand-red-glow)",
         amber: "var(--glow-amber)",
         marine: "var(--glow-marine)",
         sonar: "var(--glow-sonar)",

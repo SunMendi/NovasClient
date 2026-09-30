@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { COMPANY_INFO } from "../data/company";
-import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
 import {
   MapPin,
   Phone,
@@ -13,19 +11,20 @@ import {
   Copy,
   Clock,
   HelpCircle,
-  FileCheck2
+  FileCheck2,
+  Building2,
+  Globe
 } from "lucide-react";
 
 export const ContactPage: React.FC = () => {
-  const [organization, setOrganization] = useState("");
-  const [department, setDepartment] = useState("");
-  const [contactName, setContactName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [sectorInterest, setSectorInterest] = useState("Defence Procurement");
-  const [deliveryPort, setDeliveryPort] = useState("Chattogram Port");
-  const [notes, setNotes] = useState("");
-  const [endUserConfirmed, setEndUserConfirmed] = useState(false);
+  const [company, setCompany] = useState("");
+  const [address, setAddress] = useState("");
+  const [message, setMessage] = useState("");
+  const [priceQuotation, setPriceQuotation] = useState(true);
+  const [productInformation, setProductInformation] = useState(true);
+
   const [submitted, setSubmitted] = useState(false);
   const [referenceCode, setReferenceCode] = useState("");
   const [copied, setCopied] = useState(false);
@@ -54,325 +53,329 @@ export const ContactPage: React.FC = () => {
     },
     {
       q: "How are international export controls and End-User Certificates (EUC) handled?",
-      a: "Novas has 25+ years of experience processing export licenses with government trade ministries in Germany, the UK, the US, and EU members, ensuring strict compliance with international non-proliferation laws and fast turnaround on EUC verifications."
+      a: "Novas has extensive experience processing export licenses with government trade ministries in Germany, the UK, the US, and EU members, ensuring strict compliance with international non-proliferation laws and fast turnaround on EUC verifications."
     },
     {
       q: "Do you provide on-site commissioning and spare parts sustainment?",
-      a: "Yes. Every naval platform, radar suite, and heavy machinery installation includes certified OEM on-site commissioning, operator training programs, and contractual 2- to 5-year guaranteed spare parts supply."
+      a: "Yes. Every naval platform, radar suite, and heavy machinery installation includes certified OEM on-site commissioning, operator training programs, and contractual guaranteed spare parts supply."
     }
   ];
 
   return (
-    <div className="space-y-16 pb-24">
-      {/* Banner */}
-      <section className="border-b border-border/60 bg-navy-900/70 py-16 sm:py-24 bg-grid-pattern">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl space-y-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-amber-signal font-bold">
-              Procurement & Tender Inquiries
-            </span>
-            <h1 className="font-display text-4xl sm:text-6xl font-extrabold text-ink tracking-tight">
-              Request a Formal Quote <br />
-              <span className="text-amber-signal">or Tender Proposal.</span>
-            </h1>
-            <p className="text-base sm:text-lg text-metal leading-relaxed">
-              Connect directly with our procurement officers in Dhaka for certified equipment scoping, naval architectural estimates, or urgent force supply requirements.
-            </p>
+    <div className="flex flex-col space-y-16 pb-24">
+      {/* 1. HEADER BANNER: Let's Connect */}
+      <section className="relative overflow-hidden border-b border-border/80 bg-gradient-to-b from-[#061833] via-[#02163b] to-[#030a18] py-16 sm:py-20">
+        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/10 blur-3xl" />
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#ed145b]/40 bg-[#002e6e]/60 px-4 py-1 text-xs font-mono uppercase tracking-wider text-[#ed145b]">
+            <Globe className="size-3.5" />
+            <span>MOHAKHALI DOHS, DHAKA • 24/7 PROCUREMENT DESK</span>
           </div>
+
+          <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+            Let&apos;s <span className="text-[#ed145b]">Connect !</span>
+          </h1>
+
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            In business, maintaining proper contact with clients, colleagues, and customers is crucial for success. Novas connects armed forces, port authorities, and industrial leaders with certified global OEMs.
+          </p>
         </div>
       </section>
 
-      {/* Main Grid: Form + Office Coordinates */}
+      {/* 2. DIRECT CONTACT CHANNELS & INTERACTIVE RFQ FORM */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
-          {/* Left Column: Comprehensive RFQ Form */}
-          <div className="lg:col-span-7 rounded-3xl border border-border/80 bg-navy-900 p-6 sm:p-10 shadow-card">
-            {submitted ? (
-              <div className="flex flex-col items-center justify-center p-8 text-center space-y-4">
-                <div className="grid size-16 place-items-center rounded-2xl bg-sonar/15 text-sonar border border-sonar/30 shadow-sonar">
-                  <CheckCircle2 className="size-8" />
-                </div>
-                <Badge variant="verified">SUBMISSION RECORDED</Badge>
-                <h3 className="font-display text-2xl font-bold text-ink">
-                  Inquiry Dispatched to Technical Advisory
-                </h3>
-                <p className="text-sm text-metal leading-relaxed max-w-md">
-                  Thank you, <strong className="text-ink">{contactName}</strong>. Your inquiry on behalf of <strong className="text-ink">{organization}</strong> has been logged. Our defense and naval procurement desk will review your scope and follow up with tender documentation.
-                </p>
-
-                <div className="w-full rounded-xl border border-border/80 bg-navy-950 p-4 font-mono text-sm space-y-1">
-                  <span className="text-xs text-metal">OFFICIAL TRACKING REFERENCE CODE</span>
-                  <div className="flex items-center justify-center gap-3">
-                    <span className="text-xl font-bold text-amber-signal">{referenceCode}</span>
-                    <button
-                      type="button"
-                      onClick={handleCopyCode}
-                      className="rounded p-1 text-metal hover:text-ink hover:bg-navy-850"
-                      title="Copy code"
-                    >
-                      <Copy className="size-4" />
-                    </button>
-                  </div>
-                  {copied && <span className="text-[10px] text-sonar">Copied to clipboard</span>}
-                </div>
-
-                <Button
-                  onClick={() => {
-                    setSubmitted(false);
-                    setNotes("");
-                  }}
-                  variant="outline"
-                  className="mt-4"
-                >
-                  Submit Additional Inquiry
-                </Button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <h3 className="font-display text-2xl font-bold text-ink">
-                    Technical Specification & RFQ Form
-                  </h3>
-                  <p className="text-xs text-metal mt-1">
-                    Fields marked with an asterisk (*) are required for formal tender verification.
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-1">
-                      <label htmlFor="c-org" className="text-xs font-semibold text-metal">
-                        Organization / Military Branch *
-                      </label>
-                      <Input
-                        id="c-org"
-                        required
-                        placeholder="e.g. Bangladesh Navy / Port Authority"
-                        value={organization}
-                        onChange={(e) => setOrganization(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label htmlFor="c-dept" className="text-xs font-semibold text-metal">
-                        Department / Directorate
-                      </label>
-                      <Input
-                        id="c-dept"
-                        placeholder="e.g. Directorate General Purchase"
-                        value={department}
-                        onChange={(e) => setDepartment(e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    <div className="space-y-1 sm:col-span-1">
-                      <label htmlFor="c-name" className="text-xs font-semibold text-metal">
-                        Authorized Officer Name *
-                      </label>
-                      <Input
-                        id="c-name"
-                        required
-                        placeholder="Full Name"
-                        value={contactName}
-                        onChange={(e) => setContactName(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="space-y-1 sm:col-span-1">
-                      <label htmlFor="c-email" className="text-xs font-semibold text-metal">
-                        Official Email *
-                      </label>
-                      <Input
-                        id="c-email"
-                        type="email"
-                        required
-                        placeholder="officer@domain.gov.bd"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="space-y-1 sm:col-span-1">
-                      <label htmlFor="c-phone" className="text-xs font-semibold text-metal">
-                        Phone / Signal Line *
-                      </label>
-                      <Input
-                        id="c-phone"
-                        required
-                        placeholder="+880 1700..."
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-1">
-                      <label htmlFor="c-sector" className="text-xs font-semibold text-metal">
-                        Primary Sector Scope
-                      </label>
-                      <select
-                        id="c-sector"
-                        value={sectorInterest}
-                        onChange={(e) => setSectorInterest(e.target.value)}
-                        className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-amber-signal focus:outline-none"
-                      >
-                        <option value="Defence Procurement">Defence (Ballistic Armor, NVG, Comms)</option>
-                        <option value="Maritime & Naval Vessels">Maritime (Workboats, Patrol Craft, Radar, Sonar)</option>
-                        <option value="Heavy Industry & Machinery">Industry (Turnkey Plant, CNC, Power)</option>
-                        <option value="Geospatial & Survey">Geospatial (RTK GNSS, LiDAR, Aerial Survey)</option>
-                        <option value="Mission ICT & Cyber">ICT (Hardened Comms, Tactical Data Centers)</option>
-                        <option value="Turnkey Logistics">Logistics & Supply Chain</option>
-                      </select>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label htmlFor="c-port" className="text-xs font-semibold text-metal">
-                        Intended Delivery Destination
-                      </label>
-                      <select
-                        id="c-port"
-                        value={deliveryPort}
-                        onChange={(e) => setDeliveryPort(e.target.value)}
-                        className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-amber-signal focus:outline-none"
-                      >
-                        <option value="Chattogram Port">Chattogram Port (Seaport)</option>
-                        <option value="Mongla Port">Mongla Port (Seaport)</option>
-                        <option value="Hazrat Shahjalal Int'l Airport">Hazrat Shahjalal Int'l Airport (Air Cargo)</option>
-                        <option value="Dhaka Inland Depot">Dhaka Inland Depot</option>
-                        <option value="Direct Shipyard Delivery">Direct Shipyard Delivery</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="c-notes" className="text-xs font-semibold text-metal">
-                      Detailed Requirement / Specifications
-                    </label>
-                    <textarea
-                      id="c-notes"
-                      rows={4}
-                      required
-                      placeholder="Specify required quantities, ballistic protection level, delivery timeline, or vessel parameters (LOA, speed, engine horsepower)..."
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      className="w-full rounded-lg border border-border/80 bg-navy-950 p-3 text-xs text-ink placeholder:text-metal/60 focus:border-amber-signal focus:outline-none"
-                    />
-                  </div>
-
-                  {/* End-User Compliance Checkbox */}
-                  <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-navy-950/70 p-4">
-                    <input
-                      type="checkbox"
-                      id="c-euc"
-                      checked={endUserConfirmed}
-                      onChange={(e) => setEndUserConfirmed(e.target.checked)}
-                      required
-                      className="mt-0.5 size-4 rounded border-border text-amber-signal focus:ring-amber-signal"
-                    />
-                    <label htmlFor="c-euc" className="text-xs text-metal leading-relaxed cursor-pointer">
-                      I confirm that this tender inquiry is submitted by an authorized institutional representative, and agree to supply certified End-User Documentation (EUC) for defense-grade items.
-                    </label>
-                  </div>
-                </div>
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  variant="default"
-                  className="w-full gap-2 font-bold shadow-amber"
-                >
-                  <Send className="size-4" />
-                  <span>Transmit Official Tender Inquiry</span>
-                </Button>
-              </form>
-            )}
-          </div>
-
-          {/* Right Column: Office Coordinates & Operating Hours */}
+        <div className="grid gap-12 lg:grid-cols-12 max-w-6xl mx-auto">
+          {/* Left Column: Direct Info Cards */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="rounded-3xl border border-border/70 bg-navy-900 p-8 space-y-6 shadow-card">
-              <div className="flex items-center gap-2 text-amber-signal font-mono text-xs uppercase tracking-wider font-semibold">
-                <MapPin className="size-4" />
-                <span>Headquarters & Command Desk</span>
-              </div>
-
-              <div className="space-y-2">
-                <h3 className="font-display text-2xl font-bold text-ink">
-                  Novas Solutions BD
-                </h3>
-                <p className="text-xs font-mono text-metal">
-                  Corporate Registry: {COMPANY_INFO.corporateRegistry}
-                </p>
-              </div>
-
-              <div className="space-y-4 border-t border-border/60 pt-4 text-sm text-metal">
-                <div className="flex items-start gap-3">
-                  <MapPin className="size-4 shrink-0 text-amber-signal mt-1" />
-                  <span className="text-xs text-secondary leading-relaxed">
-                    {COMPANY_INFO.address}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Phone className="size-4 shrink-0 text-amber-signal" />
-                  <a href={`tel:${COMPANY_INFO.phone}`} className="text-xs text-secondary hover:text-ink">
-                    {COMPANY_INFO.phone}
-                  </a>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Mail className="size-4 shrink-0 text-amber-signal" />
-                  <a href={`mailto:${COMPANY_INFO.email}`} className="text-xs text-secondary hover:text-ink">
-                    {COMPANY_INFO.email}
-                  </a>
-                </div>
-
-                <div className="flex items-center gap-3 pt-2">
-                  <Clock className="size-4 shrink-0 text-marine" />
-                  <span className="text-xs text-metal font-mono">
-                    Sunday – Thursday: 09:00 – 18:00 BST
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Security Notice */}
-            <div className="rounded-2xl border border-sonar/30 bg-sonar/5 p-6 space-y-2">
-              <div className="flex items-center gap-2 text-sonar font-mono text-xs font-bold uppercase tracking-wider">
-                <ShieldCheck className="size-4" />
-                <span>Encrypted & Audited Transmission</span>
-              </div>
-              <p className="text-xs text-metal leading-relaxed">
-                All tender communications and technical schematics transmitted through this portal are handled under strict confidentiality protocols and ISO 9001:2015 audit guidelines.
+            <div className="space-y-2">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b]">
+                OFFICIAL LIAISON
+              </span>
+              <h2 className="font-display text-2xl font-bold text-white">
+                Contact Details
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400">
+                Reach out to our specialized procurement desk for tenders, technical datasheets, and OEM agency verifications.
               </p>
             </div>
+
+            {/* Email Card */}
+            <div
+              onClick={() => (window.location.href = `mailto:${COMPANY_INFO.email}`)}
+              className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 cursor-pointer hover:border-[#ed145b]/60 transition-colors shadow-lg"
+            >
+              <div className="p-3 rounded-xl bg-[#ed145b]/10 text-[#ed145b]">
+                <Mail className="size-6" />
+              </div>
+              <div>
+                <div className="font-mono text-[10px] text-slate-400 uppercase">Email Enquiries</div>
+                <div className="font-display text-sm sm:text-base font-bold text-white hover:text-[#ed145b] transition-colors">
+                  {COMPANY_INFO.email}
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile / Direct Phone Card */}
+            <div
+              onClick={() => (window.location.href = `tel:${COMPANY_INFO.phone}`)}
+              className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 cursor-pointer hover:border-[#ed145b]/60 transition-colors shadow-lg"
+            >
+              <div className="p-3 rounded-xl bg-[#002e6e] text-white">
+                <Phone className="size-6 text-[#10b981]" />
+              </div>
+              <div>
+                <div className="font-mono text-[10px] text-slate-400 uppercase">Mobile Hot-Desk</div>
+                <div className="font-display text-sm sm:text-base font-bold text-white">
+                  {COMPANY_INFO.phone}
+                </div>
+              </div>
+            </div>
+
+            {/* Landline Phone Card */}
+            <div
+              onClick={() => (window.location.href = `tel:${COMPANY_INFO.landline}`)}
+              className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 cursor-pointer hover:border-[#ed145b]/60 transition-colors shadow-lg"
+            >
+              <div className="p-3 rounded-xl bg-[#061833] border border-slate-700 text-sky-400">
+                <Phone className="size-6" />
+              </div>
+              <div>
+                <div className="font-mono text-[10px] text-slate-400 uppercase">Headquarters Landline</div>
+                <div className="font-display text-sm sm:text-base font-bold text-white">
+                  {COMPANY_INFO.landline}
+                </div>
+              </div>
+            </div>
+
+            {/* Physical Facility Card */}
+            <div className="flex items-start gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 shadow-lg">
+              <div className="p-3 rounded-xl bg-[#ed145b]/10 text-[#ed145b] shrink-0 mt-0.5">
+                <MapPin className="size-6" />
+              </div>
+              <div>
+                <div className="font-mono text-[10px] text-slate-400 uppercase">Head Office</div>
+                <div className="font-sans text-xs sm:text-sm font-semibold text-white leading-relaxed">
+                  {COMPANY_INFO.address}
+                </div>
+              </div>
+            </div>
+
+            {/* Working Hours */}
+            <div className="flex items-center gap-3 rounded-xl border border-slate-800/80 bg-[#030a18] p-3 text-xs font-mono text-slate-400">
+              <Clock className="size-4 text-[#ed145b]" />
+              <span>Sun - Thu: 09:00 - 18:00 BST // Emergency Duty Officer: 24/7</span>
+            </div>
+          </div>
+
+          {/* Right Column: Tender RFQ / Quote Request Form */}
+          <div className="lg:col-span-7">
+            <div className="rounded-3xl border border-slate-800 bg-[#061833] p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
+              <div className="space-y-2 mb-6">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-white">
+                  Submit a <span className="text-[#ed145b]">Tender RFQ</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-400">
+                  Fill in your institutional procurement details to receive formal specifications and commercial pricing.
+                </p>
+              </div>
+
+              {submitted ? (
+                <div className="space-y-6 py-6 text-center animate-in fade-in zoom-in-95 duration-200">
+                  <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-[#ed145b]/20 border border-[#ed145b]/50 text-[#ed145b] shadow-crimson">
+                    <CheckCircle2 className="size-8" />
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-display text-xl font-bold text-white">
+                      RFQ Transmitted Successfully!
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
+                      Your procurement request has been routed to our technical desk at Mohakhali DOHS, Dhaka.
+                    </p>
+                  </div>
+
+                  <div className="mx-auto max-w-sm rounded-xl border border-slate-700 bg-[#030a18] p-4 text-center">
+                    <span className="font-mono text-[10px] text-slate-400 uppercase">
+                      Official RFQ Reference Code
+                    </span>
+                    <div className="mt-1 flex items-center justify-center gap-2">
+                      <span className="font-mono text-base font-bold text-[#ed145b]">
+                        {referenceCode}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleCopyCode}
+                        className="p-1 rounded text-slate-400 hover:text-white"
+                        title="Copy RFQ Code"
+                      >
+                        <Copy className="size-4" />
+                      </button>
+                    </div>
+                    {copied && <span className="text-[10px] text-[#10b981]">Copied to clipboard</span>}
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setName("");
+                      setEmail("");
+                      setCompany("");
+                      setAddress("");
+                      setMessage("");
+                    }}
+                    variant="outline"
+                    className="border-slate-700 text-white"
+                  >
+                    Submit Another Request
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-slate-300">Your Full Name *</label>
+                      <input
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Commander / Director Name"
+                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-slate-300">Official Email *</label>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="officer@mod.gov.bd"
+                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-slate-300">Company / Ministry *</label>
+                      <input
+                        type="text"
+                        required
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        placeholder="Ministry of Defence / Port Authority"
+                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-mono text-slate-300">Delivery Address / Port *</label>
+                      <input
+                        type="text"
+                        required
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Chittagong Port / Dhaka Central"
+                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Checklist Toggles from novasbd.com */}
+                  <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-mono text-slate-300">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={priceQuotation}
+                        onChange={(e) => setPriceQuotation(e.target.checked)}
+                        className="size-4 rounded accent-[#ed145b]"
+                      />
+                      <span>Request Commercial Price Quotation</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={productInformation}
+                        onChange={(e) => setProductInformation(e.target.checked)}
+                        className="size-4 rounded accent-[#ed145b]"
+                      />
+                      <span>Request Technical Datasheet &amp; CoC</span>
+                    </label>
+                  </div>
+
+                  <div className="space-y-1.5 pt-2">
+                    <label className="text-xs font-mono text-slate-300">Project / Equipment Specifications *</label>
+                    <textarea
+                      required
+                      rows={4}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Specify required quantities, doctrine standards (MIL-STD, NIJ, SOLAS), target delivery dates, or technical questions..."
+                      className="w-full rounded-lg border border-slate-700 bg-[#030a18] p-3 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold h-11 rounded-lg shadow-crimson text-sm"
+                  >
+                    <Send className="mr-2 size-4" />
+                    Transmit Official Tender RFQ
+                  </Button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Procurement FAQ Section */}
+      {/* 3. GOOGLE MAP EMBED (MOHAKHALI DOHS, DHAKA) */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-border/70 bg-navy-900/60 p-8 sm:p-12 space-y-8">
-          <div className="max-w-2xl space-y-2">
-            <Badge variant="secondary" className="gap-1.5">
-              <HelpCircle className="size-3.5" />
-              <span>FREQUENTLY ASKED QUESTIONS</span>
-            </Badge>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-ink">
-              Institutional Procurement Protocol FAQs
+        <div className="max-w-6xl mx-auto rounded-3xl border border-slate-800 bg-[#061833] p-4 sm:p-6 shadow-2xl space-y-4 overflow-hidden">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
+              <MapPin className="size-4 text-[#ed145b]" />
+              <span>GEOLOCATION: MOHAKHALI DOHS, DHAKA-1206, BANGLADESH</span>
+            </div>
+            <span className="font-mono text-[10px] text-slate-500">23.7772° N, 90.3995° E</span>
+          </div>
+
+          <div className="relative aspect-[21/9] w-full min-h-[300px] overflow-hidden rounded-2xl border border-slate-700">
+            <iframe
+              title="Novas BD Office Map"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.0264023719086!2d90.39566377602334!3d23.782071687541624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c76c12513f13%3A0x6b9d628d0859c258!2sMohakhali%20DOHS%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 4. PROCUREMENT FAQS */}
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="text-center space-y-2">
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b]">
+              FAQ &amp; ADVISORY
+            </span>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">
+              Institutional Procurement Protocols
             </h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {faqs.map((faq, i) => (
-              <div key={i} className="rounded-2xl border border-border/60 bg-navy-950 p-6 space-y-2">
-                <h4 className="font-display text-base font-bold text-ink">
-                  {faq.q}
+          <div className="space-y-4">
+            {faqs.map((faq, idx) => (
+              <div
+                key={idx}
+                className="rounded-2xl border border-slate-800 bg-[#061833] p-6 space-y-2"
+              >
+                <h4 className="font-display text-base font-bold text-white flex items-center gap-2">
+                  <span className="size-2 rounded-full bg-[#ed145b]" />
+                  <span>{faq.q}</span>
                 </h4>
-                <p className="text-xs text-metal leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans pl-4">
                   {faq.a}
                 </p>
               </div>

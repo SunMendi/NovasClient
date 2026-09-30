@@ -1,135 +1,198 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { COMPANY_INFO } from "../../data/company";
-import { SECTORS } from "../../data/sectors";
-import { MapPin, Mail, Phone, ShieldCheck, Anchor } from "lucide-react";
+import { NovasLogo } from "../common/NovasLogo";
+import { MapPin, Mail, Phone, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
+import { Button } from "../ui/button";
 
 export const Footer: React.FC = () => {
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterName, setNewsletterName] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    setSubscribed(true);
+    setTimeout(() => {
+      setNewsletterEmail("");
+      setNewsletterName("");
+    }, 3000);
+  };
+
   return (
-    <footer className="border-t border-border/70 bg-navy-950 text-secondary">
+    <footer className="border-t border-slate-800 bg-[#02163b] text-slate-300">
       {/* Top Credentials Strip */}
-      <div className="border-b border-border/40 bg-navy-900/60 py-6">
+      <div className="border-b border-slate-800/80 bg-[#030a18] py-4">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-metal">
+          <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-slate-400">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="size-4 text-amber-signal" />
-              <span>DEFENCE-GRADE AUDIT TRAIL // ISO 9001:2015 CERTIFIED</span>
+              <ShieldCheck className="size-4 text-[#ed145b]" />
+              <span>DEFENCE &amp; SCIENCE PROCUREMENT EXCELLENCE // ESTABLISHED JULY 2012</span>
             </div>
             <div className="flex items-center gap-2">
-              <Anchor className="size-4 text-marine" />
-              <span>BUREAU VERITAS & LLOYDS REGISTER COMPLIANCE</span>
+              <span className="size-2 rounded-full bg-[#10b981]" />
+              <span>ISO 9001:2015 &amp; MIL-STD COMPLIANT VENDOR</span>
             </div>
             <div className="text-right">
-              <span>SOUTH ASIA REGISTRY: {COMPANY_INFO.corporateRegistry}</span>
+              <span>HEAD OFFICE: MOHAKHALI DOHS, DHAKA, BANGLADESH</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Links */}
-      <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
-          {/* Brand Column */}
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+          {/* Brand & Mission Column */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-3">
-              <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-amber-signal to-amber-600 font-display text-lg font-black text-navy-950 shadow-amber">
-                N
-              </span>
-              <span className="font-display text-2xl font-extrabold tracking-tight text-ink">
-                NOVAS
-              </span>
+            <Link to="/" className="inline-block py-1">
+              <NovasLogo variant="dark" height={36} showSubtitle={true} />
             </Link>
-            <p className="max-w-sm text-sm text-metal leading-relaxed">
+            <p className="max-w-sm text-sm text-slate-300 leading-relaxed">
               {COMPANY_INFO.subheading}
             </p>
-            <div className="pt-2 text-xs font-mono text-metal/70 space-y-1">
-              <p>Trusted by naval headquarters, security forces, and industrial EPCs across the region.</p>
+            <p className="text-xs text-slate-400 font-mono">
+              24-member specialized engineering, procurement and after-sales support team.
+            </p>
+
+            {/* Direct Contact Pills */}
+            <div className="pt-2 space-y-2 text-xs">
+              <div className="flex items-start gap-2.5 text-slate-300">
+                <MapPin className="size-4 shrink-0 text-[#ed145b] mt-0.5" />
+                <span>{COMPANY_INFO.address}</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-slate-300">
+                <Phone className="size-4 shrink-0 text-[#ed145b]" />
+                <span>{COMPANY_INFO.phone} / {COMPANY_INFO.landline}</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-slate-300">
+                <Mail className="size-4 shrink-0 text-[#ed145b]" />
+                <a href={`mailto:${COMPANY_INFO.email}`} className="hover:text-[#ed145b] transition-colors">
+                  {COMPANY_INFO.email}
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Sectors Navigation */}
+          {/* Quick Links Column */}
           <div>
-            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-ink mb-4">
-              Mission Sectors
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              {SECTORS.map((s) => (
-                <li key={s.id}>
-                  <Link
-                    to={`/sectors/${s.slug}`}
-                    className="text-metal hover:text-amber-signal transition-colors"
-                  >
-                    {s.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-ink mb-4">
+            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-white mb-4">
               Explore
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/about" className="text-metal hover:text-amber-signal transition-colors">
-                  About Our Shipyard
+                <Link to="/" className="hover:text-[#ed145b] transition-colors">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link to="/catalogue" className="text-metal hover:text-amber-signal transition-colors">
-                  Equipment Catalogue
+                <Link to="/aboutus" className="hover:text-[#ed145b] transition-colors">
+                  About Us
                 </Link>
               </li>
               <li>
-                <Link to="/sectors" className="text-metal hover:text-amber-signal transition-colors">
-                  Capability Blueprint
+                <Link to="/projects" className="hover:text-[#ed145b] transition-colors">
+                  Projects Catalog
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-metal hover:text-amber-signal transition-colors">
-                  Request a Tender Quote
+                <Link to="/products/all" className="hover:text-[#ed145b] transition-colors">
+                  Product Directory
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-[#ed145b] transition-colors">
+                  Contact &amp; Tender RFQ
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Direct Contact */}
+          {/* Core Sectors Column */}
           <div>
-            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-ink mb-4">
-              Headquarters
+            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-white mb-4">
+              Sectors &amp; Industry
             </h4>
-            <ul className="space-y-3 text-sm text-metal">
-              <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-amber-signal" />
-                <span className="text-xs leading-relaxed">{COMPANY_INFO.address}</span>
+            <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link to="/industry/defence" className="hover:text-[#ed145b] transition-colors">
+                  Defence Systems
+                </Link>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="size-4 shrink-0 text-amber-signal" />
-                <a href={`mailto:${COMPANY_INFO.email}`} className="text-xs hover:text-ink">
-                  {COMPANY_INFO.email}
-                </a>
+              <li>
+                <Link to="/industry/consultancy" className="hover:text-[#ed145b] transition-colors">
+                  Strategic Consultancy
+                </Link>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="size-4 shrink-0 text-amber-signal" />
-                <a href={`tel:${COMPANY_INFO.phone}`} className="text-xs hover:text-ink">
-                  {COMPANY_INFO.phone}
-                </a>
+              <li>
+                <Link to="/industry/industry" className="hover:text-[#ed145b] transition-colors">
+                  Heavy Industry
+                </Link>
+              </li>
+              <li>
+                <Link to="/products/maritime" className="hover:text-[#ed145b] transition-colors">
+                  Maritime &amp; Naval
+                </Link>
+              </li>
+              <li>
+                <Link to="/products/medical" className="hover:text-[#ed145b] transition-colors">
+                  Medical &amp; Trauma
+                </Link>
               </li>
             </ul>
+          </div>
+
+          {/* Newsletter Subscribe Column (From novasbd.com) */}
+          <div className="space-y-3">
+            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-white">
+              Stay Connected
+            </h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Subscribe to official Novas procurement bulletins and technical specifications updates.
+            </p>
+
+            {subscribed ? (
+              <div className="rounded-lg bg-[#061833] border border-[#10b981]/40 p-3 text-xs text-[#10b981] flex items-center gap-2">
+                <CheckCircle2 className="size-4 shrink-0" />
+                <span>Thank you for subscribing to Novas bulletins!</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="space-y-2">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={newsletterName}
+                  onChange={(e) => setNewsletterName(e.target.value)}
+                  className="w-full rounded-lg border border-slate-700 bg-[#061833] px-3 py-2 text-xs text-white placeholder-slate-400 focus:border-[#ed145b] focus:outline-none"
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  className="w-full rounded-lg border border-slate-700 bg-[#061833] px-3 py-2 text-xs text-white placeholder-slate-400 focus:border-[#ed145b] focus:outline-none"
+                  required
+                />
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="w-full bg-[#ed145b] hover:bg-[#d00f4e] text-white font-semibold text-xs py-2 shadow-crimson"
+                >
+                  Subscribe
+                </Button>
+              </form>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-border/50 py-6 text-center sm:text-left">
-        <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-metal/70">
-          <p>© {new Date().getFullYear()} {COMPANY_INFO.name}. All rights reserved.</p>
-          <p className="tracking-widest">
-            DEFENCE · MARITIME · HEAVY INDUSTRY · TACTICAL · MEDICAL
-          </p>
-        </div>
+      {/* Bottom Copyright Strip matching novasbd.com */}
+      <div className="border-t border-slate-800 bg-[#002e6e] py-4 text-center text-xs text-slate-300">
+        <p className="font-sans font-medium">
+          &copy; Copyright 2025 by <span className="font-bold text-white">Novas</span>. All Rights Reserved.
+        </p>
       </div>
     </footer>
   );

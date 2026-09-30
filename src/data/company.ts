@@ -1,34 +1,69 @@
 export const COMPANY_INFO = {
-  name: 'Novas Solutions BD',
+  name: 'Nova Solutions BD',
   shortName: 'NOVAS',
-  tagline: 'Defence, Maritime & Medical Procurement',
-  subheading: 'Certified defence, maritime and turnkey industrial supply across South Asia.',
-  address: 'Road 04, House 18, Mohakhali DOHS, Dhaka-1206, Bangladesh',
-  phone: '+880 1700 000 000',
+  founder: 'Mr. Raoson Alom',
+  founderTitle: 'Founder & CEO, Novas',
+  foundedYear: '2012',
+  foundedMonth: 'July 2012',
+  teamSize: '24-member specialized engineering & research team',
+  tagline: 'Achieving excellence in the field of science, technology and procurement',
+  subheading: 'Novas started in July 2012. Our eventual destination is to serve Bangladesh by achieving excellence in the field of science and technology.',
+  address: 'House No-412, Road No-29, Flat-5A-5B-4B, Mohakhali DOHS, Dhaka, Bangladesh',
+  phone: '+8801711264822',
+  landline: '9832552',
   email: 'info@novasbd.com',
-  corporateRegistry: 'REG-BD-MAR-784910',
-  foundedYear: '1998',
+  corporateRegistry: 'REG-BD-NOVAS-2012',
 
-  pillars: [
+  mission: 'To contribute to technological development in Bangladesh by introducing unmatched technologies with expert knowledge and providing execution support.',
+  vision: 'To become a globally recognized technology leader by expanding access to international markets, fostering innovation, and creating value through high-quality, future-ready solutions that empower communities and industries.',
+  values: [
+    { name: 'Honesty', description: 'Transparency in every transaction and partnership.' },
+    { name: 'Integrity', description: 'Uncompromising adherence to international engineering and defense standards.' },
+    { name: 'Commitment', description: 'Dedicated post-sale execution and multi-year lifecycle operational support.' }
+  ],
+
+  shipyardCapacity: {
+    dryDockLength: '120m',
+    slipwayCapacity: '1,500 DWT',
+    fabricationBays: '4 Heavy Bays',
+    craneRating: '50-Tonne Gantry',
+    cncCuttingBed: '24m x 4m Plasma',
+    annualSteelOutput: '8,000 Metric Tons'
+  },
+
+  // 4 Core Competency Pillars (from novasbd.com "BEST IN" section)
+  bestInPillars: [
     {
-      title: 'Procurement Excellence',
-      description: 'End-to-end sourcing from vetted OEMs across Europe, North America and Asia — with clear lead times, traceability and audit trails.',
-      icon: 'Award'
+      id: 'commitment',
+      badge: 'BEST',
+      keyword: 'COMMITMENT',
+      title: 'BEST COMMITMENT',
+      description: 'We ensure an excellent commitment with our valuable vendors, government ministries, and armed forces.',
+      icon: 'Handshake'
     },
     {
-      title: 'Defence-Grade Compliance',
-      description: 'NIJ, MIL-STD, SOLAS and ISO-certified equipment, documented from origin to final delivery and post-sale support.',
-      icon: 'ShieldCheck'
+      id: 'planning',
+      badge: 'BEST',
+      keyword: 'PLANNING',
+      title: 'BEST PLANNING',
+      description: 'Equipment planning services include comprehensive evaluation of all equipment, facility needs, and operational oversight.',
+      icon: 'ListCheck'
     },
     {
-      title: 'Sector Specialization',
-      description: 'Deep domain expertise in defence, maritime and heavy industry — paired with consultancy that translates capability into operations.',
-      icon: 'Layers'
+      id: 'deal',
+      badge: 'BEST',
+      keyword: 'DEAL',
+      title: 'BEST DEAL',
+      description: 'Efforts focused on achieving "win-win" solutions, fostering mutual benefits, cost-efficiency, and positive long-term outcomes.',
+      icon: 'HelpingHands'
     },
     {
-      title: 'End-to-End Logistics',
-      description: 'Customs clearance, bonded freight, warehousing and on-site commissioning — Novas handles the entire chain so your team stays focused on mission.',
-      icon: 'Truck'
+      id: 'service',
+      badge: 'BEST',
+      keyword: 'SERVICE',
+      title: 'BEST SERVICE',
+      description: 'End-to-end engineering support, tailored technology solutions, and dedicated 24/7 on-site after-sales technical maintenance.',
+      icon: 'Tools'
     }
   ],
 
@@ -60,12 +95,11 @@ export const COMPANY_INFO = {
     }
   ],
 
-  shipyardCapacity: {
-    experienceYears: '40+ Years Naval Heritage',
-    coveredArea: '35,000 m² Fabrication Halls',
-    slipways: '2x 120m Heavy Marine Slipways',
-    drydockCapacity: 'Up to 5,000 DWT Vessels',
-    weldingCertifications: 'Bureau Veritas & DNV Class 1 Certified',
-    annualOutput: '15+ Commercial & Patrol Vessels Annually'
-  }
+  certifications: [
+    'ISO 9001:2015 Quality Management',
+    'ISO 14001:2015 Environmental Systems',
+    'ISO 45001:2018 Occupational Health & Safety',
+    'NATO / MIL-STD-810H Compliant Vendor',
+    'IMO / SOLAS & MED-B Certified Marine Systems'
+  ]
 };

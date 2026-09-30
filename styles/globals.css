@@ -47,17 +47,39 @@
 .bg-novas-grid {
   background-size: 48px 48px;
   background-image: 
-    linear-gradient(to right, rgba(245, 158, 11, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(245, 158, 11, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(237, 20, 91, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(237, 20, 91, 0.07) 1px, transparent 1px);
 }
 
 /* Ambient Radial Glow */
 .bg-radar-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(237, 20, 91, 0.15) 0%, transparent 70%);
+}
+
+.bg-crimson-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(237, 20, 91, 0.18) 0%, transparent 70%);
+}
+
+.bg-navy-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(4, 46, 111, 0.35) 0%, transparent 70%);
 }
 
 .bg-marine-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(0, 95, 153, 0.15) 0%, transparent 70%);
+}
+
+/* Floating Animation for Best In Section Icons */
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.float-animation {
+  animation: floatAnimation 3s ease-in-out infinite;
 }
 
 /* Dynamic Hero Cinematic Ken Burns Motion (From Novas Demo Site) */

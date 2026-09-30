@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
-import { Menu, Shield, Phone, Mail, ArrowRight } from "lucide-react";
+import { Menu, ChevronDown, FileCheck2, Phone, Mail, ArrowRight, Shield } from "lucide-react";
+import { NovasLogo } from "../common/NovasLogo";
 import { COMPANY_INFO } from "../../data/company";
 
 interface NavbarProps {
@@ -12,12 +13,25 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
 
-  const navLinks = [
+  const productCategories = [
+    { name: "All Products", path: "/products/all", desc: "Complete mission equipment catalog" },
+    { name: "Defence Systems", path: "/products/defence", desc: "Ballistic armor, radar, tactical comms" },
+    { name: "Tactical & Response", path: "/products/tactical", desc: "Personal protection & optics" },
+    { name: "Maritime Platforms", path: "/products/maritime", desc: "Naval workboats & hydrographic sonar" },
+    { name: "Medical & Trauma", path: "/products/medical", desc: "TCCC kits & field casualty gear" },
+    { name: "Heavy Industry", path: "/products/industry", desc: "CNC fabrication & turnkey power" },
+    { name: "ICT & Cyber Defence", path: "/products/ict", desc: "C4ISR & sovereign data security" },
+  ];
+
+  const mainNavLinks = [
     { name: "Home", path: "/" },
-    { name: "About Us", path: "/about" },
-    { name: "Sectors", path: "/sectors" },
-    { name: "Product Catalogue", path: "/catalogue" },
+    { name: "Projects", path: "/projects" },
+    { name: "Consultancy", path: "/industry/consultancy" },
+    { name: "Defence", path: "/industry/defence" },
+    { name: "Industry", path: "/industry/industry" },
+    { name: "About us", path: "/aboutus" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -26,39 +40,98 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
     return location.pathname.startsWith(path);
   };
 
+  const isProductsActive = location.pathname.startsWith("/product");
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-navy-950/80 backdrop-blur-xl transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-[#030a18]/90 backdrop-blur-xl transition-all">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Identity */}
-        <Link to="/" className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-signal rounded-lg p-1">
-          <span className="grid size-9 place-items-center rounded-lg bg-gradient-to-br from-amber-signal to-amber-600 font-display text-lg font-black text-navy-950 shadow-amber">
-            N
-          </span>
-          <div className="flex flex-col">
-            <span className="font-display text-lg font-extrabold tracking-tight text-ink leading-tight">
-              NOVAS
-            </span>
-            <span className="font-mono text-[9px] uppercase tracking-widest text-amber-signal font-semibold">
-              Defence & Maritime
-            </span>
-          </div>
+        {/* Brand Identity / Official Novas Logo */}
+        <Link
+          to="/"
+          className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ed145b] rounded-lg py-1"
+          aria-label="Novas BD Homepage"
+        >
+          <NovasLogo variant="dark" height={34} showSubtitle={true} />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => {
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-7">
+          <Link
+            to="/"
+            className={`relative font-display text-sm font-semibold transition-colors duration-200 hover:text-white py-5 ${
+              location.pathname === "/" ? "text-[#ed145b] font-bold" : "text-slate-300"
+            }`}
+          >
+            Home
+            {location.pathname === "/" && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-[#ed145b] shadow-crimson" />
+            )}
+          </Link>
+
+          {/* Products Dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={() => setProductsDropdownOpen(true)}
+            onMouseLeave={() => setProductsDropdownOpen(false)}
+          >
+            <button
+              type="button"
+              className={`flex items-center gap-1.5 font-display text-sm font-semibold transition-colors duration-200 hover:text-white py-5 focus:outline-none ${
+                isProductsActive ? "text-[#ed145b] font-bold" : "text-slate-300"
+              }`}
+            >
+              <span>Products</span>
+              <ChevronDown
+                className={`size-4 transition-transform duration-200 ${
+                  productsDropdownOpen ? "rotate-180 text-[#ed145b]" : "text-slate-400"
+                }`}
+              />
+              {isProductsActive && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-[#ed145b] shadow-crimson" />
+              )}
+            </button>
+
+            {/* Dropdown Menu */}
+            {productsDropdownOpen && (
+              <div className="absolute top-full left-0 w-80 rounded-xl border border-slate-800 bg-[#061833] p-3 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                <div className="mb-2 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ed145b]">
+                  Equipment Directory
+                </div>
+                <div className="space-y-1">
+                  {productCategories.map((cat) => (
+                    <Link
+                      key={cat.path}
+                      to={cat.path}
+                      onClick={() => setProductsDropdownOpen(false)}
+                      className="group flex flex-col rounded-lg px-3 py-2 transition-colors hover:bg-[#0f2c56]"
+                    >
+                      <span className="text-sm font-medium text-white group-hover:text-[#ed145b] transition-colors">
+                        {cat.name}
+                      </span>
+                      <span className="text-xs text-slate-400 group-hover:text-slate-300">
+                        {cat.desc}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Other Main Links from novasbd.com */}
+          {mainNavLinks.slice(1).map((link) => {
             const active = isActive(link.path);
             return (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative font-display text-sm font-semibold transition-colors duration-200 hover:text-ink ${
-                  active ? "text-amber-signal font-bold" : "text-metal"
+                className={`relative font-display text-sm font-semibold transition-colors duration-200 hover:text-white py-5 ${
+                  active ? "text-[#ed145b] font-bold" : "text-slate-300"
                 }`}
               >
                 {link.name}
                 {active && (
-                  <span className="absolute -bottom-2 left-0 right-0 h-0.5 rounded-full bg-amber-signal shadow-amber" />
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-[#ed145b] shadow-crimson" />
                 )}
               </Link>
             );
@@ -66,25 +139,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
         </nav>
 
         {/* Desktop Right CTA */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-3">
           <Button
             onClick={onOpenRfq}
             variant="default"
             size="default"
-            className="gap-2 shadow-amber"
+            className="gap-2 bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold shadow-crimson transition-all h-10 px-5 rounded-lg"
           >
-            <Shield className="size-4 text-navy-950" />
+            <FileCheck2 className="size-4 text-white" />
             <span>Request a Quote</span>
           </Button>
         </div>
 
         {/* Mobile Hamburger Trigger */}
-        <div className="flex md:hidden items-center gap-3">
+        <div className="flex lg:hidden items-center gap-2.5">
           <Button
             onClick={onOpenRfq}
             size="sm"
             variant="default"
-            className="text-xs px-3"
+            className="bg-[#ed145b] hover:bg-[#d00f4e] text-white text-xs px-3 font-semibold h-9 rounded-lg"
           >
             Quote
           </Button>
@@ -95,67 +168,87 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
                 variant="outline"
                 size="icon"
                 aria-label="Open Navigation Menu"
-                className="size-11 rounded-lg border-border text-ink"
+                className="size-9 rounded-lg border-border bg-[#061833] text-white"
               >
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col justify-between">
-              <div>
-                <SheetHeader className="mb-6 text-left">
-                  <div className="flex items-center gap-3">
-                    <span className="grid size-9 place-items-center rounded-lg bg-amber-signal font-display text-lg font-black text-navy-950">
-                      N
-                    </span>
-                    <SheetTitle className="text-xl font-bold font-display text-ink">
-                      NOVAS
-                    </SheetTitle>
-                  </div>
-                </SheetHeader>
+            <SheetContent
+              side="right"
+              className="w-[300px] sm:w-[360px] border-l border-slate-800 bg-[#030a18] p-6 text-white overflow-y-auto"
+            >
+              <SheetHeader className="text-left border-b border-slate-800 pb-4">
+                <SheetTitle className="flex items-center">
+                  <NovasLogo variant="dark" height={30} showSubtitle={true} />
+                </SheetTitle>
+              </SheetHeader>
 
-                <nav className="flex flex-col space-y-3">
-                  {navLinks.map((link) => (
+              <div className="flex flex-col gap-6 py-6">
+                <div className="space-y-1">
+                  <Link
+                    to="/"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-[#061833]"
+                  >
+                    <span>Home</span>
+                  </Link>
+
+                  <div className="pt-2 pb-1">
+                    <span className="px-3 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ed145b]">
+                      Products
+                    </span>
+                  </div>
+                  {productCategories.map((cat) => (
+                    <Link
+                      key={cat.path}
+                      to={cat.path}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center justify-between rounded-lg px-3 py-1.5 text-sm text-slate-300 hover:text-white hover:bg-[#061833]"
+                    >
+                      <span>{cat.name}</span>
+                    </Link>
+                  ))}
+
+                  <div className="pt-3 pb-1">
+                    <span className="px-3 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ed145b]">
+                      Navigation
+                    </span>
+                  </div>
+                  {mainNavLinks.slice(1).map((link) => (
                     <Link
                       key={link.path}
                       to={link.path}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-between rounded-xl px-4 py-3 text-base font-semibold transition-colors ${
-                        isActive(link.path)
-                          ? "bg-navy-800 text-amber-signal font-bold border border-amber-signal/40"
-                          : "text-secondary hover:bg-navy-850 hover:text-ink"
-                      }`}
+                      className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-[#061833]"
                     >
                       <span>{link.name}</span>
-                      <ArrowRight className="size-4 opacity-50" />
+                      <ArrowRight className="size-3.5 text-slate-500" />
                     </Link>
                   ))}
-                </nav>
-              </div>
+                </div>
 
-              {/* Mobile Drawer Footer */}
-              <div className="border-t border-border/60 pt-6 space-y-4">
+                <div className="rounded-xl border border-slate-800 bg-[#061833] p-4 text-xs space-y-2">
+                  <div className="font-mono uppercase font-bold text-[#ed145b]">Direct Desk</div>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <Phone className="size-3.5 text-[#ed145b]" />
+                    <span>{COMPANY_INFO.phone}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <Mail className="size-3.5 text-[#ed145b]" />
+                    <span>{COMPANY_INFO.email}</span>
+                  </div>
+                </div>
+
                 <Button
                   onClick={() => {
                     setMobileOpen(false);
                     onOpenRfq();
                   }}
-                  variant="default"
-                  className="w-full justify-center gap-2"
+                  className="w-full bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold py-5 rounded-lg shadow-crimson"
                 >
-                  <Shield className="size-4" />
-                  <span>Launch Tender RFQ</span>
+                  <FileCheck2 className="mr-2 size-4" />
+                  Request Tender RFQ
                 </Button>
-
-                <div className="space-y-2 text-xs font-mono text-metal">
-                  <div className="flex items-center gap-2">
-                    <Phone className="size-3.5 text-amber-signal" />
-                    <span>{COMPANY_INFO.phone}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="size-3.5 text-amber-signal" />
-                    <span>{COMPANY_INFO.email}</span>
-                  </div>
-                </div>
               </div>
             </SheetContent>
           </Sheet>
