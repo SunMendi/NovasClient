@@ -174,7 +174,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
             {/* Left Column: Pill Tag, Punchy Headline, Subtitle, CTAs */}
             <div key={`content-${activeSlide}`} className="space-y-4 sm:space-y-5 lg:col-span-7">
               {/* Category Pill with Glowing Bullet */}
-              <div className="hero-rise-1 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
+              <div className="hero-rise-1 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
                 <span className="size-1.5 rounded-full bg-[#ed145b]" />
                 <span className="font-bold text-[#ed145b]">{currentSlide.tag}</span>
               </div>
@@ -227,11 +227,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
             {/* Right Column: 2x2 "CAPABILITY SNAPSHOT" Widget */}
             <div className="lg:col-span-5 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#ed145b]">
+                <span className="font-sans text-xs font-bold uppercase tracking-wider text-[#ed145b]">
                   CAPABILITY SNAPSHOT
                 </span>
-                <span className="font-mono text-[10px] text-slate-300">
-                  LIVE TELEMETRY
+                <span className="font-sans text-[11px] text-slate-300 font-medium">
+                  OPERATIONAL METRICS
                 </span>
               </div>
 
@@ -241,7 +241,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     120+
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
+                  <div className="font-sans text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-200 mt-1">
                     ACTIVE CONTRACTS
                   </div>
                 </div>
@@ -250,7 +250,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     5
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
+                  <div className="font-sans text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-200 mt-1">
                     SECTORS SERVED
                   </div>
                 </div>
@@ -259,7 +259,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     40+
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
+                  <div className="font-sans text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-200 mt-1">
                     GLOBAL PARTNERS
                   </div>
                 </div>
@@ -268,7 +268,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     21 d
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
+                  <div className="font-sans text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-200 mt-1">
                     AVG. LEAD TIME
                   </div>
                 </div>
@@ -283,7 +283,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
         <div className="relative rounded-3xl border border-slate-200 bg-white p-8 md:p-12 shadow-sm overflow-hidden">
           <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-[#ed145b]/5 blur-3xl" />
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#ed145b]/30 bg-[#ed145b]/10 px-4 py-1 text-xs font-mono uppercase tracking-wider text-[#ed145b]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#ed145b]/30 bg-[#ed145b]/10 px-4 py-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-[#ed145b]">
               <span>ESTABLISHED JULY 2012</span>
             </div>
 
@@ -292,27 +292,56 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
               <span className="text-[#ed145b]">Science, Technology &amp; Supply</span>.
             </h2>
 
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto font-sans">
               Novas started in July 2012. Our eventual destination is to serve Bangladesh by achieving excellence in the field of science and technology. Our main objectives are quality service, innovation, and integrity. We act as a catalyst in the country&apos;s development, offering tailored solutions with dedicated after-sales support.
             </p>
 
             {/* Quick Stat Badges */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <div className="font-display text-2xl font-bold text-[#002e6e]">2012</div>
-                <div className="font-mono text-xs text-slate-500 uppercase mt-1">Founded In Dhaka</div>
+                <div className="font-sans text-xs font-semibold text-slate-500 uppercase mt-1">Founded In Dhaka</div>
               </div>
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <div className="font-display text-2xl font-bold text-[#ed145b]">24</div>
-                <div className="font-mono text-xs text-slate-500 uppercase mt-1">Specialized Engineers</div>
+                <div className="font-sans text-xs font-semibold text-slate-500 uppercase mt-1">Specialized Engineers</div>
               </div>
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <div className="font-display text-2xl font-bold text-[#002e6e]">100%</div>
-                <div className="font-mono text-xs text-slate-500 uppercase mt-1">Defence Audit Compliant</div>
+                <div className="font-sans text-xs font-semibold text-slate-500 uppercase mt-1">Defence Audit Compliant</div>
               </div>
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <div className="font-display text-2xl font-bold text-[#059669]">ISO</div>
-                <div className="font-mono text-xs text-slate-500 uppercase mt-1">9001:2015 Certified</div>
+                <div className="font-sans text-xs font-semibold text-slate-500 uppercase mt-1">9001:2015 Certified</div>
+              </div>
+            </div>
+
+            {/* Founder Leadership Spotlight Card */}
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6 text-left flex flex-col sm:flex-row items-center gap-5 shadow-xs max-w-2xl mx-auto">
+              <div className="relative shrink-0">
+                <div className="size-20 sm:size-24 rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md bg-white">
+                  <img
+                    src="/assets/founder.png"
+                    alt={COMPANY_INFO.founder}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+                <div className="absolute -bottom-1 -right-1 size-6 rounded-full bg-[#ed145b] text-white flex items-center justify-center text-[10px] shadow font-bold">
+                  ★
+                </div>
+              </div>
+              <div className="space-y-1.5 flex-1 text-center sm:text-left">
+                <p className="text-xs sm:text-sm text-slate-700 italic font-sans leading-relaxed">
+                  &ldquo;Novas started in July 2012. Our eventual destination is to serve Bangladesh by achieving excellence in the field of science and technology.&rdquo;
+                </p>
+                <div className="pt-0.5">
+                  <div className="font-display text-sm font-bold text-[#002e6e]">
+                    {COMPANY_INFO.founder}
+                  </div>
+                  <div className="text-xs font-sans text-[#ed145b] font-semibold">
+                    {COMPANY_INFO.founderTitle}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -406,7 +435,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
+            <div className="font-sans text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
               FIELD IMPLEMENTATIONS
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
@@ -435,12 +464,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute top-3 left-3">
-                  <span className="rounded-full bg-[#ed145b] px-3 py-1 font-mono text-[10px] font-bold uppercase text-white shadow-md">
+                  <span className="rounded-full bg-[#ed145b] px-3 py-1 font-sans text-[11px] font-bold uppercase text-white shadow-md">
                     {project.sectorName}
                   </span>
                 </div>
                 <div className="absolute bottom-3 right-3">
-                  <span className="rounded-md bg-black/60 px-2 py-0.5 font-mono text-[10px] text-white backdrop-blur-sm">
+                  <span className="rounded-md bg-black/60 px-2 py-0.5 font-sans text-[11px] font-medium text-white backdrop-blur-sm">
                     {project.year}
                   </span>
                 </div>
@@ -457,7 +486,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
-                  <span className="text-slate-500 font-mono">{project.client}</span>
+                  <span className="text-slate-500 font-sans">{project.client}</span>
                   <span className="flex items-center gap-1 text-[#ed145b] font-semibold group-hover:underline">
                     <span>Details</span>
                     <ChevronRight className="size-3.5" />
@@ -473,7 +502,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
+            <div className="font-sans text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
               HARDWARE CATALOGUE
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
@@ -504,7 +533,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
         <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 lg:p-10 shadow-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#005f99]/30 bg-[#005f99]/10 px-3 py-1 text-xs font-mono uppercase tracking-wider text-[#005f99] mb-2 font-semibold">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#005f99]/30 bg-[#005f99]/10 px-3 py-1 text-xs font-sans uppercase tracking-wider text-[#005f99] mb-2 font-semibold">
                 <Anchor className="size-3" />
                 <span>NAVAL SHIPYARD &amp; VESSEL PLATFORMS</span>
               </div>

@@ -3,6 +3,7 @@ export const COMPANY_INFO = {
   shortName: 'NOVAS',
   founder: 'Mr. Raoson Alom',
   founderTitle: 'Founder & CEO, Novas',
+  founderImage: '/assets/founder.png',
   foundedYear: '2012',
   foundedMonth: 'July 2012',
   teamSize: '24-member specialized engineering & research team',

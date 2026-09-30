@@ -98,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
             {/* Dropdown Menu */}
             {productsDropdownOpen && (
               <div className="absolute top-full left-0 w-80 rounded-xl border border-slate-200 bg-white p-3 shadow-xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                <div className="mb-2 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ed145b]">
+                <div className="mb-2 px-3 py-1 font-sans text-[11px] font-bold uppercase tracking-wider text-[#ed145b]">
                   Equipment Directory
                 </div>
                 <div className="space-y-1">
@@ -200,7 +200,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
                   </Link>
 
                   <div className="pt-2 pb-1">
-                    <span className="px-3 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ed145b]">
+                    <span className="px-3 font-sans text-[11px] font-bold uppercase tracking-wider text-[#ed145b]">
                       Products
                     </span>
                   </div>
@@ -216,7 +216,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
                   ))}
 
                   <div className="pt-3 pb-1">
-                    <span className="px-3 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ed145b]">
+                    <span className="px-3 font-sans text-[11px] font-bold uppercase tracking-wider text-[#ed145b]">
                       Navigation
                     </span>
                   </div>
@@ -234,7 +234,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
                 </div>
 
                 <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs space-y-2">
-                  <div className="font-mono uppercase font-bold text-[#ed145b]">Direct Desk</div>
+                  <div className="font-sans uppercase font-bold text-[#ed145b]">Direct Desk</div>
                   <div className="flex items-center gap-2 text-slate-700">
                     <Phone className="size-3.5 text-[#ed145b]" />
                     <span>{COMPANY_INFO.phone}</span>

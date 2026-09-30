@@ -22,7 +22,7 @@ export const AboutUsPage: React.FC = () => {
         <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
               <Calendar className="size-3.5 text-[#ed145b]" />
               <span>ESTABLISHED JULY 2012 • 13+ YEARS OF EXCELLENCE</span>
             </div>
@@ -44,29 +44,50 @@ export const AboutUsPage: React.FC = () => {
 
       {/* 2. CEO PROFILE & EXECUTIVE IDENTITY */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto rounded-3xl border border-slate-200 bg-white p-8 sm:p-10 shadow-sm flex flex-col sm:flex-row items-center gap-8">
+        <div className="max-w-4xl mx-auto rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 md:gap-10">
           <div className="relative shrink-0">
-            <div className="size-36 sm:size-44 rounded-2xl bg-gradient-to-br from-[#002e6e] to-[#042e6f] border-2 border-[#ed145b] shadow-lg shadow-[#ed145b]/20 flex items-center justify-center text-center overflow-hidden">
-              <span className="font-display text-5xl font-black text-white">RA</span>
+            <div className="w-48 sm:w-56 aspect-[4/5] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl bg-slate-100 relative group">
+              <img
+                src={COMPANY_INFO.founderImage}
+                alt={COMPANY_INFO.founder}
+                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#002e6e]/50 via-transparent to-transparent opacity-30 pointer-events-none" />
             </div>
-            <div className="absolute -bottom-2 -right-2 rounded-full bg-[#ed145b] p-2 text-white shadow-md">
+            <div className="absolute -bottom-2 -right-2 rounded-full bg-[#ed145b] p-2.5 text-white shadow-lg border-2 border-white">
               <Sparkles className="size-4" />
             </div>
           </div>
 
-          <div className="space-y-3 text-center sm:text-left flex-1">
-            <div className="inline-block rounded-md bg-[#ed145b]/10 px-2.5 py-1 font-mono text-xs font-bold text-[#ed145b] uppercase">
-              Executive Leadership
+          <div className="space-y-4 text-center md:text-left flex-1">
+            <div className="inline-flex items-center gap-2 rounded-md bg-[#ed145b]/10 px-3 py-1 font-sans text-xs font-bold text-[#ed145b] uppercase tracking-wide">
+              <span>Executive Leadership</span>
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
-              {COMPANY_INFO.founder}
-            </h2>
-            <div className="font-sans text-sm font-semibold text-slate-700">
-              {COMPANY_INFO.founderTitle}
+
+            <div className="space-y-1">
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e] tracking-tight">
+                {COMPANY_INFO.founder}
+              </h2>
+              <div className="font-sans text-sm sm:text-base font-semibold text-[#ed145b]">
+                {COMPANY_INFO.founderTitle}
+              </div>
             </div>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
               Leading Novas from its inception in July 2012 into a trusted tier-one partner for sovereign defense procurement, naval systems integration, and industrial turnkey execution across Bangladesh and South Asia.
             </p>
+
+            <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-sans text-slate-500">
+              <div className="flex items-center gap-1.5 font-medium text-slate-700">
+                <CheckCircle2 className="size-4 text-[#ed145b]" />
+                <span>Founder Since July 2012</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-medium text-slate-700">
+                <CheckCircle2 className="size-4 text-[#ed145b]" />
+                <span>Defence &amp; Maritime Visionary</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -112,7 +133,7 @@ export const AboutUsPage: React.FC = () => {
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto rounded-3xl border border-slate-200 bg-slate-50 p-8 sm:p-12 shadow-sm text-center space-y-8">
           <div>
-            <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
+            <div className="font-sans text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
               FOUNDATIONAL ETHICS
             </div>
             <h2 className="font-display text-3xl font-extrabold text-[#002e6e]">
@@ -158,7 +179,7 @@ export const AboutUsPage: React.FC = () => {
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto grid gap-8 md:grid-cols-12 items-center">
           <div className="md:col-span-6 space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#059669]/30 bg-[#059669]/10 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-[#059669] font-semibold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#059669]/30 bg-[#059669]/10 px-3.5 py-1 text-xs font-sans uppercase tracking-wider text-[#059669] font-semibold">
               <Users className="size-3.5" />
               <span>THE HUMAN CAPABILITY</span>
             </div>

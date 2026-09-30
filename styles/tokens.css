@@ -110,11 +110,11 @@
   --radius: 0.625rem;               /* 10px baseline border radius */
 
   /* =========================================================================
-     3. TYPOGRAPHY SYSTEM
+     3. TYPOGRAPHY SYSTEM - EXECUTIVE CORPORATE STANDARD
      ========================================================================= */
-  --font-display: "Cabinet Grotesk", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", Menlo, Monaco, Consolas, monospace;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, monospace;
 
   /* =========================================================================
      4. SHADOWS & ELEVATION

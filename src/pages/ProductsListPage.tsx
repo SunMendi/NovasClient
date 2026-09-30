@@ -60,7 +60,7 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
       <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-14 sm:py-18 text-white">
         <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
             <ShieldCheck className="size-3.5 text-[#ed145b]" />
             <span>MIL-STD-810H • NIJ LEVEL IV • IMO/SOLAS CERTIFIED</span>
           </div>
@@ -167,7 +167,7 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs sm:text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50 font-mono text-xs text-slate-500 uppercase">
+                  <tr className="border-b border-slate-200 bg-slate-50 font-sans text-xs font-semibold text-slate-600 uppercase tracking-wider">
                     <th className="py-3 px-4">Equipment</th>
                     <th className="py-3 px-4">Sector</th>
                     <th className="py-3 px-4">Certifications</th>
@@ -196,20 +196,20 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
                           </div>
                         </div>
                       </td>
-                      <td className="py-4 px-4 font-mono text-slate-700 capitalize">{p.sectorId}</td>
+                      <td className="py-4 px-4 font-sans text-slate-700 capitalize font-medium">{p.sectorId}</td>
                       <td className="py-4 px-4">
                         <div className="flex flex-wrap gap-1">
                           {p.certifications.slice(0, 2).map((c, idx) => (
                             <span
                               key={idx}
-                              className="rounded bg-[#ed145b]/10 border border-[#ed145b]/30 px-2 py-0.5 font-mono text-[10px] text-[#ed145b] font-semibold"
+                              className="rounded bg-[#ed145b]/10 border border-[#ed145b]/30 px-2 py-0.5 font-sans text-[11px] text-[#ed145b] font-semibold"
                             >
                               {c}
                             </span>
                           ))}
                         </div>
                       </td>
-                      <td className="py-4 px-4 font-mono text-slate-600">{p.origin}</td>
+                      <td className="py-4 px-4 font-sans text-slate-600 font-medium">{p.origin}</td>
                       <td className="py-4 px-4 text-right">
                         <Button
                           onClick={() => onOpenRfq(p)}

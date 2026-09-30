@@ -33,7 +33,7 @@ export const ProjectsPage: React.FC = () => {
       <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-16 sm:py-20 text-white">
         <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
             <span>NATIONAL INFRASTRUCTURE &amp; SOVEREIGN DEFENCE</span>
           </div>
 
@@ -82,7 +82,7 @@ export const ProjectsPage: React.FC = () => {
         </div>
 
         {/* Results Counter */}
-        <div className="pt-4 text-xs font-mono text-slate-500">
+        <div className="pt-4 text-xs font-sans font-medium text-slate-500">
           Showing {filteredProjects.length} of {PROJECTS.length} Projects
         </div>
       </section>
@@ -119,12 +119,12 @@ export const ProjectsPage: React.FC = () => {
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="rounded-full bg-[#ed145b] px-3 py-1 font-mono text-[10px] font-bold uppercase text-white shadow-md">
+                    <span className="rounded-full bg-[#ed145b] px-3 py-1 font-sans text-[11px] font-bold uppercase text-white shadow-md">
                       {project.sectorName}
                     </span>
                   </div>
                   <div className="absolute bottom-3 right-3">
-                    <span className="rounded-md bg-black/65 px-2.5 py-1 font-mono text-[10px] text-white backdrop-blur-sm">
+                    <span className="rounded-md bg-black/65 px-2.5 py-1 font-sans text-[11px] font-medium text-white backdrop-blur-sm">
                       {project.year}
                     </span>
                   </div>

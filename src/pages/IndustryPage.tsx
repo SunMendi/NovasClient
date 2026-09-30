@@ -41,7 +41,7 @@ export const IndustryPage: React.FC<IndustryPageProps> = ({ onOpenRfq }) => {
         <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
               <span>CORE SECTOR CAPABILITY</span>
             </div>
 
@@ -62,7 +62,7 @@ export const IndustryPage: React.FC<IndustryPageProps> = ({ onOpenRfq }) => {
               {sector.capabilities.map((area, idx) => (
                 <span
                   key={idx}
-                  className="rounded-lg bg-white/10 border border-white/20 px-3 py-1 text-xs font-mono text-white"
+                  className="rounded-lg bg-white/10 border border-white/20 px-3 py-1 text-xs font-sans text-white font-medium"
                 >
                   • {area}
                 </span>
@@ -101,7 +101,7 @@ export const IndustryPage: React.FC<IndustryPageProps> = ({ onOpenRfq }) => {
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 mb-8">
           <div>
-            <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
+            <div className="font-sans text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
               SECTOR INVENTORY
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">

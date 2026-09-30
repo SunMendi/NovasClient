@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
       {/* Top Credentials Strip */}
       <div className="border-b border-slate-800/80 bg-[#030a18] py-4">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-slate-400">
+          <div className="flex flex-wrap items-center justify-between gap-4 font-sans text-xs text-slate-400 font-medium">
             <div className="flex items-center gap-2">
               <ShieldCheck className="size-4 text-[#ed145b]" />
               <span>DEFENCE &amp; SCIENCE PROCUREMENT EXCELLENCE // ESTABLISHED JULY 2012</span>
@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
             <p className="max-w-sm text-sm text-slate-300 leading-relaxed">
               {COMPANY_INFO.subheading}
             </p>
-            <p className="text-xs text-slate-400 font-mono">
+            <p className="text-xs text-slate-400 font-sans">
               24-member specialized engineering, procurement and after-sales support team.
             </p>
 

@@ -67,7 +67,7 @@ export const ContactPage: React.FC = () => {
       <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-16 sm:py-20 text-white">
         <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1 text-xs font-mono uppercase tracking-wider text-white">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white">
             <Globe className="size-3.5 text-[#ed145b]" />
             <span>MOHAKHALI DOHS, DHAKA • 24/7 PROCUREMENT DESK</span>
           </div>
@@ -88,7 +88,7 @@ export const ContactPage: React.FC = () => {
           {/* Left Column: Direct Info Cards */}
           <div className="lg:col-span-5 space-y-6">
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b]">
+              <span className="font-sans text-xs font-bold uppercase tracking-wider text-[#ed145b]">
                 OFFICIAL LIAISON
               </span>
               <h2 className="font-display text-2xl font-bold text-[#002e6e]">
@@ -108,7 +108,7 @@ export const ContactPage: React.FC = () => {
                 <Mail className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Email Enquiries</div>
+                <div className="font-sans text-[11px] text-slate-500 uppercase font-semibold">Email Enquiries</div>
                 <div className="font-display text-sm sm:text-base font-bold text-[#002e6e] hover:text-[#ed145b] transition-colors">
                   {COMPANY_INFO.email}
                 </div>
@@ -124,7 +124,7 @@ export const ContactPage: React.FC = () => {
                 <Phone className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Mobile Hot-Desk</div>
+                <div className="font-sans text-[11px] text-slate-500 uppercase font-semibold">Mobile Hot-Desk</div>
                 <div className="font-display text-sm sm:text-base font-bold text-[#002e6e]">
                   {COMPANY_INFO.phone}
                 </div>
@@ -140,7 +140,7 @@ export const ContactPage: React.FC = () => {
                 <Phone className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Headquarters Landline</div>
+                <div className="font-sans text-[11px] text-slate-500 uppercase font-semibold">Headquarters Landline</div>
                 <div className="font-display text-sm sm:text-base font-bold text-[#002e6e]">
                   {COMPANY_INFO.landline}
                 </div>
@@ -153,7 +153,7 @@ export const ContactPage: React.FC = () => {
                 <MapPin className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Head Office</div>
+                <div className="font-sans text-[11px] text-slate-500 uppercase font-semibold">Head Office</div>
                 <div className="font-sans text-xs sm:text-sm font-semibold text-[#133057] leading-relaxed">
                   {COMPANY_INFO.address}
                 </div>
@@ -161,7 +161,7 @@ export const ContactPage: React.FC = () => {
             </div>
 
             {/* Working Hours */}
-            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 text-xs font-mono text-slate-600 shadow-sm">
+            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 text-xs font-sans text-slate-600 shadow-sm">
               <Clock className="size-4 text-[#ed145b]" />
               <span>Sun - Thu: 09:00 - 18:00 BST // Emergency Duty Officer: 24/7</span>
             </div>
@@ -232,7 +232,7 @@ export const ContactPage: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono font-semibold text-slate-700">Your Full Name *</label>
+                      <label className="text-xs font-sans font-semibold text-slate-700">Your Full Name *</label>
                       <input
                         type="text"
                         required
@@ -243,7 +243,7 @@ export const ContactPage: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono font-semibold text-slate-700">Official Email *</label>
+                      <label className="text-xs font-sans font-semibold text-slate-700">Official Email *</label>
                       <input
                         type="email"
                         required
@@ -257,7 +257,7 @@ export const ContactPage: React.FC = () => {
 
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono font-semibold text-slate-700">Company / Ministry *</label>
+                      <label className="text-xs font-sans font-semibold text-slate-700">Company / Ministry *</label>
                       <input
                         type="text"
                         required
@@ -268,7 +268,7 @@ export const ContactPage: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono font-semibold text-slate-700">Delivery Address / Port *</label>
+                      <label className="text-xs font-sans font-semibold text-slate-700">Delivery Address / Port *</label>
                       <input
                         type="text"
                         required
@@ -281,7 +281,7 @@ export const ContactPage: React.FC = () => {
                   </div>
 
                   {/* Checklist Toggles from novasbd.com */}
-                  <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-mono text-slate-700">
+                  <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-sans text-slate-700">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
@@ -303,7 +303,7 @@ export const ContactPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-1.5 pt-2">
-                    <label className="text-xs font-mono font-semibold text-slate-700">Project / Equipment Specifications *</label>
+                    <label className="text-xs font-sans font-semibold text-slate-700">Project / Equipment Specifications *</label>
                     <textarea
                       required
                       rows={4}

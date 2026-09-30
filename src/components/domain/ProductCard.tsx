@@ -49,7 +49,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenRfq }) 
         </p>
 
         {/* Spec Highlights Preview */}
-        <div className="mt-5 space-y-2 border-t border-slate-100 pt-4 text-xs font-mono">
+        <div className="mt-5 space-y-2 border-t border-slate-100 pt-4 text-xs font-sans">
           {product.specs.slice(0, 3).map((spec, i) => (
             <div key={i} className="flex items-start gap-2 text-slate-600">
               <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#ed145b]" />
