@@ -8,43 +8,43 @@ interface VesselHudProps {
 
 export const VesselHud: React.FC<VesselHudProps> = ({ vessel }) => {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 rounded-xl border border-border/70 bg-navy-950/80 p-3.5 font-mono text-xs shadow-inner">
-      <div className="flex flex-col gap-0.5 border-r border-border/40 pr-2">
-        <div className="flex items-center gap-1.5 text-metal">
-          <Navigation className="h-3.5 w-3.5 text-marine" />
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 rounded-xl border border-slate-200 bg-slate-50 p-3.5 font-mono text-xs shadow-inner">
+      <div className="flex flex-col gap-0.5 border-r border-slate-200 pr-2">
+        <div className="flex items-center gap-1.5 text-slate-500">
+          <Navigation className="h-3.5 w-3.5 text-[#002e6e]" />
           <span>LOA / BEAM</span>
         </div>
-        <span className="font-bold text-ink text-sm tracking-tight">
+        <span className="font-bold text-[#002e6e] text-sm tracking-tight">
           {vessel.lengthOverall} × {vessel.beam}
         </span>
       </div>
 
-      <div className="flex flex-col gap-0.5 border-r border-border/40 pr-2">
-        <div className="flex items-center gap-1.5 text-metal">
-          <Gauge className="h-3.5 w-3.5 text-amber-signal" />
+      <div className="flex flex-col gap-0.5 border-r border-slate-200 pr-2">
+        <div className="flex items-center gap-1.5 text-slate-500">
+          <Gauge className="h-3.5 w-3.5 text-[#ed145b]" />
           <span>MAX SPEED</span>
         </div>
-        <span className="font-bold text-amber-signal text-sm tracking-tight">
+        <span className="font-bold text-[#ed145b] text-sm tracking-tight">
           {vessel.maxSpeed}
         </span>
       </div>
 
-      <div className="flex flex-col gap-0.5 border-r border-border/40 pr-2">
-        <div className="flex items-center gap-1.5 text-metal">
-          <Anchor className="h-3.5 w-3.5 text-sky-400" />
+      <div className="flex flex-col gap-0.5 border-r border-slate-200 pr-2">
+        <div className="flex items-center gap-1.5 text-slate-500">
+          <Anchor className="h-3.5 w-3.5 text-[#002e6e]" />
           <span>{vessel.bollardPull ? "BOLLARD PULL" : "DRAFT"}</span>
         </div>
-        <span className="font-bold text-ink text-sm tracking-tight">
+        <span className="font-bold text-[#133057] text-sm tracking-tight">
           {vessel.bollardPull || vessel.draft}
         </span>
       </div>
 
       <div className="flex flex-col gap-0.5">
-        <div className="flex items-center gap-1.5 text-metal">
-          <Compass className="h-3.5 w-3.5 text-emerald-400" />
+        <div className="flex items-center gap-1.5 text-slate-500">
+          <Compass className="h-3.5 w-3.5 text-emerald-600" />
           <span>CLASS SOCIETY</span>
         </div>
-        <span className="font-bold text-ink text-xs truncate" title={vessel.classificationSociety}>
+        <span className="font-bold text-[#133057] text-xs truncate" title={vessel.classificationSociety}>
           {vessel.classificationSociety.split(' ')[0]}
         </span>
       </div>

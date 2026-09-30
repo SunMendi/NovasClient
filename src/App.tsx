@@ -34,7 +34,7 @@ export function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="flex min-h-screen flex-col bg-navy-950 text-ink selection:bg-[#ed145b] selection:text-white">
+      <div className="flex min-h-screen flex-col bg-[#f9f8fb] text-[#133057] selection:bg-[#ed145b] selection:text-white">
         {/* Navigation Bar */}
         <Navbar onOpenRfq={() => handleOpenRfq()} />
 

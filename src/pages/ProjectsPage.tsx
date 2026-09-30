@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { PROJECTS, Project } from "../data/projects";
+import { PROJECTS } from "../data/projects";
 import { Button } from "../components/ui/button";
-import { Search, ChevronRight, ExternalLink, Calendar, MapPin, Building2, Filter } from "lucide-react";
+import { Search, ChevronRight, MapPin, Building2 } from "lucide-react";
 
 export const ProjectsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -30,10 +30,10 @@ export const ProjectsPage: React.FC = () => {
   return (
     <div className="flex flex-col space-y-12 pb-24">
       {/* Header Banner */}
-      <section className="relative overflow-hidden border-b border-border/80 bg-gradient-to-b from-[#061833] via-[#02163b] to-[#030a18] py-16 sm:py-20">
-        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/10 blur-3xl" />
+      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-16 sm:py-20 text-white">
+        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#ed145b]/40 bg-[#002e6e]/60 px-4 py-1 text-xs font-mono uppercase tracking-wider text-[#ed145b]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
             <span>NATIONAL INFRASTRUCTURE &amp; SOVEREIGN DEFENCE</span>
           </div>
 
@@ -41,7 +41,7 @@ export const ProjectsPage: React.FC = () => {
             Our <span className="text-[#ed145b]">Projects</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-200 max-w-2xl mx-auto leading-relaxed">
             Explore major turn-key procurement, naval vessel integrations, border surveillance deployments, and heavy industrial automation executed by Novas BD across South Asia.
           </p>
         </div>
@@ -49,7 +49,7 @@ export const ProjectsPage: React.FC = () => {
 
       {/* Filter and Search Bar */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-800 pb-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-200 pb-6">
           {/* Category Tabs */}
           <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
             {categories.map((cat) => (
@@ -59,8 +59,8 @@ export const ProjectsPage: React.FC = () => {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`rounded-lg px-4 py-2 text-xs font-semibold transition-all ${
                   selectedCategory === cat.id
-                    ? "bg-[#ed145b] text-white shadow-crimson"
-                    : "bg-[#061833] text-slate-300 hover:bg-[#0f2c56] hover:text-white border border-slate-800"
+                    ? "bg-[#ed145b] text-white shadow-md shadow-[#ed145b]/20"
+                    : "bg-white text-[#133057] hover:bg-slate-50 border border-slate-200"
                 }`}
               >
                 {cat.name}
@@ -76,13 +76,13 @@ export const ProjectsPage: React.FC = () => {
               placeholder="Search projects, client, location..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-slate-700 bg-[#061833] pl-9 pr-4 py-2 text-xs text-white placeholder-slate-400 focus:border-[#ed145b] focus:outline-none"
+              className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-4 py-2 text-xs text-[#133057] placeholder-slate-400 focus:border-[#ed145b] focus:outline-none shadow-xs"
             />
           </div>
         </div>
 
         {/* Results Counter */}
-        <div className="pt-4 text-xs font-mono text-slate-400">
+        <div className="pt-4 text-xs font-mono text-slate-500">
           Showing {filteredProjects.length} of {PROJECTS.length} Projects
         </div>
       </section>
@@ -90,15 +90,15 @@ export const ProjectsPage: React.FC = () => {
       {/* Projects Grid */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         {filteredProjects.length === 0 ? (
-          <div className="rounded-2xl border border-slate-800 bg-[#061833] p-12 text-center space-y-4">
-            <p className="text-base text-slate-300">No projects found matching your criteria.</p>
+          <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center space-y-4 shadow-sm">
+            <p className="text-base text-slate-600">No projects found matching your criteria.</p>
             <Button
               onClick={() => {
                 setSelectedCategory("all");
                 setSearchQuery("");
               }}
               variant="outline"
-              className="border-slate-700 text-white"
+              className="border-slate-300 text-[#002e6e] hover:bg-[#002e6e] hover:text-white"
             >
               Reset Filters
             </Button>
@@ -109,10 +109,10 @@ export const ProjectsPage: React.FC = () => {
               <Link
                 key={project.id}
                 to={`/projects/${project.id}`}
-                className="group flex flex-col rounded-2xl border border-slate-800 bg-[#061833] overflow-hidden shadow-xl transition-all duration-300 hover:border-[#ed145b]/50 hover:-translate-y-1.5 hover:shadow-2xl"
+                className="group flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm transition-all duration-300 hover:border-[#ed145b]/50 hover:-translate-y-1.5 hover:shadow-lg"
               >
                 {/* Project Image */}
-                <div className="relative h-56 w-full overflow-hidden bg-slate-900">
+                <div className="relative h-56 w-full overflow-hidden bg-slate-100">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -124,7 +124,7 @@ export const ProjectsPage: React.FC = () => {
                     </span>
                   </div>
                   <div className="absolute bottom-3 right-3">
-                    <span className="rounded-md bg-black/75 px-2.5 py-1 font-mono text-[10px] text-slate-200 backdrop-blur-sm">
+                    <span className="rounded-md bg-black/65 px-2.5 py-1 font-mono text-[10px] text-white backdrop-blur-sm">
                       {project.year}
                     </span>
                   </div>
@@ -133,20 +133,20 @@ export const ProjectsPage: React.FC = () => {
                 {/* Content */}
                 <div className="p-6 flex flex-col flex-grow justify-between space-y-4">
                   <div className="space-y-2">
-                    <h2 className="font-display text-lg font-bold text-white group-hover:text-[#ed145b] transition-colors line-clamp-2">
+                    <h2 className="font-display text-lg font-bold text-[#002e6e] group-hover:text-[#ed145b] transition-colors line-clamp-2">
                       {project.title}
                     </h2>
-                    <p className="text-xs sm:text-sm text-slate-300 line-clamp-3 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
                       {project.summary}
                     </p>
                   </div>
 
-                  <div className="space-y-3 pt-3 border-t border-slate-800/80 text-xs">
-                    <div className="flex items-center gap-2 text-slate-400">
+                  <div className="space-y-2.5 pt-3 border-t border-slate-100 text-xs">
+                    <div className="flex items-center gap-2 text-slate-600">
                       <Building2 className="size-3.5 text-[#ed145b] shrink-0" />
                       <span className="truncate">{project.client}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-400">
+                    <div className="flex items-center gap-2 text-slate-600">
                       <MapPin className="size-3.5 text-[#005f99] shrink-0" />
                       <span className="truncate">{project.location}</span>
                     </div>

@@ -10,62 +10,64 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background-color: var(--bg-abyss);
-    color: var(--text-primary);
+    background-color: #f9f8fb;
+    color: #133057;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight text-ink;
+    @apply font-display tracking-tight text-[#133057];
   }
 }
 
-/* Custom Scrollbar for Tactical Data & Tables */
+/* Official Novas BD Utility Classes (From novasbd.com) */
+.bgnavi {
+  background-color: #002e6e;
+}
+.navi {
+  color: #002e6e;
+}
+.pin {
+  color: #ed145b;
+}
+.ns-color-red {
+  color: #ed145b;
+}
+.ns-color-blue {
+  color: #002e6e;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-abyss);
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(132, 155, 181, 0.25);
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-amber);
+  background: #ed145b;
 }
 
 /* Tactical Background Grid Effect */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(132, 155, 181, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(132, 155, 181, 0.05) 1px, transparent 1px);
-}
-
 .bg-novas-grid {
   background-size: 48px 48px;
   background-image: 
-    linear-gradient(to right, rgba(237, 20, 91, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(237, 20, 91, 0.07) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 46, 110, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 46, 110, 0.05) 1px, transparent 1px);
 }
 
 /* Ambient Radial Glow */
-.bg-radar-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(237, 20, 91, 0.15) 0%, transparent 70%);
-}
-
 .bg-crimson-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(237, 20, 91, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(237, 20, 91, 0.12) 0%, transparent 70%);
 }
 
 .bg-navy-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(4, 46, 111, 0.35) 0%, transparent 70%);
-}
-
-.bg-marine-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(0, 95, 153, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(0, 46, 110, 0.15) 0%, transparent 70%);
 }
 
 /* Floating Animation for Best In Section Icons */
@@ -138,4 +140,3 @@
   animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   animation-delay: 0.2s;
 }
-

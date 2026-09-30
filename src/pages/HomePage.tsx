@@ -157,15 +157,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                 className={`absolute inset-0 bg-cover bg-center ${isActive ? "hero-kb" : "scale-105"}`}
                 style={{ backgroundImage: `url(${slide.imageUrl})` }}
               />
-              {/* Dark Tactical Vignette Overlay with Brand Deep Navy Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#030a18] via-[#030a18]/85 to-[#030a18]/55 pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#030a18] via-transparent to-[#030a18]/45 pointer-events-none" />
+              {/* Dark Tactical Vignette Overlay with Official Royal Navy Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#002e6e]/95 via-[#002e6e]/75 to-[#001c44]/55 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#002e6e]/75 via-transparent to-transparent pointer-events-none" />
             </div>
           );
         })}
 
         {/* Tactical Ambient Grid Overlay & Dynamic Glowing Radar */}
-        <div className="pointer-events-none absolute inset-0 bg-novas-grid opacity-30 z-0" />
+        <div className="pointer-events-none absolute inset-0 bg-novas-grid opacity-25 z-0" />
         <div className="pointer-events-none absolute inset-0 bg-crimson-glow opacity-40 z-0 hero-glow" />
 
         {/* Content Container (Compact Padding for Immediate Above-the-Fold Visibility) */}
@@ -174,9 +174,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
             {/* Left Column: Pill Tag, Punchy Headline, Subtitle, CTAs */}
             <div key={`content-${activeSlide}`} className="space-y-4 sm:space-y-5 lg:col-span-7">
               {/* Category Pill with Glowing Bullet */}
-              <div className="hero-rise-1 inline-flex items-center gap-2 rounded-full border border-[#ed145b]/40 bg-[#061833]/90 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-[#ed145b] backdrop-blur-md">
+              <div className="hero-rise-1 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-mono uppercase tracking-wider text-white backdrop-blur-md">
                 <span className="size-1.5 rounded-full bg-[#ed145b]" />
-                <span className="font-bold">{currentSlide.tag}</span>
+                <span className="font-bold text-[#ed145b]">{currentSlide.tag}</span>
               </div>
 
               {/* Dynamic Animated Headline */}
@@ -184,7 +184,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                 {activeSlide === 0 ? (
                   <>
                     Institutional Defence,<br />
-                    <span className="bg-gradient-to-r from-[#ed145b] via-rose-400 to-sky-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#ed145b] via-rose-300 to-sky-300 bg-clip-text text-transparent">
                       Maritime &amp; Heavy Supply.
                     </span>
                   </>
@@ -194,7 +194,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
               </h1>
 
               {/* Dynamic Subtitle */}
-              <p className="hero-rise-3 text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl leading-relaxed font-sans min-h-[48px]">
+              <p className="hero-rise-3 text-sm sm:text-base lg:text-lg text-slate-200 max-w-xl leading-relaxed font-sans min-h-[48px]">
                 {currentSlide.subtitle}
               </p>
 
@@ -204,7 +204,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   asChild
                   size="default"
                   variant="default"
-                  className="gap-2 font-bold shadow-crimson text-xs sm:text-sm h-11 px-6 rounded-lg bg-[#ed145b] text-white hover:bg-[#d00f4e] transition-all"
+                  className="gap-2 font-bold shadow-md shadow-[#ed145b]/30 text-xs sm:text-sm h-11 px-6 rounded-lg bg-[#ed145b] text-white hover:bg-[#d00f4e] transition-all"
                 >
                   <Link to={currentSlide.link}>
                     <span>Explore Products</span>
@@ -216,7 +216,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   onClick={() => onOpenRfq()}
                   size="default"
                   variant="outline"
-                  className="gap-2 font-semibold text-xs sm:text-sm h-11 px-5 rounded-lg border-slate-700 bg-[#061833]/80 backdrop-blur-md text-white hover:bg-[#002e6e] transition-colors"
+                  className="gap-2 font-semibold text-xs sm:text-sm h-11 px-5 rounded-lg border-white/30 bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-[#002e6e] transition-colors"
                 >
                   <FileCheck2 className="size-4 text-[#ed145b]" />
                   <span>Launch Tender RFQ</span>
@@ -230,45 +230,45 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                 <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#ed145b]">
                   CAPABILITY SNAPSHOT
                 </span>
-                <span className="font-mono text-[10px] text-slate-400">
+                <span className="font-mono text-[10px] text-slate-300">
                   LIVE TELEMETRY
                 </span>
               </div>
 
               {/* 2x2 Grid of Frosted Capability Cards */}
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                <div className="rounded-2xl border border-white/10 bg-[#061833]/85 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-[#ed145b]/50 hover:-translate-y-0.5">
+                <div className="rounded-2xl border border-white/20 bg-white/10 p-4 sm:p-5 backdrop-blur-md shadow-lg transition-all hover:border-[#ed145b]/80 hover:bg-white/15">
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     120+
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
                     ACTIVE CONTRACTS
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-[#061833]/85 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-[#ed145b]/50 hover:-translate-y-0.5">
+                <div className="rounded-2xl border border-white/20 bg-white/10 p-4 sm:p-5 backdrop-blur-md shadow-lg transition-all hover:border-[#ed145b]/80 hover:bg-white/15">
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     5
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
                     SECTORS SERVED
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-[#061833]/85 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-[#ed145b]/50 hover:-translate-y-0.5">
+                <div className="rounded-2xl border border-white/20 bg-white/10 p-4 sm:p-5 backdrop-blur-md shadow-lg transition-all hover:border-[#ed145b]/80 hover:bg-white/15">
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     40+
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
                     GLOBAL PARTNERS
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-[#061833]/85 p-4 sm:p-5 backdrop-blur-md shadow-card transition-all hover:border-[#ed145b]/50 hover:-translate-y-0.5">
+                <div className="rounded-2xl border border-white/20 bg-white/10 p-4 sm:p-5 backdrop-blur-md shadow-lg transition-all hover:border-[#ed145b]/80 hover:bg-white/15">
                   <div className="font-display font-extrabold text-2xl sm:text-3xl text-white">
                     21 d
                   </div>
-                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mt-1">
+                  <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-200 mt-1">
                     AVG. LEAD TIME
                   </div>
                 </div>
@@ -280,44 +280,44 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
 
       {/* 2. NOVAS BANGLADESH INTRO SECTION (Directly from novasbd.com) */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl border border-slate-800 bg-gradient-to-br from-[#061833] via-[#02163b] to-[#030a18] p-8 md:p-12 shadow-2xl overflow-hidden">
-          <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-[#ed145b]/10 blur-3xl" />
+        <div className="relative rounded-3xl border border-slate-200 bg-white p-8 md:p-12 shadow-sm overflow-hidden">
+          <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-[#ed145b]/5 blur-3xl" />
           <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#ed145b]/40 bg-[#002e6e]/60 px-4 py-1 text-xs font-mono uppercase tracking-wider text-[#ed145b]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#ed145b]/30 bg-[#ed145b]/10 px-4 py-1 text-xs font-mono uppercase tracking-wider text-[#ed145b]">
               <span>ESTABLISHED JULY 2012</span>
             </div>
 
-            <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#002e6e] tracking-tight">
               Serving Bangladesh through Excellence in{" "}
               <span className="text-[#ed145b]">Science, Technology &amp; Supply</span>.
             </h2>
 
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
               Novas started in July 2012. Our eventual destination is to serve Bangladesh by achieving excellence in the field of science and technology. Our main objectives are quality service, innovation, and integrity. We act as a catalyst in the country&apos;s development, offering tailored solutions with dedicated after-sales support.
             </p>
 
             {/* Quick Stat Badges */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-              <div className="rounded-xl border border-slate-700/60 bg-[#030a18]/70 p-4">
-                <div className="font-display text-2xl font-bold text-white">2012</div>
-                <div className="font-mono text-xs text-slate-400 uppercase mt-1">Founded In Dhaka</div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <div className="font-display text-2xl font-bold text-[#002e6e]">2012</div>
+                <div className="font-mono text-xs text-slate-500 uppercase mt-1">Founded In Dhaka</div>
               </div>
-              <div className="rounded-xl border border-slate-700/60 bg-[#030a18]/70 p-4">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <div className="font-display text-2xl font-bold text-[#ed145b]">24</div>
-                <div className="font-mono text-xs text-slate-400 uppercase mt-1">Specialized Engineers</div>
+                <div className="font-mono text-xs text-slate-500 uppercase mt-1">Specialized Engineers</div>
               </div>
-              <div className="rounded-xl border border-slate-700/60 bg-[#030a18]/70 p-4">
-                <div className="font-display text-2xl font-bold text-white">100%</div>
-                <div className="font-mono text-xs text-slate-400 uppercase mt-1">Defence Audit Compliant</div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <div className="font-display text-2xl font-bold text-[#002e6e]">100%</div>
+                <div className="font-mono text-xs text-slate-500 uppercase mt-1">Defence Audit Compliant</div>
               </div>
-              <div className="rounded-xl border border-slate-700/60 bg-[#030a18]/70 p-4">
-                <div className="font-display text-2xl font-bold text-[#10b981]">ISO</div>
-                <div className="font-mono text-xs text-slate-400 uppercase mt-1">9001:2015 Certified</div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <div className="font-display text-2xl font-bold text-[#059669]">ISO</div>
+                <div className="font-mono text-xs text-slate-500 uppercase mt-1">9001:2015 Certified</div>
               </div>
             </div>
 
             <div className="pt-2">
-              <Button asChild variant="outline" className="border-slate-700 text-white hover:bg-[#002e6e] rounded-lg">
+              <Button asChild variant="outline" className="border-slate-300 text-[#002e6e] hover:bg-[#002e6e] hover:text-white rounded-lg transition-colors">
                 <Link to="/aboutus" className="gap-2">
                   <span>Read Full Company Story</span>
                   <ArrowRight className="size-4 text-[#ed145b]" />
@@ -331,70 +331,70 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
       {/* 3. "WE ARE BEST IN" 4-PILLAR SECTION (Exact replica from novasbd.com) */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-3 mb-10">
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#002e6e]">
             We are <span className="text-[#ed145b] font-bold">BEST IN</span>
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+          <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
             Our 4 fundamental commitments that set Novas apart in high-stakes defense, maritime and engineering procurement.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Card 1: BEST COMMITMENT */}
-          <div className="group rounded-2xl border border-slate-800 bg-[#061833] p-6 shadow-xl transition-all duration-300 hover:border-[#ed145b]/50 hover:-translate-y-1 flex items-center gap-5">
-            <div className="shrink-0 p-4 rounded-2xl bg-[#002e6e]/60 border border-slate-700 text-[#ed145b] float-animation">
+          <div className="group rounded-2xl bgnavi p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center gap-5 border border-[#003882]">
+            <div className="shrink-0 p-4 rounded-2xl bg-[#001f4d] border border-[#003d8f] text-[#ed145b] float-animation">
               <Handshake className="size-10" />
             </div>
             <div className="space-y-1.5">
               <h3 className="font-display text-lg font-bold text-white group-hover:text-[#ed145b] transition-colors">
                 BEST <span className="font-extrabold text-[#ed145b]">COMMITMENT</span>
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 We ensure an excellent commitment with our valuable vendors, government ministries, and armed forces operators.
               </p>
             </div>
           </div>
 
           {/* Card 2: BEST PLANNING */}
-          <div className="group rounded-2xl border border-slate-800 bg-[#061833] p-6 shadow-xl transition-all duration-300 hover:border-[#ed145b]/50 hover:-translate-y-1 flex items-center gap-5">
-            <div className="shrink-0 p-4 rounded-2xl bg-[#002e6e]/60 border border-slate-700 text-[#ed145b] float-animation" style={{ animationDelay: "0.5s" }}>
+          <div className="group rounded-2xl bgnavi p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center gap-5 border border-[#003882]">
+            <div className="shrink-0 p-4 rounded-2xl bg-[#001f4d] border border-[#003d8f] text-[#ed145b] float-animation" style={{ animationDelay: "0.5s" }}>
               <ListChecks className="size-10" />
             </div>
             <div className="space-y-1.5">
               <h3 className="font-display text-lg font-bold text-white group-hover:text-[#ed145b] transition-colors">
                 BEST <span className="font-extrabold text-[#ed145b]">PLANNING</span>
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 Equipment planning services include comprehensive evaluation of all equipment, facility needs, and operational oversight.
               </p>
             </div>
           </div>
 
           {/* Card 3: BEST DEAL */}
-          <div className="group rounded-2xl border border-slate-800 bg-[#061833] p-6 shadow-xl transition-all duration-300 hover:border-[#ed145b]/50 hover:-translate-y-1 flex items-center gap-5">
-            <div className="shrink-0 p-4 rounded-2xl bg-[#002e6e]/60 border border-slate-700 text-[#ed145b] float-animation" style={{ animationDelay: "1s" }}>
+          <div className="group rounded-2xl bgnavi p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center gap-5 border border-[#003882]">
+            <div className="shrink-0 p-4 rounded-2xl bg-[#001f4d] border border-[#003d8f] text-[#ed145b] float-animation" style={{ animationDelay: "1s" }}>
               <HeartHandshake className="size-10" />
             </div>
             <div className="space-y-1.5">
               <h3 className="font-display text-lg font-bold text-white group-hover:text-[#ed145b] transition-colors">
                 BEST <span className="font-extrabold text-[#ed145b]">DEAL</span>
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 Efforts focused on achieving &ldquo;win-win&rdquo; solutions, fostering mutual benefits, cost-efficiency, and positive long-term outcomes.
               </p>
             </div>
           </div>
 
           {/* Card 4: BEST SERVICE */}
-          <div className="group rounded-2xl border border-slate-800 bg-[#061833] p-6 shadow-xl transition-all duration-300 hover:border-[#ed145b]/50 hover:-translate-y-1 flex items-center gap-5">
-            <div className="shrink-0 p-4 rounded-2xl bg-[#002e6e]/60 border border-slate-700 text-[#ed145b] float-animation" style={{ animationDelay: "1.5s" }}>
+          <div className="group rounded-2xl bgnavi p-6 shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center gap-5 border border-[#003882]">
+            <div className="shrink-0 p-4 rounded-2xl bg-[#001f4d] border border-[#003d8f] text-[#ed145b] float-animation" style={{ animationDelay: "1.5s" }}>
               <Wrench className="size-10" />
             </div>
             <div className="space-y-1.5">
               <h3 className="font-display text-lg font-bold text-white group-hover:text-[#ed145b] transition-colors">
                 BEST <span className="font-extrabold text-[#ed145b]">SERVICE</span>
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-200 leading-relaxed">
                 End-to-end engineering support, tailored technology solutions, and dedicated 24/7 on-site after-sales technical maintenance.
               </p>
             </div>
@@ -409,11 +409,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
             <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
               FIELD IMPLEMENTATIONS
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
               Featured <span className="text-[#ed145b]">Projects</span>
             </h2>
           </div>
-          <Button asChild variant="outline" size="sm" className="border-slate-700 text-white hover:bg-[#002e6e]">
+          <Button asChild variant="outline" size="sm" className="border-slate-300 text-[#002e6e] hover:bg-[#002e6e] hover:text-white transition-colors">
             <Link to="/projects" className="gap-2">
               <span>View All Projects</span>
               <ArrowRight className="size-4 text-[#ed145b]" />
@@ -426,9 +426,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
             <Link
               key={project.id}
               to={`/projects/${project.id}`}
-              className="group flex flex-col rounded-2xl border border-slate-800 bg-[#061833] overflow-hidden shadow-lg transition-all duration-300 hover:border-[#ed145b]/50 hover:-translate-y-1"
+              className="group flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm transition-all duration-300 hover:border-[#ed145b]/50 hover:shadow-lg hover:-translate-y-1"
             >
-              <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+              <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -440,7 +440,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   </span>
                 </div>
                 <div className="absolute bottom-3 right-3">
-                  <span className="rounded-md bg-black/70 px-2 py-0.5 font-mono text-[10px] text-slate-300 backdrop-blur-sm">
+                  <span className="rounded-md bg-black/60 px-2 py-0.5 font-mono text-[10px] text-white backdrop-blur-sm">
                     {project.year}
                   </span>
                 </div>
@@ -448,17 +448,17 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
 
               <div className="p-5 flex flex-col flex-grow justify-between space-y-3">
                 <div className="space-y-2">
-                  <h3 className="font-display text-base font-bold text-white group-hover:text-[#ed145b] transition-colors line-clamp-1">
+                  <h3 className="font-display text-base font-bold text-[#002e6e] group-hover:text-[#ed145b] transition-colors line-clamp-1">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                     {project.summary}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-slate-800/80 text-xs">
-                  <span className="text-slate-400 font-mono">{project.client}</span>
-                  <span className="flex items-center gap-1 text-[#ed145b] font-medium group-hover:underline">
+                <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+                  <span className="text-slate-500 font-mono">{project.client}</span>
+                  <span className="flex items-center gap-1 text-[#ed145b] font-semibold group-hover:underline">
                     <span>Details</span>
                     <ChevronRight className="size-3.5" />
                   </span>
@@ -476,11 +476,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
             <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b] mb-1">
               HARDWARE CATALOGUE
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
               Mission-Ready <span className="text-[#ed145b]">Equipment</span>
             </h2>
           </div>
-          <Button asChild variant="outline" size="sm" className="border-slate-700 text-white hover:bg-[#002e6e]">
+          <Button asChild variant="outline" size="sm" className="border-slate-300 text-[#002e6e] hover:bg-[#002e6e] hover:text-white transition-colors">
             <Link to="/products/all" className="gap-2">
               <span>View Full Directory</span>
               <ArrowRight className="size-4 text-[#ed145b]" />
@@ -501,20 +501,20 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
 
       {/* 6. SHIPYARD SHOWCASE TEASER */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-slate-800 bg-[#061833] p-6 sm:p-8 lg:p-10 shadow-2xl">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 lg:p-10 shadow-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs font-mono uppercase tracking-wider text-sky-400 mb-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#005f99]/30 bg-[#005f99]/10 px-3 py-1 text-xs font-mono uppercase tracking-wider text-[#005f99] mb-2 font-semibold">
                 <Anchor className="size-3" />
                 <span>NAVAL SHIPYARD &amp; VESSEL PLATFORMS</span>
               </div>
-              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
                 Sovereign Vessel Construction
               </h2>
             </div>
             <Button
               onClick={() => onOpenRfq(featuredVessel)}
-              className="bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold rounded-lg shadow-crimson"
+              className="bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold rounded-lg shadow-md shadow-[#ed145b]/20"
             >
               Request Vessel Spec Sheet
             </Button>
@@ -522,10 +522,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
 
           <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-5 space-y-4">
-              <h3 className="font-display text-xl font-bold text-white">
+              <h3 className="font-display text-xl font-bold text-[#002e6e]">
                 {featuredVessel.name}
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 {featuredVessel.description}
               </p>
               <VesselHud vessel={featuredVessel} />
@@ -538,10 +538,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                   alt={featuredVessel.name}
                   className="h-full w-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-60" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl bg-navy-950/80 px-4 py-2.5 backdrop-blur-md border border-white/10 text-xs font-mono text-slate-300">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001f4d] via-transparent to-transparent opacity-60" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl bg-[#002e6e]/90 px-4 py-2.5 backdrop-blur-md border border-white/15 text-xs font-mono text-white">
                   <span>HULL: {featuredVessel.hullMaterial}</span>
-                  <span className="text-[#10b981]">CLASS: {featuredVessel.classificationSociety}</span>
+                  <span className="text-emerald-400">CLASS: {featuredVessel.classificationSociety}</span>
                 </div>
               </div>
             </div>

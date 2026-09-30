@@ -13,24 +13,24 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenRfq }) => {
   return (
-    <Card className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-navy-900 transition-all duration-300 hover:-translate-y-1 hover:border-amber-signal/50 hover:shadow-card">
-      {/* Aspect Ratio Media Container to Prevent CLS */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-navy-950">
+    <Card className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[#ed145b]/50 hover:shadow-lg">
+      {/* Aspect Ratio Media Container */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
         <img
           src={product.imageUrl}
           alt={product.name}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-900 via-transparent to-black/30" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
         
         {/* Category & Status Chips */}
         <div className="absolute left-3 top-3 flex items-center gap-2">
-          <Badge variant="secondary" className="bg-navy-950/80 backdrop-blur-md text-ink">
+          <Badge variant="secondary" className="bg-[#002e6e] text-white border-0 font-medium">
             {product.category}
           </Badge>
           {product.featured && (
-            <Badge variant="default" className="shadow-sm">
+            <Badge variant="default" className="bg-[#ed145b] text-white border-0 shadow-sm font-semibold">
               Featured
             </Badge>
           )}
@@ -38,22 +38,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenRfq }) 
       </div>
 
       <CardContent className="flex flex-1 flex-col p-6">
-        <h3 className="font-display text-xl font-bold text-ink transition-colors group-hover:text-amber-signal">
-          <Link to={`/catalogue/${product.slug}`} className="focus:outline-none">
+        <h3 className="font-display text-xl font-bold text-[#002e6e] transition-colors group-hover:text-[#ed145b]">
+          <Link to={`/product/${product.id}`} className="focus:outline-none">
             {product.name}
           </Link>
         </h3>
         
-        <p className="mt-2 text-sm text-metal leading-relaxed line-clamp-2">
+        <p className="mt-2 text-sm text-slate-600 leading-relaxed line-clamp-2">
           {product.tagline}
         </p>
 
         {/* Spec Highlights Preview */}
-        <div className="mt-5 space-y-2 border-t border-border/60 pt-4 text-xs font-mono">
+        <div className="mt-5 space-y-2 border-t border-slate-100 pt-4 text-xs font-mono">
           {product.specs.slice(0, 3).map((spec, i) => (
-            <div key={i} className="flex items-start gap-2 text-secondary">
-              <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-signal" />
-              <span className="line-clamp-1">{spec.label}: <strong className="text-ink font-semibold">{spec.value}</strong></span>
+            <div key={i} className="flex items-start gap-2 text-slate-600">
+              <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#ed145b]" />
+              <span className="line-clamp-1">{spec.label}: <strong className="text-[#133057] font-semibold">{spec.value}</strong></span>
             </div>
           ))}
         </div>
@@ -64,9 +64,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenRfq }) 
             asChild
             variant="outline"
             size="sm"
-            className="flex-1 text-xs font-medium"
+            className="flex-1 text-xs font-semibold border-slate-200 text-[#133057] hover:bg-slate-50"
           >
-            <Link to={`/catalogue/${product.slug}`}>
+            <Link to={`/product/${product.id}`}>
               <FileText className="mr-1.5 h-3.5 w-3.5" />
               Datasheet
             </Link>
@@ -75,7 +75,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenRfq }) 
           <Button
             size="sm"
             variant="default"
-            className="flex-1 text-xs"
+            className="flex-1 text-xs font-bold bg-[#ed145b] hover:bg-[#d00f4e] text-white shadow-sm shadow-[#ed145b]/20"
             onClick={() => onOpenRfq && onOpenRfq(product)}
           >
             Enquire

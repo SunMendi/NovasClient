@@ -9,19 +9,19 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-amber-signal text-navy-950 font-bold hover:bg-amber-hover shadow-amber transition-transform hover:-translate-y-0.5",
+          "bg-[#ed145b] text-white font-bold hover:bg-[#d00f4e] shadow-crimson transition-transform hover:-translate-y-0.5",
         marine:
-          "bg-marine text-white hover:bg-marine-hover shadow-marine transition-transform hover:-translate-y-0.5",
+          "bg-[#002e6e] text-white hover:bg-[#042e6f] shadow-md transition-transform hover:-translate-y-0.5",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm",
         outline:
-          "border border-border/70 bg-navy-900/60 text-ink hover:bg-navy-850 hover:border-amber-signal/50 hover:text-amber-signal",
+          "border border-slate-300 bg-white text-[#002e6e] hover:bg-slate-50 hover:border-[#ed145b] hover:text-[#ed145b]",
         secondary:
-          "bg-navy-800 text-ink hover:bg-navy-700 border border-border/40",
+          "bg-slate-100 text-[#133057] hover:bg-slate-200 border border-slate-200",
         ghost:
-          "text-metal hover:bg-navy-850 hover:text-ink",
+          "text-slate-600 hover:bg-slate-100 hover:text-[#002e6e]",
         link:
-          "text-amber-signal underline-offset-4 hover:underline",
+          "text-[#ed145b] underline-offset-4 hover:underline",
       },
       size: {
         default: "h-11 px-5 py-2.5",

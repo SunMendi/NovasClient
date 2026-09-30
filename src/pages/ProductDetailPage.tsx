@@ -2,20 +2,14 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { PRODUCTS } from "../data/products";
 import { VESSELS } from "../data/vessels";
-import { SpecBadge } from "../components/domain/SpecBadge";
 import { VesselHud } from "../components/domain/VesselHud";
 import { EmptyState } from "../components/domain/StateView";
 import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
 import { Product, Vessel } from "../types";
 import {
-  ChevronLeft,
   Download,
   FileCheck2,
   ShieldCheck,
-  Truck,
-  RotateCcw,
-  CheckCircle2,
   Clock,
   Globe2
 } from "lucide-react";
@@ -54,18 +48,18 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
   return (
     <div className="space-y-12 pb-24">
       {/* Breadcrumb Bar */}
-      <section className="border-b border-slate-800 bg-[#061833]/60 py-4">
+      <section className="border-b border-slate-200 bg-white py-4 shadow-xs">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
-            <Link to="/" className="hover:text-white transition-colors">
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-500">
+            <Link to="/" className="hover:text-[#002e6e] transition-colors">
               Home
             </Link>
             <span>/</span>
-            <Link to="/products/all" className="hover:text-white transition-colors">
+            <Link to="/products/all" className="hover:text-[#002e6e] transition-colors">
               Products
             </Link>
             <span>/</span>
-            <span className="text-[#ed145b] truncate max-w-xs">{product ? product.name : vessel?.name}</span>
+            <span className="text-[#ed145b] font-semibold truncate max-w-xs">{product ? product.name : vessel?.name}</span>
           </div>
         </div>
       </section>
@@ -75,19 +69,18 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
         <div className="grid gap-12 lg:grid-cols-12 lg:items-start max-w-6xl mx-auto">
           {/* Left Column: Image & Provenance Badges */}
           <div className="space-y-6 lg:col-span-6">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-xl">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-md">
               <img
                 src={product ? product.imageUrl : vessel?.imageUrl}
                 alt={product ? product.name : vessel?.name}
                 className="h-full w-full object-cover"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-60" />
               <div className="absolute top-4 left-4 flex gap-2">
-                <span className="rounded-full bg-[#ed145b] px-3 py-1 font-mono text-xs font-bold uppercase text-white shadow-md">
+                <span className="rounded-full bg-[#ed145b] px-3 py-1 font-mono text-xs font-bold uppercase text-white shadow-sm">
                   {product ? product.category : "Naval Vessel"}
                 </span>
                 {product?.featured && (
-                  <span className="rounded-full bg-[#002e6e] border border-slate-600 px-3 py-1 font-mono text-xs text-white">
+                  <span className="rounded-full bg-[#002e6e] text-white px-3 py-1 font-mono text-xs font-semibold">
                     Featured
                   </span>
                 )}
@@ -95,8 +88,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
             </div>
 
             {/* Compliance Certifications Strip */}
-            <div className="rounded-xl border border-slate-800 bg-[#061833] p-5 space-y-3">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-3 shadow-xs">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#002e6e] flex items-center gap-2">
                 <ShieldCheck className="size-4 text-[#ed145b]" />
                 Verified Standards &amp; Certifications
               </span>
@@ -105,13 +98,13 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
                   product.certifications.map((c, i) => (
                     <span
                       key={i}
-                      className="rounded-md bg-[#ed145b]/10 border border-[#ed145b]/30 px-2.5 py-1 font-mono text-xs text-[#ed145b]"
+                      className="rounded-md bg-[#ed145b]/10 border border-[#ed145b]/30 px-2.5 py-1 font-mono text-xs text-[#ed145b] font-semibold"
                     >
                       {c}
                     </span>
                   ))
                 ) : (
-                  <span className="rounded-md bg-[#ed145b]/10 border border-[#ed145b]/30 px-2.5 py-1 font-mono text-xs text-[#ed145b]">
+                  <span className="rounded-md bg-[#ed145b]/10 border border-[#ed145b]/30 px-2.5 py-1 font-mono text-xs text-[#ed145b] font-semibold">
                     {vessel?.classificationSociety || "Bureau Veritas"}
                   </span>
                 )}
@@ -120,21 +113,21 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
 
             {/* Lead Time & Origin Stats */}
             <div className="grid grid-cols-2 gap-4 font-mono text-xs">
-              <div className="rounded-xl border border-slate-800 bg-[#061833] p-4 space-y-1">
-                <span className="text-slate-400 flex items-center gap-1.5">
+              <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1 shadow-xs">
+                <span className="text-slate-500 font-semibold flex items-center gap-1.5">
                   <Clock className="size-3.5 text-[#ed145b]" />
                   LEAD TIME
                 </span>
-                <span className="font-bold text-white text-sm">
+                <span className="font-bold text-[#002e6e] text-sm">
                   {product ? product.leadTime : vessel?.deliveryLeadTime}
                 </span>
               </div>
-              <div className="rounded-xl border border-slate-800 bg-[#061833] p-4 space-y-1">
-                <span className="text-slate-400 flex items-center gap-1.5">
-                  <Globe2 className="size-3.5 text-sky-400" />
+              <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-1 shadow-xs">
+                <span className="text-slate-500 font-semibold flex items-center gap-1.5">
+                  <Globe2 className="size-3.5 text-[#005f99]" />
                   ORIGIN PROVENANCE
                 </span>
-                <span className="font-bold text-white text-sm truncate block" title={product?.origin || "Shipyard Build"}>
+                <span className="font-bold text-[#002e6e] text-sm truncate block" title={product?.origin || "Shipyard Build"}>
                   {product ? product.origin : "Novas Yard / Partner Drydock"}
                 </span>
               </div>
@@ -147,13 +140,13 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
               <span className="font-mono text-xs uppercase tracking-widest text-[#ed145b] font-bold">
                 OFFICIAL SPECIFICATION SHEET // {product ? product.id.toUpperCase() : vessel?.id.toUpperCase()}
               </span>
-              <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-white mt-2">
+              <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-[#002e6e] mt-2">
                 {product ? product.name : vessel?.name}
               </h1>
-              <p className="font-display text-base font-semibold text-slate-300 mt-2">
+              <p className="font-display text-base font-semibold text-slate-700 mt-2">
                 {product ? product.tagline : vessel?.tagline}
               </p>
-              <p className="text-sm text-slate-300 leading-relaxed mt-4">
+              <p className="text-sm text-slate-600 leading-relaxed mt-4">
                 {product ? product.description : vessel?.description}
               </p>
             </div>
@@ -163,52 +156,52 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
 
             {/* Technical Parameters Matrix Table */}
             <div className="space-y-3">
-              <h3 className="font-display text-lg font-bold text-white">
+              <h3 className="font-display text-lg font-bold text-[#002e6e]">
                 Technical Data Matrix
               </h3>
-              <div className="rounded-xl border border-slate-800 bg-[#061833] overflow-hidden font-mono text-xs">
+              <div className="rounded-xl border border-slate-200 bg-white overflow-hidden font-mono text-xs shadow-xs">
                 <table className="w-full text-left">
-                  <tbody className="divide-y divide-slate-800">
+                  <tbody className="divide-y divide-slate-100">
                     {product ? (
                       product.specs.map((spec, i) => (
-                        <tr key={i} className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold w-1/2 bg-[#02163b]/50">
+                        <tr key={i} className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold w-1/2 bg-slate-50">
                             {spec.label}
                           </td>
-                          <td className="p-3.5 text-white font-bold w-1/2">
+                          <td className="p-3.5 text-[#133057] font-bold w-1/2">
                             {spec.value}
                           </td>
                         </tr>
                       ))
                     ) : (
                       <>
-                        <tr className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold bg-[#02163b]/50">Length Overall (LOA)</td>
-                          <td className="p-3.5 text-white font-bold">{vessel?.lengthOverall}</td>
+                        <tr className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold bg-slate-50">Length Overall (LOA)</td>
+                          <td className="p-3.5 text-[#133057] font-bold">{vessel?.lengthOverall}</td>
                         </tr>
-                        <tr className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold bg-[#02163b]/50">Beam</td>
-                          <td className="p-3.5 text-white font-bold">{vessel?.beam}</td>
+                        <tr className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold bg-slate-50">Beam</td>
+                          <td className="p-3.5 text-[#133057] font-bold">{vessel?.beam}</td>
                         </tr>
-                        <tr className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold bg-[#02163b]/50">Draft</td>
-                          <td className="p-3.5 text-white font-bold">{vessel?.draft}</td>
+                        <tr className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold bg-slate-50">Draft</td>
+                          <td className="p-3.5 text-[#133057] font-bold">{vessel?.draft}</td>
                         </tr>
-                        <tr className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold bg-[#02163b]/50">Max Speed</td>
-                          <td className="p-3.5 text-white font-bold">{vessel?.maxSpeed}</td>
+                        <tr className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold bg-slate-50">Max Speed</td>
+                          <td className="p-3.5 text-[#133057] font-bold">{vessel?.maxSpeed}</td>
                         </tr>
-                        <tr className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold bg-[#02163b]/50">Propulsion &amp; Engines</td>
-                          <td className="p-3.5 text-white font-bold">{vessel?.enginePower}</td>
+                        <tr className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold bg-slate-50">Propulsion &amp; Engines</td>
+                          <td className="p-3.5 text-[#133057] font-bold">{vessel?.enginePower}</td>
                         </tr>
-                        <tr className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold bg-[#02163b]/50">Hull Material</td>
-                          <td className="p-3.5 text-white font-bold">{vessel?.hullMaterial}</td>
+                        <tr className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold bg-slate-50">Hull Material</td>
+                          <td className="p-3.5 text-[#133057] font-bold">{vessel?.hullMaterial}</td>
                         </tr>
-                        <tr className="hover:bg-[#0f2c56]/40 transition-colors">
-                          <td className="p-3.5 text-slate-400 font-semibold bg-[#02163b]/50">Classification</td>
-                          <td className="p-3.5 text-white font-bold">{vessel?.classificationSociety}</td>
+                        <tr className="hover:bg-slate-50 transition-colors">
+                          <td className="p-3.5 text-slate-500 font-semibold bg-slate-50">Classification</td>
+                          <td className="p-3.5 text-[#133057] font-bold">{vessel?.classificationSociety}</td>
                         </tr>
                       </>
                     )}
@@ -218,12 +211,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-800">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-200">
               <Button
                 onClick={() => onOpenRfq(product || vessel || undefined)}
                 size="lg"
                 variant="default"
-                className="flex-1 gap-2 font-bold bg-[#ed145b] hover:bg-[#d00f4e] text-white rounded-lg shadow-crimson h-12"
+                className="flex-1 gap-2 font-bold bg-[#ed145b] hover:bg-[#d00f4e] text-white rounded-lg shadow-md shadow-[#ed145b]/20 h-12"
               >
                 <FileCheck2 className="size-4 text-white" />
                 <span>Request Quotation</span>
@@ -234,7 +227,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
                 disabled={downloading}
                 size="lg"
                 variant="outline"
-                className="gap-2 font-semibold text-white border-slate-700 bg-[#061833] hover:bg-[#002e6e] rounded-lg h-12"
+                className="gap-2 font-semibold text-[#002e6e] border-slate-300 bg-white hover:bg-slate-50 rounded-lg h-12"
               >
                 <Download className="size-4 text-[#ed145b]" />
                 <span>{downloading ? "Generating PDF..." : "Download PDF"}</span>

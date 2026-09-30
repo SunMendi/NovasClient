@@ -72,63 +72,63 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="flex flex-col h-full overflow-y-auto">
-        <SheetHeader className="text-left border-b border-border/70 pb-4">
+      <SheetContent side="right" className="flex flex-col h-full overflow-y-auto bg-white text-[#133057]">
+        <SheetHeader className="text-left border-b border-slate-200 pb-4">
           <div className="flex items-center gap-2 text-[#ed145b] font-mono text-xs uppercase tracking-wider font-semibold">
             <ShieldCheck className="size-4" />
-            <span>Procurement & Quotation Gateway</span>
+            <span>Procurement &amp; Quotation Gateway</span>
           </div>
-          <SheetTitle className="text-2xl font-bold font-display text-ink">
+          <SheetTitle className="text-2xl font-bold font-display text-[#002e6e]">
             Request Formal Quotation (RFQ)
           </SheetTitle>
-          <SheetDescription className="text-metal text-xs">
+          <SheetDescription className="text-slate-500 text-xs">
             Submit your technical requirement for defense, maritime equipment, or custom shipyard vessel construction.
           </SheetDescription>
         </SheetHeader>
 
         {submitted ? (
           <div className="my-auto flex flex-col items-center justify-center p-6 text-center space-y-4">
-            <div className="grid size-16 place-items-center rounded-2xl bg-sonar/15 text-sonar border border-sonar/30 shadow-sonar">
+            <div className="grid size-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200">
               <CheckCircle2 className="size-8" />
             </div>
             <Badge variant="verified">SUBMISSION CONFIRMED</Badge>
-            <h3 className="font-display text-2xl font-bold text-ink">
+            <h3 className="font-display text-2xl font-bold text-[#002e6e]">
               Tender RFQ Dispatched
             </h3>
-            <p className="text-sm text-metal leading-relaxed max-w-sm">
+            <p className="text-sm text-slate-600 leading-relaxed max-w-sm">
               Your inquiry has been assigned to our procurement advisory unit. Our technical officer will review specifications and return a formal commercial proposal within 24–48 hours.
             </p>
 
-            <div className="w-full rounded-xl border border-border/80 bg-navy-950 p-4 font-mono text-sm space-y-1">
-              <span className="text-xs text-metal">OFFICIAL TRACKING REFERENCE</span>
+            <div className="w-full rounded-xl border border-slate-200 bg-slate-50 p-4 font-mono text-sm space-y-1">
+              <span className="text-xs text-slate-500 uppercase font-semibold">OFFICIAL TRACKING REFERENCE</span>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-lg font-bold text-[#ed145b]">{referenceCode}</span>
                 <button
                   type="button"
                   onClick={handleCopyCode}
-                  className="rounded p-1 text-metal hover:text-ink hover:bg-navy-850"
+                  className="rounded p-1 text-slate-500 hover:text-[#002e6e] hover:bg-slate-200"
                   title="Copy reference code"
                 >
                   <Copy className="size-4" />
                 </button>
               </div>
-              {copied && <span className="text-[10px] text-sonar">Copied to clipboard</span>}
+              {copied && <span className="text-[10px] text-emerald-600 font-medium">Copied to clipboard</span>}
             </div>
 
-            <Button onClick={handleReset} variant="outline" className="w-full">
-              Close & Return to Portal
+            <Button onClick={handleReset} variant="outline" className="w-full border-slate-300 text-[#002e6e]">
+              Close &amp; Return to Portal
             </Button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex-1 space-y-6 pt-4">
             {/* Selected Items / Cart */}
-            <div className="rounded-xl border border-border/60 bg-navy-950/60 p-4 space-y-3">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-wider text-metal">
+                <span className="text-xs font-mono uppercase tracking-wider text-slate-600 font-semibold">
                   Target Equipment / Vessels ({selectedItems.length})
                 </span>
                 {selectedItems.length === 0 && (
-                  <span className="text-xs text-[#ed145b]">General inquiry</span>
+                  <span className="text-xs text-[#ed145b] font-medium">General inquiry</span>
                 )}
               </div>
 
@@ -137,18 +137,18 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                   {selectedItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between rounded-lg border border-border/40 bg-navy-900 px-3 py-2 text-xs"
+                      className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm"
                     >
                       <div className="flex items-center gap-2">
                         <Badge variant="secondary" className="text-[10px] py-0">
                           {item.type}
                         </Badge>
-                        <span className="font-semibold text-ink">{item.name}</span>
+                        <span className="font-semibold text-[#002e6e]">{item.name}</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => handleRemoveItem(item.id)}
-                        className="text-metal hover:text-tactical-red"
+                        className="text-slate-400 hover:text-[#ed145b] transition-colors"
                         title="Remove item"
                       >
                         <Trash2 className="size-3.5" />
@@ -157,7 +157,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-metal/70 italic">
+                <p className="text-xs text-slate-500 italic">
                   No specific product pre-selected. Detail your specifications in the scope notes below.
                 </p>
               )}
@@ -165,13 +165,13 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
 
             {/* Procurement Entity Details */}
             <div className="space-y-4">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-ink border-b border-border/40 pb-1">
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#002e6e] border-b border-slate-200 pb-1">
                 1. Institutional Entity
               </h4>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1">
-                  <label htmlFor="org" className="text-xs font-semibold text-metal">
+                  <label htmlFor="org" className="text-xs font-semibold text-slate-700">
                     Organization / Command *
                   </label>
                   <Input
@@ -184,7 +184,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                 </div>
 
                 <div className="space-y-1">
-                  <label htmlFor="dept" className="text-xs font-semibold text-metal">
+                  <label htmlFor="dept" className="text-xs font-semibold text-slate-700">
                     Department / Division
                   </label>
                   <Input
@@ -198,7 +198,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
 
               <div className="grid gap-3 sm:grid-cols-3">
                 <div className="space-y-1 sm:col-span-1">
-                  <label htmlFor="contact" className="text-xs font-semibold text-metal">
+                  <label htmlFor="contact" className="text-xs font-semibold text-slate-700">
                     Contact Officer *
                   </label>
                   <Input
@@ -211,7 +211,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                 </div>
 
                 <div className="space-y-1 sm:col-span-1">
-                  <label htmlFor="email" className="text-xs font-semibold text-metal">
+                  <label htmlFor="email" className="text-xs font-semibold text-slate-700">
                     Official Email *
                   </label>
                   <Input
@@ -225,7 +225,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                 </div>
 
                 <div className="space-y-1 sm:col-span-1">
-                  <label htmlFor="phone" className="text-xs font-semibold text-metal">
+                  <label htmlFor="phone" className="text-xs font-semibold text-slate-700">
                     Phone / Signal *
                   </label>
                   <Input
@@ -241,20 +241,20 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
 
             {/* Logistics & Delivery Options */}
             <div className="space-y-4">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-ink border-b border-border/40 pb-1">
-                2. Delivery & Logistics Parameters
+              <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#002e6e] border-b border-slate-200 pb-1">
+                2. Delivery &amp; Logistics Parameters
               </h4>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-1">
-                  <label htmlFor="port" className="text-xs font-semibold text-metal">
+                  <label htmlFor="port" className="text-xs font-semibold text-slate-700">
                     Designated Port of Entry
                   </label>
                   <select
                     id="port"
                     value={deliveryPort}
                     onChange={(e) => setDeliveryPort(e.target.value)}
-                    className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-[#ed145b] focus:outline-none"
+                    className="flex h-11 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-[#133057] focus:bg-white focus:border-[#ed145b] focus:outline-none"
                   >
                     <option value="Chattogram Port (Seaport)">Chattogram Port (Seaport)</option>
                     <option value="Mongla Port (Seaport)">Mongla Port (Seaport)</option>
@@ -265,14 +265,14 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                 </div>
 
                 <div className="space-y-1">
-                  <label htmlFor="timeframe" className="text-xs font-semibold text-metal">
+                  <label htmlFor="timeframe" className="text-xs font-semibold text-slate-700">
                     Required Delivery Window
                   </label>
                   <select
                     id="timeframe"
                     value={timeframe}
                     onChange={(e) => setTimeframe(e.target.value)}
-                    className="flex h-11 w-full rounded-lg border border-border/80 bg-navy-950 px-3 text-xs text-ink focus:border-[#ed145b] focus:outline-none"
+                    className="flex h-11 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 text-xs text-[#133057] focus:bg-white focus:border-[#ed145b] focus:outline-none"
                   >
                     <option value="Immediate Urgent (30 Days)">Immediate Urgent (30 Days)</option>
                     <option value="60–90 Days (Standard)">60–90 Days (Standard)</option>
@@ -283,8 +283,8 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
               </div>
 
               <div className="space-y-1">
-                <label htmlFor="notes" className="text-xs font-semibold text-metal">
-                  Detailed Operational Scope & Specs
+                <label htmlFor="notes" className="text-xs font-semibold text-slate-700">
+                  Detailed Operational Scope &amp; Specs
                 </label>
                 <textarea
                   id="notes"
@@ -292,21 +292,21 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
                   placeholder="Detail exact quantities, ballistic rating, propulsion options, or custom vessel modifications required..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full rounded-lg border border-border/80 bg-navy-950 p-3 text-xs text-ink placeholder:text-metal/60 focus:border-[#ed145b] focus:outline-none"
+                  className="w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-[#133057] placeholder:text-slate-400 focus:bg-white focus:border-[#ed145b] focus:outline-none"
                 />
               </div>
 
               {/* End-User Compliance Check */}
-              <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-navy-950/60 p-3.5">
+              <div className="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
                 <input
                   type="checkbox"
                   id="endUser"
                   checked={endUserConfirmed}
                   onChange={(e) => setEndUserConfirmed(e.target.checked)}
                   required
-                  className="mt-0.5 size-4 rounded border-border text-[#ed145b] focus:ring-[#ed145b]"
+                  className="mt-0.5 size-4 rounded border-slate-300 accent-[#ed145b]"
                 />
-                <label htmlFor="endUser" className="text-xs text-metal leading-relaxed cursor-pointer">
+                <label htmlFor="endUser" className="text-xs text-slate-600 leading-relaxed cursor-pointer">
                   I certify that this inquiry is for legitimate institutional, government, or authorized corporate procurement, and agree to provide official End-User Certificates (EUC) if required.
                 </label>
               </div>

@@ -62,13 +62,13 @@ export const ContactPage: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col space-y-16 pb-24">
+    <div className="flex flex-col space-y-16 pb-24 bg-[#f9f8fb]">
       {/* 1. HEADER BANNER: Let's Connect */}
-      <section className="relative overflow-hidden border-b border-border/80 bg-gradient-to-b from-[#061833] via-[#02163b] to-[#030a18] py-16 sm:py-20">
-        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/10 blur-3xl" />
+      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-16 sm:py-20 text-white">
+        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#ed145b]/40 bg-[#002e6e]/60 px-4 py-1 text-xs font-mono uppercase tracking-wider text-[#ed145b]">
-            <Globe className="size-3.5" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-1 text-xs font-mono uppercase tracking-wider text-white">
+            <Globe className="size-3.5 text-[#ed145b]" />
             <span>MOHAKHALI DOHS, DHAKA • 24/7 PROCUREMENT DESK</span>
           </div>
 
@@ -76,7 +76,7 @@ export const ContactPage: React.FC = () => {
             Let&apos;s <span className="text-[#ed145b]">Connect !</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-200 max-w-2xl mx-auto leading-relaxed">
             In business, maintaining proper contact with clients, colleagues, and customers is crucial for success. Novas connects armed forces, port authorities, and industrial leaders with certified global OEMs.
           </p>
         </div>
@@ -91,10 +91,10 @@ export const ContactPage: React.FC = () => {
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b]">
                 OFFICIAL LIAISON
               </span>
-              <h2 className="font-display text-2xl font-bold text-white">
+              <h2 className="font-display text-2xl font-bold text-[#002e6e]">
                 Contact Details
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="text-xs sm:text-sm text-slate-600">
                 Reach out to our specialized procurement desk for tenders, technical datasheets, and OEM agency verifications.
               </p>
             </div>
@@ -102,14 +102,14 @@ export const ContactPage: React.FC = () => {
             {/* Email Card */}
             <div
               onClick={() => (window.location.href = `mailto:${COMPANY_INFO.email}`)}
-              className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 cursor-pointer hover:border-[#ed145b]/60 transition-colors shadow-lg"
+              className="flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 cursor-pointer hover:border-[#ed145b]/50 hover:shadow-md transition-all shadow-sm"
             >
               <div className="p-3 rounded-xl bg-[#ed145b]/10 text-[#ed145b]">
                 <Mail className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-400 uppercase">Email Enquiries</div>
-                <div className="font-display text-sm sm:text-base font-bold text-white hover:text-[#ed145b] transition-colors">
+                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Email Enquiries</div>
+                <div className="font-display text-sm sm:text-base font-bold text-[#002e6e] hover:text-[#ed145b] transition-colors">
                   {COMPANY_INFO.email}
                 </div>
               </div>
@@ -118,14 +118,14 @@ export const ContactPage: React.FC = () => {
             {/* Mobile / Direct Phone Card */}
             <div
               onClick={() => (window.location.href = `tel:${COMPANY_INFO.phone}`)}
-              className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 cursor-pointer hover:border-[#ed145b]/60 transition-colors shadow-lg"
+              className="flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 cursor-pointer hover:border-[#ed145b]/50 hover:shadow-md transition-all shadow-sm"
             >
-              <div className="p-3 rounded-xl bg-[#002e6e] text-white">
-                <Phone className="size-6 text-[#10b981]" />
+              <div className="p-3 rounded-xl bg-[#002e6e]/10 text-[#002e6e]">
+                <Phone className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-400 uppercase">Mobile Hot-Desk</div>
-                <div className="font-display text-sm sm:text-base font-bold text-white">
+                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Mobile Hot-Desk</div>
+                <div className="font-display text-sm sm:text-base font-bold text-[#002e6e]">
                   {COMPANY_INFO.phone}
                 </div>
               </div>
@@ -134,34 +134,34 @@ export const ContactPage: React.FC = () => {
             {/* Landline Phone Card */}
             <div
               onClick={() => (window.location.href = `tel:${COMPANY_INFO.landline}`)}
-              className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 cursor-pointer hover:border-[#ed145b]/60 transition-colors shadow-lg"
+              className="flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 cursor-pointer hover:border-[#ed145b]/50 hover:shadow-md transition-all shadow-sm"
             >
-              <div className="p-3 rounded-xl bg-[#061833] border border-slate-700 text-sky-400">
+              <div className="p-3 rounded-xl bg-slate-100 text-[#002e6e]">
                 <Phone className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-400 uppercase">Headquarters Landline</div>
-                <div className="font-display text-sm sm:text-base font-bold text-white">
+                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Headquarters Landline</div>
+                <div className="font-display text-sm sm:text-base font-bold text-[#002e6e]">
                   {COMPANY_INFO.landline}
                 </div>
               </div>
             </div>
 
             {/* Physical Facility Card */}
-            <div className="flex items-start gap-4 rounded-2xl border border-slate-800 bg-[#061833] p-4 shadow-lg">
+            <div className="flex items-start gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm">
               <div className="p-3 rounded-xl bg-[#ed145b]/10 text-[#ed145b] shrink-0 mt-0.5">
                 <MapPin className="size-6" />
               </div>
               <div>
-                <div className="font-mono text-[10px] text-slate-400 uppercase">Head Office</div>
-                <div className="font-sans text-xs sm:text-sm font-semibold text-white leading-relaxed">
+                <div className="font-mono text-[10px] text-slate-500 uppercase font-semibold">Head Office</div>
+                <div className="font-sans text-xs sm:text-sm font-semibold text-[#133057] leading-relaxed">
                   {COMPANY_INFO.address}
                 </div>
               </div>
             </div>
 
             {/* Working Hours */}
-            <div className="flex items-center gap-3 rounded-xl border border-slate-800/80 bg-[#030a18] p-3 text-xs font-mono text-slate-400">
+            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 text-xs font-mono text-slate-600 shadow-sm">
               <Clock className="size-4 text-[#ed145b]" />
               <span>Sun - Thu: 09:00 - 18:00 BST // Emergency Duty Officer: 24/7</span>
             </div>
@@ -169,32 +169,32 @@ export const ContactPage: React.FC = () => {
 
           {/* Right Column: Tender RFQ / Quote Request Form */}
           <div className="lg:col-span-7">
-            <div className="rounded-3xl border border-slate-800 bg-[#061833] p-6 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden">
+            <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 lg:p-10 shadow-lg relative overflow-hidden">
               <div className="space-y-2 mb-6">
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-white">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-[#002e6e]">
                   Submit a <span className="text-[#ed145b]">Tender RFQ</span>
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-400">
+                <p className="text-xs sm:text-sm text-slate-600">
                   Fill in your institutional procurement details to receive formal specifications and commercial pricing.
                 </p>
               </div>
 
               {submitted ? (
                 <div className="space-y-6 py-6 text-center animate-in fade-in zoom-in-95 duration-200">
-                  <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-[#ed145b]/20 border border-[#ed145b]/50 text-[#ed145b] shadow-crimson">
+                  <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-[#ed145b]/10 border border-[#ed145b]/30 text-[#ed145b]">
                     <CheckCircle2 className="size-8" />
                   </div>
                   <div className="space-y-2">
-                    <h4 className="font-display text-xl font-bold text-white">
+                    <h4 className="font-display text-xl font-bold text-[#002e6e]">
                       RFQ Transmitted Successfully!
                     </h4>
-                    <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
+                    <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
                       Your procurement request has been routed to our technical desk at Mohakhali DOHS, Dhaka.
                     </p>
                   </div>
 
-                  <div className="mx-auto max-w-sm rounded-xl border border-slate-700 bg-[#030a18] p-4 text-center">
-                    <span className="font-mono text-[10px] text-slate-400 uppercase">
+                  <div className="mx-auto max-w-sm rounded-xl border border-slate-200 bg-slate-50 p-4 text-center">
+                    <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">
                       Official RFQ Reference Code
                     </span>
                     <div className="mt-1 flex items-center justify-center gap-2">
@@ -204,13 +204,13 @@ export const ContactPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={handleCopyCode}
-                        className="p-1 rounded text-slate-400 hover:text-white"
+                        className="p-1 rounded text-slate-500 hover:text-[#002e6e]"
                         title="Copy RFQ Code"
                       >
                         <Copy className="size-4" />
                       </button>
                     </div>
-                    {copied && <span className="text-[10px] text-[#10b981]">Copied to clipboard</span>}
+                    {copied && <span className="text-[10px] text-emerald-600 font-medium">Copied to clipboard</span>}
                   </div>
 
                   <Button
@@ -223,7 +223,7 @@ export const ContactPage: React.FC = () => {
                       setMessage("");
                     }}
                     variant="outline"
-                    className="border-slate-700 text-white"
+                    className="border-slate-300 text-[#002e6e] hover:bg-slate-50"
                   >
                     Submit Another Request
                   </Button>
@@ -232,56 +232,56 @@ export const ContactPage: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono text-slate-300">Your Full Name *</label>
+                      <label className="text-xs font-mono font-semibold text-slate-700">Your Full Name *</label>
                       <input
                         type="text"
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Commander / Director Name"
-                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-[#133057] placeholder-slate-400 focus:bg-white focus:border-[#ed145b] focus:outline-none transition-colors"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono text-slate-300">Official Email *</label>
+                      <label className="text-xs font-mono font-semibold text-slate-700">Official Email *</label>
                       <input
                         type="email"
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="officer@mod.gov.bd"
-                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-[#133057] placeholder-slate-400 focus:bg-white focus:border-[#ed145b] focus:outline-none transition-colors"
                       />
                     </div>
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono text-slate-300">Company / Ministry *</label>
+                      <label className="text-xs font-mono font-semibold text-slate-700">Company / Ministry *</label>
                       <input
                         type="text"
                         required
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
                         placeholder="Ministry of Defence / Port Authority"
-                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-[#133057] placeholder-slate-400 focus:bg-white focus:border-[#ed145b] focus:outline-none transition-colors"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-mono text-slate-300">Delivery Address / Port *</label>
+                      <label className="text-xs font-mono font-semibold text-slate-700">Delivery Address / Port *</label>
                       <input
                         type="text"
                         required
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Chittagong Port / Dhaka Central"
-                        className="w-full rounded-lg border border-slate-700 bg-[#030a18] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-[#133057] placeholder-slate-400 focus:bg-white focus:border-[#ed145b] focus:outline-none transition-colors"
                       />
                     </div>
                   </div>
 
                   {/* Checklist Toggles from novasbd.com */}
-                  <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-mono text-slate-300">
+                  <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-mono text-slate-700">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
@@ -303,14 +303,14 @@ export const ContactPage: React.FC = () => {
                   </div>
 
                   <div className="space-y-1.5 pt-2">
-                    <label className="text-xs font-mono text-slate-300">Project / Equipment Specifications *</label>
+                    <label className="text-xs font-mono font-semibold text-slate-700">Project / Equipment Specifications *</label>
                     <textarea
                       required
                       rows={4}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Specify required quantities, doctrine standards (MIL-STD, NIJ, SOLAS), target delivery dates, or technical questions..."
-                      className="w-full rounded-lg border border-slate-700 bg-[#030a18] p-3 text-xs text-white placeholder-slate-500 focus:border-[#ed145b] focus:outline-none"
+                      className="w-full rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-[#133057] placeholder-slate-400 focus:bg-white focus:border-[#ed145b] focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -330,16 +330,16 @@ export const ContactPage: React.FC = () => {
 
       {/* 3. GOOGLE MAP EMBED (MOHAKHALI DOHS, DHAKA) */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto rounded-3xl border border-slate-800 bg-[#061833] p-4 sm:p-6 shadow-2xl space-y-4 overflow-hidden">
+        <div className="max-w-6xl mx-auto rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-md space-y-4 overflow-hidden">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#002e6e] font-semibold">
               <MapPin className="size-4 text-[#ed145b]" />
               <span>GEOLOCATION: MOHAKHALI DOHS, DHAKA-1206, BANGLADESH</span>
             </div>
             <span className="font-mono text-[10px] text-slate-500">23.7772° N, 90.3995° E</span>
           </div>
 
-          <div className="relative aspect-[21/9] w-full min-h-[300px] overflow-hidden rounded-2xl border border-slate-700">
+          <div className="relative aspect-[21/9] w-full min-h-[300px] overflow-hidden rounded-2xl border border-slate-200">
             <iframe
               title="Novas BD Office Map"
               width="100%"
@@ -360,7 +360,7 @@ export const ContactPage: React.FC = () => {
             <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#ed145b]">
               FAQ &amp; ADVISORY
             </span>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
               Institutional Procurement Protocols
             </h2>
           </div>
@@ -369,13 +369,13 @@ export const ContactPage: React.FC = () => {
             {faqs.map((faq, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl border border-slate-800 bg-[#061833] p-6 space-y-2"
+                className="rounded-2xl border border-slate-200/80 bg-white p-6 space-y-2 shadow-sm"
               >
-                <h4 className="font-display text-base font-bold text-white flex items-center gap-2">
+                <h4 className="font-display text-base font-bold text-[#002e6e] flex items-center gap-2">
                   <span className="size-2 rounded-full bg-[#ed145b]" />
                   <span>{faq.q}</span>
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans pl-4">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans pl-4">
                   {faq.a}
                 </p>
               </div>
