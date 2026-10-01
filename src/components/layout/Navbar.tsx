@@ -22,6 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
     { name: "Tactical & Response", path: "/products/tactical", desc: "Personal protection & optics" },
     { name: "Maritime Platforms", path: "/products/maritime", desc: "Naval workboats & hydrographic sonar" },
     { name: "Medical & Trauma", path: "/products/medical", desc: "TCCC kits & field casualty gear" },
+    { name: "Agriculture", path: "/products/agriculture", desc: "Precision spraying UAVs, harvesters & sensors" },
     { name: "Heavy Industry", path: "/products/industry", desc: "CNC fabrication & turnkey power" },
     { name: "ICT & Cyber Defence", path: "/products/ict", desc: "C4ISR & sovereign data security" },
   ];

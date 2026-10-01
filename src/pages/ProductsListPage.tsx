@@ -22,8 +22,9 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
     { id: "all", name: "All Products" },
     { id: "defence", name: "Defence" },
     { id: "tactical", name: "Tactical" },
-    { id: "medical", name: "Medical" },
     { id: "maritime", name: "Maritime" },
+    { id: "medical", name: "Medical" },
+    { id: "agriculture", name: "Agriculture" },
     { id: "industry", name: "Industry" },
     { id: "ict", name: "Cyber & ICT" }
   ];
@@ -37,10 +38,13 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((p) => {
+      const selected = selectedSector.toLowerCase();
       const matchesCategory =
-        selectedSector === "all" ||
-        p.sectorId.toLowerCase() === selectedSector.toLowerCase() ||
-        p.category.toLowerCase().includes(selectedSector.toLowerCase());
+        selected === "all" ||
+        p.sectorId.toLowerCase() === selected ||
+        p.category.toLowerCase() === selected ||
+        p.category.toLowerCase().includes(selected) ||
+        (selected === "agriculture" && (p.category.toLowerCase() === "agriculture" || p.category.toLowerCase() === "agri"));
 
       const matchesSearch =
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

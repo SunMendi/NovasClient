@@ -252,7 +252,7 @@ export const PRODUCTS: Product[] = [
     id: 'crop-sprayer-precision',
     slug: 'crop-sprayer-precision',
     name: 'Precision Crop Sprayer PCS-1200',
-    category: 'Agri',
+    category: 'Agriculture',
     sectorId: 'industry',
     tagline: 'Tractor-mounted variable-rate agricultural sprayer.',
     description: 'Heavy-duty industrial sprayer with stainless steel tank, GPS-guided pulse-width section control, and 18-meter hydraulic self-leveling boom designed for commercial agribusiness and national food security farms.',
@@ -274,7 +274,7 @@ export const PRODUCTS: Product[] = [
     id: 'ag-drone-ag200',
     slug: 'ag-drone-ag200',
     name: 'Agricultural Drone AG-200',
-    category: 'Agri',
+    category: 'Agriculture',
     sectorId: 'industry',
     tagline: 'Heavy-lift spraying & hyperspectral mapping UAV.',
     description: 'Autonomous hexacopter agricultural drone with 20-liter payload tank, RTK centimeter-precision positioning, terrain-following radar, and quick-swap smart batteries for large-scale pest control and yield optimization.',
@@ -291,5 +291,49 @@ export const PRODUCTS: Product[] = [
     origin: 'Leading Aerial Robotics OEM',
     warranty: '1 Year Full Avionics',
     imageUrl: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    id: 'combine-harvester-ch450',
+    slug: 'combine-harvester-ch450',
+    name: 'Precision Combine Harvester CH-450',
+    category: 'Agriculture',
+    sectorId: 'industry',
+    tagline: 'High-throughput grain harvesting and moisture analysis system.',
+    description: 'Modern heavy-duty combine harvester engineered for grain, rice, and wheat cultivation with onboard real-time yield monitoring, GPS auto-steering, and low-loss threshing rotor.',
+    featured: true,
+    certifications: ['ISO 4254-7 Agricultural Machinery Safety', 'CE Certified', 'OECD Tractor & Harvester Code'],
+    specs: [
+      { label: 'Header Width', value: '5.4 Meter Floating Flex Cutterbar' },
+      { label: 'Engine Output', value: '175 HP Turbocharged Tier-3 Diesel' },
+      { label: 'Grain Tank Capacity', value: '5,000 Liters with Fast Unloading Auger' },
+      { label: 'Threshing Mechanism', value: 'Twin Axial Rotor with Variable Speed' },
+      { label: 'Telematics', value: 'Integrated GPS Fleet & Fuel Telematics' }
+    ],
+    leadTime: '35–50 Days',
+    origin: 'European Union / Japan Agri OEM',
+    warranty: '2 Years Powertrain & Hydraulics',
+    imageUrl: 'https://images.unsplash.com/photo-1595838796899-8a56f2a873e8?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    id: 'hyperspectral-soil-sensor',
+    slug: 'hyperspectral-soil-sensor',
+    name: 'IoT Smart Soil & Canopy Sensor Network',
+    category: 'Agriculture',
+    sectorId: 'industry',
+    tagline: 'Real-time soil moisture, NPK fertility and micro-climate telemetry station.',
+    description: 'Solar-powered wireless agricultural telemetry station providing multi-depth soil moisture profiling, electrical conductivity (EC), temperature, and ambient micro-climate monitoring for precision irrigation.',
+    featured: false,
+    certifications: ['IP68 Sensor Probes / IP65 Station', 'LoRaWAN Certified', 'FCC / CE Compliant'],
+    specs: [
+      { label: 'Measurement Depths', value: '10cm, 30cm, 60cm, and 100cm Multi-Layer Probe' },
+      { label: 'Monitored Parameters', value: 'Volumetric Water Content (VWC), Soil EC, Temperature, NPK' },
+      { label: 'Connectivity', value: 'LoRaWAN Long-Range 15km / 4G LTE-M Cellular Fallback' },
+      { label: 'Power Supply', value: 'Solar Panel with 5-Year LiFePO4 Battery' },
+      { label: 'Cloud Integration', value: 'REST API / MQTT Telemetry Platform Dashboard' }
+    ],
+    leadTime: '15–25 Days',
+    origin: 'Germany / Netherlands OEM',
+    warranty: '3 Years Sensor Integrity',
+    imageUrl: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=800&q=80'
   }
 ];

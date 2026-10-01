@@ -26,6 +26,7 @@ export type ProductCategory =
   | 'Tactical' 
   | 'Maritime' 
   | 'Medical' 
+  | 'Agriculture'
   | 'Agri'
   | 'Vessels';
 

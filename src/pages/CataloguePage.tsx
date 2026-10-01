@@ -42,7 +42,7 @@ export const CataloguePage: React.FC<CataloguePageProps> = ({ onOpenRfq }) => {
     { label: "Tactical", value: "Tactical", count: PRODUCTS.filter((p) => p.category === "Tactical").length },
     { label: "Maritime", value: "Maritime", count: PRODUCTS.filter((p) => p.category === "Maritime").length },
     { label: "Medical", value: "Medical", count: PRODUCTS.filter((p) => p.category === "Medical").length },
-    { label: "Agri", value: "Agri", count: PRODUCTS.filter((p) => p.category === "Agri").length },
+    { label: "Agriculture", value: "Agriculture", count: PRODUCTS.filter((p) => p.category === "Agriculture" || p.category === "Agri").length },
     { label: "Naval Vessels", value: "Vessels", count: VESSELS.length },
   ];
 
