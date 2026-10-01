@@ -22,15 +22,74 @@ import {
   ArrowRight
 } from "lucide-react";
 
-import { DynamicTopBanner } from "../components/common/DynamicTopBanner";
+import { DynamicTopBanner, DynamicBannerSlide } from "../components/common/DynamicTopBanner";
 
-const CONSULTANCY_BANNER_IMAGES = [
-  "/assets/hero/hero-cyber-BQaYidYs.jpg",
-  "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1200&q=80",
-  "/assets/hero/hero-logistics-sV_p9M_H.jpg",
-  "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=1200&q=80",
-  "/assets/hero/hero-defence-CzOJrdZI.jpg"
+const CONSULTANCY_SLIDES: DynamicBannerSlide[] = [
+  {
+    imageUrl: "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1200&q=80",
+    badgeText: "INTERNATIONAL CONSULTANCY // GLOBAL TRADE",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Foreign OEM Representation &amp; <span className="text-[#ed145b]">Global Trade Alliances</span>
+      </>
+    ),
+    subtitle: "Accredited local representation connecting European, North American, and Asian defense manufacturers with South Asian sovereign procurement directorates.",
+    link: "/consultancy/international",
+    linkText: "Explore International Practice"
+  },
+  {
+    imageUrl: "/assets/hero/hero-cyber-BQaYidYs.jpg",
+    badgeText: "IT & TELECOMMUNICATION // C4ISR & CYBER",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Tactical Defense Comms &amp; <span className="text-[#ed145b]">Sovereign Data Infrastructure</span>
+      </>
+    ),
+    subtitle: "Architecting mission-critical tactical radio backbones, Tier-III/IV data centers, encrypted communication systems, and cyber defense operation centers.",
+    link: "/consultancy/it-telecom",
+    linkText: "Explore Telecom Practice"
+  },
+  {
+    imageUrl: "/assets/hero/hero-logistics-sV_p9M_H.jpg",
+    badgeText: "PROJECT CONSULTANCY // TURNKEY EPC",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Turnkey Industrial EPC &amp; <span className="text-[#ed145b]">Naval Modernization</span>
+      </>
+    ),
+    subtitle: "Comprehensive project management, heavy shipyard engineering, automated CNC cutting lines, and high-capacity manufacturing plant feasibility.",
+    link: "/consultancy/project",
+    linkText: "Explore Project Advisory"
+  },
+  {
+    imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
+    badgeText: "TENDER ADVISORY // DGDP & ICB BIDDING",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        DGDP Defense Procurement &amp; <span className="text-[#ed145b]">Government Tender Advisory</span>
+      </>
+    ),
+    subtitle: "Directorate General Defence Purchase (DGDP) protocols, International Competitive Bidding (ICB), commercial valuation, and compliant bid documentation.",
+    link: "/consultancy/tender",
+    linkText: "Explore Tender Advisory"
+  },
+  {
+    imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=1200&q=80",
+    badgeText: "REAL ESTATE & CONSTRUCTION // DEFENSE INFRASTRUCTURE",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Specialized Defense Cantonments &amp; <span className="text-[#ed145b]">Coastal Port Civil Works</span>
+      </>
+    ),
+    subtitle: "Structural engineering, marine jetty berth construction, specialized blast-hardened defense compounds, and coastal hydrodynamics.",
+    link: "/consultancy/real-estate-construction",
+    linkText: "Explore Construction Practice"
+  }
 ];
 
 interface ConsultancyListPageProps {
@@ -86,18 +145,9 @@ export const ConsultancyListPage: React.FC<ConsultancyListPageProps> = ({ onOpen
 
   return (
     <div className="flex flex-col space-y-10 pb-24">
-      {/* Dynamic Header Banner with Moving Images & Ken Burns Cross-Fade */}
+      {/* Dynamic Header Banner with Specific Consultancy Variation Data Changing per Slide */}
       <DynamicTopBanner
-        images={CONSULTANCY_BANNER_IMAGES}
-        badgeText="SOVEREIGN ADVISORY • DGDP TENDER VETTING • EPC & TECH TRANSFER"
-        badgeIcon={<ShieldCheck className="size-3.5 text-[#ed145b]" />}
-        title={
-          <>
-            {filteredServices.length} Advisory Practices in{" "}
-            <span className="text-[#ed145b]">{currentCategoryTitle}</span>
-          </>
-        }
-        subtitle="Specialized sovereign advisory across defense procurement, foreign OEM market representation, encrypted tactical telecommunications, turnkey industrial EPC, DGDP institutional tenders, and hardened marine civil works."
+        slides={CONSULTANCY_SLIDES}
       />
 
       {/* Filter Tabs & Search Bar */}

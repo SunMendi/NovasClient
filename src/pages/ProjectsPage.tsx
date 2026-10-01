@@ -2,16 +2,88 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PROJECTS } from "../data/projects";
 import { Button } from "../components/ui/button";
-import { Search, ChevronRight, MapPin, Building2, ShieldCheck } from "lucide-react";
-import { DynamicTopBanner } from "../components/common/DynamicTopBanner";
+import { Search, ChevronRight, MapPin, Building2, ShieldCheck, Compass } from "lucide-react";
+import { DynamicTopBanner, DynamicBannerSlide } from "../components/common/DynamicTopBanner";
 
-const PROJECT_BANNER_IMAGES = [
-  "/assets/hero/hero-maritime-Z9Kk4jOd.jpg",
-  "/assets/hero/hero-defence-CzOJrdZI.jpg",
-  "/assets/hero/hero-logistics-sV_p9M_H.jpg",
-  "/assets/hero/hero-cyber-BQaYidYs.jpg",
-  "/assets/hero/hero-aerospace-CdirWyJV.jpg",
-  "/assets/hero/hero-medical-DBJtfXpF.jpg"
+const PROJECT_SLIDES: DynamicBannerSlide[] = [
+  {
+    imageUrl: "/assets/hero/hero-maritime-Z9Kk4jOd.jpg",
+    badgeText: "MARITIME PLATFORMS // NAVAL SHIPYARD",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Tactical High-Speed <span className="text-[#ed145b]">Naval Interceptors</span>
+      </>
+    ),
+    subtitle: "Turnkey delivery and systems integration of high-speed naval interceptor workboats equipped with marine X-band surveillance radar and encrypted VHF.",
+    link: "/projects/naval-interceptor-craft-patrol",
+    linkText: "View Naval Project"
+  },
+  {
+    imageUrl: "/assets/hero/hero-defence-CzOJrdZI.jpg",
+    badgeText: "DEFENCE & BORDER RECONNAISSANCE",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Perimeter Border Radar &amp; <span className="text-[#ed145b]">Optronics</span>
+      </>
+    ),
+    subtitle: "Deployment of tactical perimeter ground-surveillance radar with co-mounted long-range thermal electro-optical tracking cameras for 24/7 border security.",
+    link: "/projects/tactical-border-surveillance-radar",
+    linkText: "View Radar Project"
+  },
+  {
+    imageUrl: "/assets/hero/hero-logistics-sV_p9M_H.jpg",
+    badgeText: "HEAVY INDUSTRY & SHIPYARD AUTOMATION",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Automated Shipyard <span className="text-[#ed145b]">CNC Plasma Cutting Line</span>
+      </>
+    ),
+    subtitle: "Turnkey EPC installation of high-precision heavy industrial gantry CNC plasma plate-cutting machines and automated submerged-arc welding stations.",
+    link: "/projects/shipyard-heavy-industrial-cnc-automation",
+    linkText: "View Industrial Project"
+  },
+  {
+    imageUrl: "/assets/hero/hero-cyber-BQaYidYs.jpg",
+    badgeText: "ICT & SOVEREIGN CYBER DEFENCE",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Sovereign Defense <span className="text-[#ed145b]">Cyber Operations Center (SOC)</span>
+      </>
+    ),
+    subtitle: "Turnkey consultancy, architectural design, and deployment of a hardened 24/7 Security Operations Center with zero-trust sovereign network architecture.",
+    link: "/projects/c4isr-secure-cyber-defense-center",
+    linkText: "View Cyber Operations"
+  },
+  {
+    imageUrl: "/assets/hero/hero-aerospace-CdirWyJV.jpg",
+    badgeText: "AEROSPACE & LITTORAL SURVEILLANCE",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Tactical Maritime <span className="text-[#ed145b]">Reconnaissance UAV Fleet</span>
+      </>
+    ),
+    subtitle: "Long-endurance tactical UAV fleet with EO/IR sensor gimbals for littoral maritime patrols and environmental monitoring across the Bay of Bengal.",
+    link: "/projects/tactical-uav-coastal-reconnaissance",
+    linkText: "View UAV Project"
+  },
+  {
+    imageUrl: "/assets/hero/hero-medical-DBJtfXpF.jpg",
+    badgeText: "TACTICAL MEDICINE & CASUALTY RESPONSE",
+    badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+    title: (
+      <>
+        Frontline Combat Casualty <span className="text-[#ed145b]">Care (TCCC) Program</span>
+      </>
+    ),
+    subtitle: "Large-scale procurement and supply of tactical trauma kits, deployable field monitors, and specialized surgical casualty units for national defense.",
+    link: "/projects/military-frontline-medical-trauma",
+    linkText: "View Medical Program"
+  }
 ];
 
 export const ProjectsPage: React.FC = () => {
@@ -39,17 +111,9 @@ export const ProjectsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-12 pb-24">
-      {/* Dynamic Header Banner with Moving Images & Smooth Cross-Fade */}
+      {/* Dynamic Header Banner with Specific Project Data Changing per Slide */}
       <DynamicTopBanner
-        images={PROJECT_BANNER_IMAGES}
-        badgeText="NATIONAL INFRASTRUCTURE & SOVEREIGN DEFENCE"
-        badgeIcon={<ShieldCheck className="size-3.5 text-[#ed145b]" />}
-        title={
-          <>
-            Our <span className="text-[#ed145b]">Projects</span>
-          </>
-        }
-        subtitle="Explore major turn-key procurement, naval vessel integrations, border surveillance deployments, and heavy industrial automation executed by Novas BD across South Asia."
+        slides={PROJECT_SLIDES}
       />
 
       {/* Filter and Search Bar */}

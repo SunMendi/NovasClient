@@ -7,34 +7,161 @@ import { Button } from "../components/ui/button";
 import { Product } from "../types";
 import { ShieldCheck, ArrowRight, CheckCircle2, Factory, Shield, Cpu, Map, Truck, Anchor } from "lucide-react";
 
-import { DynamicTopBanner } from "../components/common/DynamicTopBanner";
+import { DynamicTopBanner, DynamicBannerSlide } from "../components/common/DynamicTopBanner";
 
-const SECTOR_BANNER_IMAGES: Record<string, string[]> = {
+const SECTOR_SLIDES: Record<string, DynamicBannerSlide[]> = {
   defence: [
-    "/assets/hero/hero-defence-CzOJrdZI.jpg",
-    "/assets/hero/hero-tactical-BSZNFcBk.jpg",
-    "/assets/hero/hero-aerospace-CdirWyJV.jpg",
-    "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=1200&q=80"
+    {
+      imageUrl: "/assets/hero/hero-defence-CzOJrdZI.jpg",
+      badgeText: "DEFENCE // BALLISTIC FORCE PROTECTION",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Force Protection &amp; <span className="text-[#ed145b]">Combat Ballistic Systems</span>
+        </>
+      ),
+      subtitle: "NIJ Level IV multi-curve ceramic torso plates, high-cut aramid combat helmets, and full traceability meeting MIL-STD-810H and STANAG 2920.",
+      link: "/products/defence",
+      linkText: "Explore Defence Products"
+    },
+    {
+      imageUrl: "/assets/hero/hero-tactical-BSZNFcBk.jpg",
+      badgeText: "DEFENCE // ADVANCED OPTRONICS",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Gen-3 Night Vision &amp; <span className="text-[#ed145b]">Thermal Optronics</span>
+        </>
+      ),
+      subtitle: "Autogated white phosphor dual-tube night vision binoculars and thermal weapon sights for South Asian armed forces and rapid response units.",
+      link: "/products/tactical",
+      linkText: "Explore Tactical Gear"
+    },
+    {
+      imageUrl: "/assets/hero/hero-aerospace-CdirWyJV.jpg",
+      badgeText: "DEFENCE // BORDER SURVEILLANCE",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Tactical Border Radar &amp; <span className="text-[#ed145b]">UAV Reconnaissance</span>
+        </>
+      ),
+      subtitle: "Long-range ground surveillance radar arrays and tactical reconnaissance UAV datalinks connecting frontier security sectors with central command.",
+      link: "/projects/tactical-border-surveillance-radar",
+      linkText: "View Border Surveillance"
+    }
   ],
   industry: [
-    "/assets/hero/hero-logistics-sV_p9M_H.jpg",
-    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80"
+    {
+      imageUrl: "/assets/hero/hero-logistics-sV_p9M_H.jpg",
+      badgeText: "HEAVY INDUSTRY // SHIPYARD AUTOMATION",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Automated Shipyard <span className="text-[#ed145b]">CNC Plasma Cutting &amp; Fabrication</span>
+        </>
+      ),
+      subtitle: "Dual-gantry heavy duty CNC plasma and oxy-fuel cutting stations handling high-tensile steel plates up to 50mm with automated nesting software.",
+      link: "/projects/shipyard-heavy-industrial-cnc-automation",
+      linkText: "View Shipyard EPC"
+    },
+    {
+      imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+      badgeText: "HEAVY INDUSTRY // TURNKEY POWER & EPC",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Turnkey Power Generation &amp; <span className="text-[#ed145b]">Plant Machinery</span>
+        </>
+      ),
+      subtitle: "High-capacity synchronized diesel power generation, medium-voltage distribution switchgear, and industrial machinery for EPC megaprojects.",
+      link: "/products/industry",
+      linkText: "Explore Industry Products"
+    },
+    {
+      imageUrl: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
+      badgeText: "HEAVY INDUSTRY // ADVANCED MANUFACTURING",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Industrial Automation &amp; <span className="text-[#ed145b]">Heavy Tooling Supply</span>
+        </>
+      ),
+      subtitle: "Supplying process control hardware, heavy fabrication tooling, and pneumatic handling systems for high-output manufacturing and energy facilities.",
+      link: "/products/industry",
+      linkText: "Explore Industrial Supply"
+    }
   ],
   maritime: [
-    "/assets/hero/hero-maritime-Z9Kk4jOd.jpg",
-    "https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80"
+    {
+      imageUrl: "/assets/hero/hero-maritime-Z9Kk4jOd.jpg",
+      badgeText: "MARITIME // NAVAL PLATFORMS & WORKBOATS",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          High-Speed Patrol Interceptors &amp; <span className="text-[#ed145b]">Naval Workboats</span>
+        </>
+      ),
+      subtitle: "Turnkey aluminum patrol craft with waterjet propulsion, shallow-draft harbor tugs, and SOLAS-certified life-saving apparatus.",
+      link: "/products/maritime",
+      linkText: "Explore Maritime Products"
+    },
+    {
+      imageUrl: "https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=1200&q=80",
+      badgeText: "MARITIME // HYDROGRAPHIC SURVEY & SONAR",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Hydrographic Multibeam Sonar &amp; <span className="text-[#ed145b]">Navigation Radar</span>
+        </>
+      ),
+      subtitle: "Deep-water bathymetric mapping arrays, X-band/S-band IMO/SOLAS navigation radar, and harbor vessel traffic monitoring instrumentation.",
+      link: "/products/maritime",
+      linkText: "Explore Sonar Systems"
+    }
   ],
   ict: [
-    "/assets/hero/hero-cyber-BQaYidYs.jpg",
-    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80"
+    {
+      imageUrl: "/assets/hero/hero-cyber-BQaYidYs.jpg",
+      badgeText: "CYBER DEFENCE // ZERO-TRUST ARCHITECTURE",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Sovereign Cyber Defence &amp; <span className="text-[#ed145b]">24/7 SOC Infrastructure</span>
+        </>
+      ),
+      subtitle: "Hardened server infrastructure, next-generation enterprise SIEM, air-gapped forensic labs, and high-density operator command video walls.",
+      link: "/products/ict",
+      linkText: "Explore ICT Products"
+    },
+    {
+      imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+      badgeText: "ICT // TACTICAL COMMUNICATIONS",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Encrypted Tactical Communications &amp; <span className="text-[#ed145b]">C4ISR Datalinks</span>
+        </>
+      ),
+      subtitle: "Military-grade frequency-hopping tactical radios, encrypted microwave backbones, and sovereign edge computing data centers.",
+      link: "/products/ict",
+      linkText: "Explore Tactical Comms"
+    }
   ],
   geospatial: [
-    "/assets/hero/hero-aerospace-CdirWyJV.jpg",
-    "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80"
+    {
+      imageUrl: "/assets/hero/hero-aerospace-CdirWyJV.jpg",
+      badgeText: "AEROSPACE // TACTICAL RECONNAISSANCE",
+      badgeIcon: <ShieldCheck className="size-3.5 text-[#ed145b]" />,
+      title: (
+        <>
+          Tactical Reconnaissance UAVs &amp; <span className="text-[#ed145b]">Sensors</span>
+        </>
+      ),
+      subtitle: "Long-endurance tactical UAVs, electro-optical sensor pods, and high-altitude mapping payloads for defense forces and coastal surveillance.",
+      link: "/industry/geospatial",
+      linkText: "Explore Geospatial Systems"
+    }
   ]
 };
 
@@ -54,36 +181,15 @@ export const IndustryPage: React.FC<IndustryPageProps> = ({ onOpenRfq }) => {
     (p) => p.sectorId.toLowerCase() === sector.id.toLowerCase() || p.sectorId.toLowerCase() === sectorId
   );
 
-  const bannerImages =
-    SECTOR_BANNER_IMAGES[sector.id.toLowerCase()] ||
-    SECTOR_BANNER_IMAGES.defence;
-
-  const getSectorIcon = (name: string) => {
-    switch (name) {
-      case "Shield": return <Shield className="size-8 text-[#ed145b]" />;
-      case "Anchor": return <Anchor className="size-8 text-[#005f99]" />;
-      case "Factory": return <Factory className="size-8 text-amber-500" />;
-      case "Map": return <Map className="size-8 text-[#059669]" />;
-      case "Cpu": return <Cpu className="size-8 text-purple-600" />;
-      default: return <Truck className="size-8 text-pink-500" />;
-    }
-  };
+  const sectorSlides =
+    SECTOR_SLIDES[sector.id.toLowerCase()] ||
+    SECTOR_SLIDES.defence;
 
   return (
     <div className="flex flex-col space-y-12 pb-24">
-      {/* Dynamic Header Banner with Moving Images & Smooth Cross-Fade */}
+      {/* Dynamic Header Banner with Specific Sector Data Changing per Slide */}
       <DynamicTopBanner
-        images={bannerImages}
-        badgeText="CORE SECTOR CAPABILITY"
-        badgeIcon={<ShieldCheck className="size-3.5 text-[#ed145b]" />}
-        icon={getSectorIcon(sector.iconName)}
-        title={
-          <>
-            {sector.name} <span className="text-[#ed145b]">Sector</span>
-          </>
-        }
-        subtitle={sector.description}
-        tags={sector.capabilities}
+        slides={sectorSlides}
         align="left"
       />
 
