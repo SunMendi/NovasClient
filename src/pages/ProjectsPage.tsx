@@ -114,6 +114,7 @@ export const ProjectsPage: React.FC = () => {
       {/* Dynamic Header Banner with Specific Project Data Changing per Slide */}
       <DynamicTopBanner
         slides={PROJECT_SLIDES}
+        align="left"
       />
 
       {/* Filter and Search Bar */}

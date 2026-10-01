@@ -148,6 +148,7 @@ export const ConsultancyListPage: React.FC<ConsultancyListPageProps> = ({ onOpen
       {/* Dynamic Header Banner with Specific Consultancy Variation Data Changing per Slide */}
       <DynamicTopBanner
         slides={CONSULTANCY_SLIDES}
+        align="left"
       />
 
       {/* Filter Tabs & Search Bar */}

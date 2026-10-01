@@ -39,7 +39,7 @@ export const DynamicTopBanner: React.FC<DynamicTopBannerProps> = ({
   subtitle: fallbackSubtitle,
   tags: fallbackTags,
   icon: fallbackIcon,
-  align = "center",
+  align = "left",
   intervalMs = 4500,
   minHeightClass = "min-h-[420px] sm:min-h-[460px] lg:min-h-[480px]"
 }) => {
@@ -117,7 +117,7 @@ export const DynamicTopBanner: React.FC<DynamicTopBannerProps> = ({
         <div
           key={`content-${activeSlide}`}
           className={`space-y-4 sm:space-y-5 max-w-4xl ${
-            isLeft ? "text-left" : "mx-auto text-center"
+            isLeft ? "text-left mr-auto" : "mx-auto text-center"
           }`}
         >
           {/* Badge / Indicator with glowing indicator */}
@@ -198,20 +198,22 @@ export const DynamicTopBanner: React.FC<DynamicTopBannerProps> = ({
 
       {/* Slide Progress Indicators (Dots) */}
       {normalizedSlides.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
-          {normalizedSlides.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setActiveSlide(i)}
-              aria-label={`Slide ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === activeSlide
-                  ? "w-6 bg-[#ed145b] shadow-crimson"
-                  : "w-1.5 bg-white/40 hover:bg-white/70"
-              }`}
-            />
-          ))}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 absolute bottom-4 left-0 right-0 z-20 pointer-events-none">
+          <div className={`flex items-center gap-1.5 pointer-events-auto ${isLeft ? "justify-start" : "justify-center"}`}>
+            {normalizedSlides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActiveSlide(i)}
+                aria-label={`Slide ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === activeSlide
+                    ? "w-6 bg-[#ed145b] shadow-crimson"
+                    : "w-1.5 bg-white/40 hover:bg-white/70"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       )}
     </section>
