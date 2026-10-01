@@ -92,3 +92,38 @@ export interface RfqFormData {
   notes?: string;
   items: RfqItem[];
 }
+
+export type ConsultancyCategoryId =
+  | 'international'
+  | 'it-telecom'
+  | 'project'
+  | 'tender'
+  | 'real-estate-construction';
+
+export interface ConsultancyCategory {
+  id: ConsultancyCategoryId;
+  slug: string;
+  name: string;
+  tagline: string;
+  description: string;
+  iconName: string;
+}
+
+export interface ConsultancyService {
+  id: string;
+  slug: string;
+  name: string;
+  categoryId: ConsultancyCategoryId;
+  categoryName: string;
+  tagline: string;
+  summary: string;
+  description: string;
+  deliverables: string[];
+  targetClients: string[];
+  methodology: { step: string; title: string; desc: string }[];
+  standards: string[];
+  duration: string;
+  leadAdvisors: string;
+  imageUrl: string;
+  featured: boolean;
+}

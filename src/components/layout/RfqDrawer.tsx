@@ -3,13 +3,13 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { Product, Vessel } from "../../types";
+import { Product, Vessel, ConsultancyService } from "../../types";
 import { ShieldCheck, CheckCircle2, Copy, Send, Trash2, Plus } from "lucide-react";
 
 interface RfqDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  initialItem?: Product | Vessel | null;
+  initialItem?: Product | Vessel | ConsultancyService | null;
 }
 
 export const RfqDrawer: React.FC<RfqDrawerProps> = ({
@@ -35,7 +35,15 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
     if (initialItem) {
       setSelectedItems((prev) => {
         if (prev.some((item) => item.id === initialItem.id)) return prev;
-        return [...prev, { id: initialItem.id, name: initialItem.name, type: "vesselType" in initialItem ? "Vessel" : initialItem.category }];
+        let itemType = "Equipment";
+        if ("vesselType" in initialItem) {
+          itemType = "Vessel";
+        } else if ("categoryId" in initialItem) {
+          itemType = `Consultancy: ${initialItem.categoryName}`;
+        } else if ("category" in initialItem) {
+          itemType = initialItem.category;
+        }
+        return [...prev, { id: initialItem.id, name: initialItem.name, type: itemType }];
       });
     }
   }, [initialItem]);

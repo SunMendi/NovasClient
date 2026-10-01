@@ -9,9 +9,11 @@ import { ProjectsPage } from "./pages/ProjectsPage";
 import { ProjectDetailPage } from "./pages/ProjectDetailPage";
 import { ProductsListPage } from "./pages/ProductsListPage";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
+import { ConsultancyListPage } from "./pages/ConsultancyListPage";
+import { ConsultancyDetailPage } from "./pages/ConsultancyDetailPage";
 import { IndustryPage } from "./pages/IndustryPage";
 import { ContactPage } from "./pages/ContactPage";
-import { Product, Vessel } from "./types";
+import { Product, Vessel, ConsultancyService } from "./types";
 
 // Scroll to top automatically when navigating between pages
 function ScrollToTop() {
@@ -24,9 +26,9 @@ function ScrollToTop() {
 
 export function App() {
   const [rfqOpen, setRfqOpen] = useState(false);
-  const [rfqInitialItem, setRfqInitialItem] = useState<Product | Vessel | null>(null);
+  const [rfqInitialItem, setRfqInitialItem] = useState<Product | Vessel | ConsultancyService | null>(null);
 
-  const handleOpenRfq = (item?: Product | Vessel) => {
+  const handleOpenRfq = (item?: Product | Vessel | ConsultancyService) => {
     setRfqInitialItem(item || null);
     setRfqOpen(true);
   };
@@ -54,6 +56,7 @@ export function App() {
             <Route path="/projects/:id" element={<ProjectDetailPage onOpenRfq={handleOpenRfq} />} />
 
             {/* 4. Products - Official category & item routes from novasbd.com */}
+            <Route path="/products" element={<Navigate to="/products/all" replace />} />
             <Route path="/products/:category_id" element={<ProductsListPage onOpenRfq={handleOpenRfq} />} />
             <Route path="/product/:_id" element={<ProductDetailPage onOpenRfq={handleOpenRfq} />} />
             <Route path="/product/:id" element={<ProductDetailPage onOpenRfq={handleOpenRfq} />} />
@@ -61,12 +64,21 @@ export function App() {
             <Route path="/catalogue" element={<Navigate to="/products/all" replace />} />
             <Route path="/catalogue/:id" element={<ProductDetailPage onOpenRfq={handleOpenRfq} />} />
 
-            {/* 5. Industry / Consultancy / Defence - Official route from novasbd.com */}
+            {/* 5. Consultancy - Dedicated 5 Variations Architecture */}
+            <Route path="/consultancy" element={<Navigate to="/consultancy/all" replace />} />
+            <Route path="/consultancy/:category_id" element={<ConsultancyListPage onOpenRfq={handleOpenRfq} />} />
+            <Route path="/consultancy/service/:id" element={<ConsultancyDetailPage onOpenRfq={handleOpenRfq} />} />
+
+            {/* Backward compatibility redirects for legacy /industry/consultancy */}
+            <Route path="/industry/consultancy" element={<Navigate to="/consultancy/all" replace />} />
+            <Route path="/industry/consultancy/:category_id" element={<Navigate to="/consultancy/all" replace />} />
+
+            {/* 6. Industry / Defence Sectors */}
             <Route path="/industry/:category_id" element={<IndustryPage onOpenRfq={handleOpenRfq} />} />
             <Route path="/sectors" element={<Navigate to="/industry/defence" replace />} />
             <Route path="/sectors/:category_id" element={<IndustryPage onOpenRfq={handleOpenRfq} />} />
 
-            {/* 6. Contact - Official route from novasbd.com */}
+            {/* 7. Contact - Official route from novasbd.com */}
             <Route path="/contact" element={<ContactPage />} />
 
             {/* Catch-all fallback */}

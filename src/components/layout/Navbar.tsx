@@ -14,6 +14,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
+  const [consultancyDropdownOpen, setConsultancyDropdownOpen] = useState(false);
 
   const productCategories = [
     { name: "All Products", path: "/products/all", desc: "Complete mission equipment catalog" },
@@ -25,10 +26,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
     { name: "ICT & Cyber Defence", path: "/products/ict", desc: "C4ISR & sovereign data security" },
   ];
 
+  const consultancyCategories = [
+    { name: "All Consultancy", path: "/consultancy/all", desc: "Sovereign advisory & turnkey project directory" },
+    { name: "International Consultancy", path: "/consultancy/international", desc: "Global OEM representation & EUC compliance" },
+    { name: "IT & Telecommunication", path: "/consultancy/it-telecom", desc: "C4ISR, tactical comms & Tier-III/IV data centers" },
+    { name: "Project Consultancy", path: "/consultancy/project", desc: "Turnkey EPC, naval shipyards & plant automation" },
+    { name: "Tender Consultancy", path: "/consultancy/tender", desc: "DGDP defense bidding & commercial valuation" },
+    { name: "Real Estate & Construction", path: "/consultancy/real-estate-construction", desc: "Hardened defense cantonments & port berths" },
+  ];
+
   const mainNavLinks = [
     { name: "Home", path: "/" },
     { name: "Projects", path: "/projects" },
-    { name: "Consultancy", path: "/industry/consultancy" },
     { name: "Defence", path: "/industry/defence" },
     { name: "Industry", path: "/industry/industry" },
     { name: "About us", path: "/aboutus" },
@@ -41,6 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
   };
 
   const isProductsActive = location.pathname.startsWith("/product");
+  const isConsultancyActive = location.pathname.startsWith("/consultancy");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-xl shadow-xs transition-all">
@@ -55,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-7">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
           <Link
             to="/"
             className={`relative font-display text-[15px] font-semibold transition-colors duration-200 py-5 ${
@@ -113,6 +123,58 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
                         {cat.name}
                       </span>
                       <span className="text-xs text-slate-500 group-hover:text-slate-600">
+                        {cat.desc}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Consultancy Dropdown (5 Variations) */}
+          <div
+            className="relative"
+            onMouseEnter={() => setConsultancyDropdownOpen(true)}
+            onMouseLeave={() => setConsultancyDropdownOpen(false)}
+          >
+            <button
+              type="button"
+              className={`flex items-center gap-1.5 font-display text-[15px] font-semibold transition-colors duration-200 py-5 focus:outline-none ${
+                isConsultancyActive
+                  ? "text-[#ed145b] font-bold"
+                  : "text-[#133057] hover:text-[#ed145b]"
+              }`}
+            >
+              <span>Consultancy</span>
+              <ChevronDown
+                className={`size-4 transition-transform duration-200 ${
+                  consultancyDropdownOpen ? "rotate-180 text-[#ed145b]" : "text-slate-500"
+                }`}
+              />
+              {isConsultancyActive && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2.5px] rounded-full bg-[#ed145b] shadow-crimson" />
+              )}
+            </button>
+
+            {/* Dropdown Menu */}
+            {consultancyDropdownOpen && (
+              <div className="absolute top-full left-0 w-84 rounded-xl border border-slate-200 bg-white p-3 shadow-xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-150 z-50">
+                <div className="mb-2 px-3 py-1 font-sans text-[11px] font-bold uppercase tracking-wider text-[#ed145b]">
+                  Consultancy Variations
+                </div>
+                <div className="space-y-1">
+                  {consultancyCategories.map((cat) => (
+                    <Link
+                      key={cat.path}
+                      to={cat.path}
+                      onClick={() => setConsultancyDropdownOpen(false)}
+                      className="group flex flex-col rounded-lg px-3 py-2 transition-colors hover:bg-slate-50"
+                    >
+                      <span className="text-sm font-semibold text-[#133057] group-hover:text-[#ed145b] transition-colors">
+                        {cat.name}
+                      </span>
+                      <span className="text-xs text-slate-500 group-hover:text-slate-600 line-clamp-1">
                         {cat.desc}
                       </span>
                     </Link>
@@ -199,6 +261,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
                     <span>Home</span>
                   </Link>
 
+                  {/* Products Section */}
                   <div className="pt-2 pb-1">
                     <span className="px-3 font-sans text-[11px] font-bold uppercase tracking-wider text-[#ed145b]">
                       Products
@@ -215,6 +278,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
                     </Link>
                   ))}
 
+                  {/* Consultancy Section with 5 Variations */}
+                  <div className="pt-3 pb-1">
+                    <span className="px-3 font-sans text-[11px] font-bold uppercase tracking-wider text-[#ed145b]">
+                      Consultancy Variations
+                    </span>
+                  </div>
+                  {consultancyCategories.map((cat) => (
+                    <Link
+                      key={cat.path}
+                      to={cat.path}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center justify-between rounded-lg px-3 py-1.5 text-sm text-slate-600 hover:text-[#ed145b] hover:bg-slate-50"
+                    >
+                      <span>{cat.name}</span>
+                    </Link>
+                  ))}
+
+                  {/* Other Navigation Links */}
                   <div className="pt-3 pb-1">
                     <span className="px-3 font-sans text-[11px] font-bold uppercase tracking-wider text-[#ed145b]">
                       Navigation

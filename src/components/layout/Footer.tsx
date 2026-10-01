@@ -102,6 +102,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/industry/defence" className="hover:text-[#ed145b] transition-colors">
+                  Defence Sector
+                </Link>
+              </li>
+              <li>
                 <Link to="/contact" className="hover:text-[#ed145b] transition-colors">
                   Contact &amp; Tender RFQ
                 </Link>
@@ -109,35 +114,40 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Core Sectors Column */}
+          {/* Consultancy Variations Column */}
           <div>
             <h4 className="font-display text-sm font-bold uppercase tracking-wider text-white mb-4">
-              Sectors &amp; Industry
+              Consultancy
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/industry/defence" className="hover:text-[#ed145b] transition-colors">
-                  Defence Systems
+                <Link to="/consultancy/international" className="hover:text-[#ed145b] transition-colors">
+                  International Consultancy
                 </Link>
               </li>
               <li>
-                <Link to="/industry/consultancy" className="hover:text-[#ed145b] transition-colors">
-                  Strategic Consultancy
+                <Link to="/consultancy/it-telecom" className="hover:text-[#ed145b] transition-colors">
+                  IT &amp; Telecommunication
                 </Link>
               </li>
               <li>
-                <Link to="/industry/industry" className="hover:text-[#ed145b] transition-colors">
-                  Heavy Industry
+                <Link to="/consultancy/project" className="hover:text-[#ed145b] transition-colors">
+                  Project Consultancy
                 </Link>
               </li>
               <li>
-                <Link to="/products/maritime" className="hover:text-[#ed145b] transition-colors">
-                  Maritime &amp; Naval
+                <Link to="/consultancy/tender" className="hover:text-[#ed145b] transition-colors">
+                  Tender Advisory
                 </Link>
               </li>
               <li>
-                <Link to="/products/medical" className="hover:text-[#ed145b] transition-colors">
-                  Medical &amp; Trauma
+                <Link to="/consultancy/real-estate-construction" className="hover:text-[#ed145b] transition-colors">
+                  Real Estate &amp; Construction
+                </Link>
+              </li>
+              <li>
+                <Link to="/consultancy/all" className="hover:text-[#ed145b] transition-colors text-xs text-slate-400">
+                  All Advisory Practices &rarr;
                 </Link>
               </li>
             </ul>
