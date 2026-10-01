@@ -22,6 +22,17 @@ import {
   ArrowRight
 } from "lucide-react";
 
+import { DynamicTopBanner } from "../components/common/DynamicTopBanner";
+
+const CONSULTANCY_BANNER_IMAGES = [
+  "/assets/hero/hero-cyber-BQaYidYs.jpg",
+  "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1200&q=80",
+  "/assets/hero/hero-logistics-sV_p9M_H.jpg",
+  "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=1200&q=80",
+  "/assets/hero/hero-defence-CzOJrdZI.jpg"
+];
+
 interface ConsultancyListPageProps {
   onOpenRfq: (service?: ConsultancyService) => void;
 }
@@ -75,26 +86,19 @@ export const ConsultancyListPage: React.FC<ConsultancyListPageProps> = ({ onOpen
 
   return (
     <div className="flex flex-col space-y-10 pb-24">
-      {/* Header Banner */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-14 sm:py-18 text-white">
-        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
-        <div className="pointer-events-none absolute -left-20 bottom-0 size-96 rounded-full bg-[#002e6e]/40 blur-3xl" />
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
-            <ShieldCheck className="size-3.5 text-[#ed145b]" />
-            <span>SOVEREIGN ADVISORY • DGDP TENDER VETTING • EPC &amp; TECH TRANSFER</span>
-          </div>
-
-          <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+      {/* Dynamic Header Banner with Moving Images & Ken Burns Cross-Fade */}
+      <DynamicTopBanner
+        images={CONSULTANCY_BANNER_IMAGES}
+        badgeText="SOVEREIGN ADVISORY • DGDP TENDER VETTING • EPC & TECH TRANSFER"
+        badgeIcon={<ShieldCheck className="size-3.5 text-[#ed145b]" />}
+        title={
+          <>
             {filteredServices.length} Advisory Practices in{" "}
             <span className="text-[#ed145b]">{currentCategoryTitle}</span>
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-200 max-w-2xl mx-auto leading-relaxed">
-            Specialized sovereign advisory across defense procurement, foreign OEM market representation, encrypted tactical telecommunications, turnkey industrial EPC, DGDP institutional tenders, and hardened marine civil works.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+        subtitle="Specialized sovereign advisory across defense procurement, foreign OEM market representation, encrypted tactical telecommunications, turnkey industrial EPC, DGDP institutional tenders, and hardened marine civil works."
+      />
 
       {/* Filter Tabs & Search Bar */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">

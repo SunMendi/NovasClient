@@ -2,7 +2,17 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { PROJECTS } from "../data/projects";
 import { Button } from "../components/ui/button";
-import { Search, ChevronRight, MapPin, Building2 } from "lucide-react";
+import { Search, ChevronRight, MapPin, Building2, ShieldCheck } from "lucide-react";
+import { DynamicTopBanner } from "../components/common/DynamicTopBanner";
+
+const PROJECT_BANNER_IMAGES = [
+  "/assets/hero/hero-maritime-Z9Kk4jOd.jpg",
+  "/assets/hero/hero-defence-CzOJrdZI.jpg",
+  "/assets/hero/hero-logistics-sV_p9M_H.jpg",
+  "/assets/hero/hero-cyber-BQaYidYs.jpg",
+  "/assets/hero/hero-aerospace-CdirWyJV.jpg",
+  "/assets/hero/hero-medical-DBJtfXpF.jpg"
+];
 
 export const ProjectsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -29,23 +39,18 @@ export const ProjectsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-12 pb-24">
-      {/* Header Banner */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-16 sm:py-20 text-white">
-        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
-            <span>NATIONAL INFRASTRUCTURE &amp; SOVEREIGN DEFENCE</span>
-          </div>
-
-          <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight">
+      {/* Dynamic Header Banner with Moving Images & Smooth Cross-Fade */}
+      <DynamicTopBanner
+        images={PROJECT_BANNER_IMAGES}
+        badgeText="NATIONAL INFRASTRUCTURE & SOVEREIGN DEFENCE"
+        badgeIcon={<ShieldCheck className="size-3.5 text-[#ed145b]" />}
+        title={
+          <>
             Our <span className="text-[#ed145b]">Projects</span>
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-200 max-w-2xl mx-auto leading-relaxed">
-            Explore major turn-key procurement, naval vessel integrations, border surveillance deployments, and heavy industrial automation executed by Novas BD across South Asia.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+        subtitle="Explore major turn-key procurement, naval vessel integrations, border surveillance deployments, and heavy industrial automation executed by Novas BD across South Asia."
+      />
 
       {/* Filter and Search Bar */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">

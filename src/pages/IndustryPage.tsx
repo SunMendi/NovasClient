@@ -7,6 +7,37 @@ import { Button } from "../components/ui/button";
 import { Product } from "../types";
 import { ShieldCheck, ArrowRight, CheckCircle2, Factory, Shield, Cpu, Map, Truck, Anchor } from "lucide-react";
 
+import { DynamicTopBanner } from "../components/common/DynamicTopBanner";
+
+const SECTOR_BANNER_IMAGES: Record<string, string[]> = {
+  defence: [
+    "/assets/hero/hero-defence-CzOJrdZI.jpg",
+    "/assets/hero/hero-tactical-BSZNFcBk.jpg",
+    "/assets/hero/hero-aerospace-CdirWyJV.jpg",
+    "https://images.unsplash.com/photo-1579829366248-204fe8413f31?auto=format&fit=crop&w=1200&q=80"
+  ],
+  industry: [
+    "/assets/hero/hero-logistics-sV_p9M_H.jpg",
+    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80"
+  ],
+  maritime: [
+    "/assets/hero/hero-maritime-Z9Kk4jOd.jpg",
+    "https://images.unsplash.com/photo-1505705694340-019e1e335916?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80"
+  ],
+  ict: [
+    "/assets/hero/hero-cyber-BQaYidYs.jpg",
+    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80"
+  ],
+  geospatial: [
+    "/assets/hero/hero-aerospace-CdirWyJV.jpg",
+    "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1200&q=80"
+  ]
+};
+
 interface IndustryPageProps {
   onOpenRfq: (item?: Product) => void;
 }
@@ -23,6 +54,10 @@ export const IndustryPage: React.FC<IndustryPageProps> = ({ onOpenRfq }) => {
     (p) => p.sectorId.toLowerCase() === sector.id.toLowerCase() || p.sectorId.toLowerCase() === sectorId
   );
 
+  const bannerImages =
+    SECTOR_BANNER_IMAGES[sector.id.toLowerCase()] ||
+    SECTOR_BANNER_IMAGES.defence;
+
   const getSectorIcon = (name: string) => {
     switch (name) {
       case "Shield": return <Shield className="size-8 text-[#ed145b]" />;
@@ -36,41 +71,21 @@ export const IndustryPage: React.FC<IndustryPageProps> = ({ onOpenRfq }) => {
 
   return (
     <div className="flex flex-col space-y-12 pb-24">
-      {/* Header Banner */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-16 sm:py-20 text-white">
-        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
-              <span>CORE SECTOR CAPABILITY</span>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
-                {getSectorIcon(sector.iconName)}
-              </div>
-              <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                {sector.name}
-              </h1>
-            </div>
-
-            <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-sans">
-              {sector.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              {sector.capabilities.map((area, idx) => (
-                <span
-                  key={idx}
-                  className="rounded-lg bg-white/10 border border-white/20 px-3 py-1 text-xs font-sans text-white font-medium"
-                >
-                  • {area}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Dynamic Header Banner with Moving Images & Smooth Cross-Fade */}
+      <DynamicTopBanner
+        images={bannerImages}
+        badgeText="CORE SECTOR CAPABILITY"
+        badgeIcon={<ShieldCheck className="size-3.5 text-[#ed145b]" />}
+        icon={getSectorIcon(sector.iconName)}
+        title={
+          <>
+            {sector.name} <span className="text-[#ed145b]">Sector</span>
+          </>
+        }
+        subtitle={sector.description}
+        tags={sector.capabilities}
+        align="left"
+      />
 
       {/* Sector Standards & Key Capabilities */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
