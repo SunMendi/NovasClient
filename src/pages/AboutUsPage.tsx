@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { COMPANY_INFO } from "../data/company";
 import { Button } from "../components/ui/button";
@@ -13,44 +13,61 @@ import {
   Calendar,
   Sparkles
 } from "lucide-react";
+import { DynamicTopBanner, DynamicBannerSlide } from "../components/common/DynamicTopBanner";
 import { api } from "../services/api";
 
 export const AboutUsPage: React.FC = () => {
   const [companyInfo, setCompanyInfo] = useState(COMPANY_INFO);
 
+  const [projectImages, setProjectImages] = useState<string[]>([]);
   useEffect(() => {
-    api.getCompanyOverview().then(setCompanyInfo).catch(() => {});
+    let active = true;
+    api.getCompanyOverview().then(data => { if (active) setCompanyInfo(data); }).catch(() => {});
+    api.getProjects().then(projects => {
+      if (active) setProjectImages([...new Set(projects.map(project => project.image).filter(Boolean))].slice(0, 3));
+    }).catch(() => {});
+    return () => { active = false; };
   }, []);
+  const slides = useMemo<DynamicBannerSlide[]>(() => [
+    {
+      imageUrl: projectImages[0] || '/assets/hero/hero-maritime-Z9Kk4jOd.jpg',
+      badgeText: `ABOUT ${companyInfo.shortName} • ESTABLISHED ${companyInfo.foundedMonth}`,
+      title: <>Engineering purpose.<br /><span className="text-[#ed145b]">Building possibilities.</span></>,
+      subtitle: companyInfo.tagline,
+      link: '/projects', linkText: 'Explore our projects',
+      tags: ['Defence', 'Maritime', 'Industry'],
+    },
+    {
+      imageUrl: projectImages[1] || '/assets/hero/hero-defence-CzOJrdZI.jpg',
+      badgeText: 'OUR MISSION',
+      title: <>Technology with<br /><span className="text-[#ed145b]">a clear purpose.</span></>,
+      subtitle: companyInfo.mission,
+      link: '/consultancy/all', linkText: 'Explore our expertise',
+    },
+    {
+      imageUrl: projectImages[2] || '/assets/hero/hero-logistics-sV_p9M_H.jpg',
+      badgeText: 'OUR VISION',
+      title: <>Working together.<br /><span className="text-[#ed145b]">Looking ahead.</span></>,
+      subtitle: companyInfo.vision,
+      link: '/contact', linkText: 'Talk to our team',
+    },
+  ], [companyInfo, projectImages]);
   return (
     <div className="flex flex-col space-y-16 pb-24">
-      {/* 1. HERO BANNER: Message from Founder & CEO (Matching novasbd.com) */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-[#002e6e] via-[#042e6f] to-[#001f4d] py-16 sm:py-20 text-white">
-        <div className="pointer-events-none absolute -right-20 top-0 size-96 rounded-full bg-[#ed145b]/15 blur-3xl" />
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center space-y-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-white backdrop-blur-md">
-              <Calendar className="size-3.5 text-[#ed145b]" />
-              <span>ESTABLISHED JULY 2012 • 13+ YEARS OF EXCELLENCE</span>
-            </div>
-
-            <h1 className="font-display text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Message from <span className="text-[#ed145b]">Founder &amp; CEO</span>
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-100 leading-relaxed font-sans font-medium">
-              &ldquo;Novas started in July 2012. Our eventual destination is to serve Bangladesh by achieving excellence in the field of science and technology.&rdquo;
-            </p>
-
-            <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-3xl mx-auto font-sans">
-              Our main objectives are quality service, innovation, and integrity. We act as a catalyst in the country&apos;s development, offering tailored solutions with dedicated after-sales support. Our 24-member specialized engineering and research team researches, shares, and supports one another across all defense, maritime and heavy industry disciplines.
-            </p>
+      <div>
+        <DynamicTopBanner slides={slides} align="left" intervalMs={6000} />
+        <div className="border-b border-slate-200 bg-white">
+          <div className="container mx-auto grid gap-5 px-4 py-6 sm:grid-cols-3 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3"><Calendar className="size-5 shrink-0 text-[#ed145b]" /><div><p className="text-xs uppercase tracking-wider text-slate-500">Established</p><p className="font-semibold text-[#002e6e]">{companyInfo.foundedMonth}</p></div></div>
+            <div className="flex items-center gap-3"><Users className="size-5 shrink-0 text-[#ed145b]" /><div><p className="text-xs uppercase tracking-wider text-slate-500">Our people</p><p className="text-sm font-semibold text-[#002e6e]">{companyInfo.teamSize}</p></div></div>
+            <div className="flex items-center gap-3"><ShieldCheck className="size-5 shrink-0 text-[#ed145b]" /><div><p className="text-xs uppercase tracking-wider text-slate-500">Our focus</p><p className="font-semibold text-[#002e6e]">Defence, Maritime &amp; Industry</p></div></div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* 2. CEO PROFILE & EXECUTIVE IDENTITY */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 md:gap-10">
+        <div className="max-w-6xl mx-auto rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 shadow-sm flex flex-col md:flex-row items-center gap-8 md:gap-10">
           <div className="relative shrink-0">
             <div className="w-48 sm:w-56 aspect-[4/5] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl bg-slate-100 relative group">
               <img
@@ -68,7 +85,7 @@ export const AboutUsPage: React.FC = () => {
 
           <div className="space-y-4 text-center md:text-left flex-1">
             <div className="inline-flex items-center gap-2 rounded-md bg-[#ed145b]/10 px-3 py-1 font-sans text-xs font-bold text-[#ed145b] uppercase tracking-wide">
-              <span>Executive Leadership</span>
+              <span>Message from our Founder &amp; CEO</span>
             </div>
 
             <div className="space-y-1">
@@ -80,14 +97,14 @@ export const AboutUsPage: React.FC = () => {
               </div>
             </div>
 
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
-              Leading Novas from its inception in July 2012 into a trusted tier-one partner for sovereign defense procurement, naval systems integration, and industrial turnkey execution across Bangladesh and South Asia.
-            </p>
+            <blockquote className="border-l-4 border-[#ed145b] pl-5 text-left text-base sm:text-lg leading-relaxed text-slate-600">
+              &ldquo;{companyInfo.subheading}&rdquo;
+            </blockquote>
 
             <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-sans text-slate-500">
               <div className="flex items-center gap-1.5 font-medium text-slate-700">
                 <CheckCircle2 className="size-4 text-[#ed145b]" />
-                <span>Founder Since July 2012</span>
+                <span>Founder since {companyInfo.foundedMonth}</span>
               </div>
               <div className="flex items-center gap-1.5 font-medium text-slate-700">
                 <CheckCircle2 className="size-4 text-[#ed145b]" />
@@ -190,7 +207,7 @@ export const AboutUsPage: React.FC = () => {
               <span>THE HUMAN CAPABILITY</span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e]">
-              24-Member Specialized Engineering &amp; Research Division
+              {companyInfo.teamSize}
             </h2>
             <p className="text-sm text-slate-600 leading-relaxed">
               Our multidisciplinary team comprises naval architects, electronics and radar engineers, certified TCCC clinical trainers, and international logistics coordinators.
@@ -220,9 +237,9 @@ export const AboutUsPage: React.FC = () => {
               Headquarters &amp; Support Hub
             </h3>
             <div className="text-xs sm:text-sm text-slate-600 space-y-2.5">
-              <p><strong className="text-[#002e6e]">Facility:</strong> House No-412, Road No-29, Flat-5A-5B-4B, Mohakhali DOHS, Dhaka, Bangladesh</p>
-              <p><strong className="text-[#002e6e]">Direct Line:</strong> +8801711264822 / 9832552</p>
-              <p><strong className="text-[#002e6e]">Official Email:</strong> info@novasbd.com</p>
+              <p><strong className="text-[#002e6e]">Facility:</strong> {companyInfo.address}</p>
+              <p><strong className="text-[#002e6e]">Direct Line:</strong> {companyInfo.phone}{companyInfo.landline ? ` / ${companyInfo.landline}` : ''}</p>
+              <p><strong className="text-[#002e6e]">Official Email:</strong> <a className="break-all hover:underline" href={`mailto:${companyInfo.email}`}>{companyInfo.email}</a></p>
               <p><strong className="text-[#002e6e]">Operating Scope:</strong> Armed Forces, Coast Guard, Port Authorities, Heavy EPC megaprojects</p>
             </div>
             <div className="pt-2">
