@@ -13,6 +13,7 @@ import { ConsultancyListPage } from "./pages/ConsultancyListPage";
 import { ConsultancyDetailPage } from "./pages/ConsultancyDetailPage";
 import { IndustryPage } from "./pages/IndustryPage";
 import { ContactPage } from "./pages/ContactPage";
+import { LoginPage } from "./pages/LoginPage";
 import { Product, Vessel, ConsultancyService } from "./types";
 
 // Scroll to top automatically when navigating between pages
@@ -80,6 +81,10 @@ export function App() {
 
             {/* 7. Contact - Official route from novasbd.com */}
             <Route path="/contact" element={<ContactPage />} />
+
+            {/* 8. Administrative Security Portal */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin" element={<LoginPage />} />
 
             {/* Catch-all fallback */}
             <Route path="*" element={<HomePage onOpenRfq={handleOpenRfq} />} />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
-import { Menu, ChevronDown, FileCheck2, Phone, Mail, ArrowRight } from "lucide-react";
+import { Menu, ChevronDown, FileCheck2, Phone, Mail, ArrowRight, Shield } from "lucide-react";
 import { NovasLogo } from "../common/NovasLogo";
 import { COMPANY_INFO } from "../../data/company";
 
@@ -209,6 +209,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenRfq }) => {
 
         {/* Desktop Right CTA */}
         <div className="hidden lg:flex items-center gap-3">
+          <Link
+            to="/login"
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-600 hover:text-[#133057] hover:bg-slate-100 rounded-lg transition-colors border border-transparent hover:border-slate-200"
+            title="Sovereign Admin Portal"
+          >
+            <Shield className="size-3.5 text-[#ed145b]" />
+            <span>Admin</span>
+          </Link>
+
           <Button
             onClick={onOpenRfq}
             variant="default"
