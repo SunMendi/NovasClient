@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { api } from "../services/api";
 import { useParams, Link } from "react-router-dom";
 import { SECTORS } from "../data/sectors";
 import { PRODUCTS } from "../data/products";
@@ -173,11 +174,20 @@ export const IndustryPage: React.FC<IndustryPageProps> = ({ onOpenRfq }) => {
   const { category_id } = useParams<{ category_id?: string }>();
   const sectorId = category_id?.toLowerCase() || "defence";
 
+  const [products, setProducts] = useState(PRODUCTS);
+  const [sectors, setSectors] = useState(SECTORS);
+  useEffect(() => {
+    let active = true;
+    api.getProducts().then(data => { if (active) setProducts(data); }).catch(() => {});
+    api.getSectors().then(data => { if (active) setSectors(data); }).catch(() => {});
+    return () => { active = false; };
+  }, []);
+
   const sector =
-    SECTORS.find((s) => s.slug === sectorId || s.id === sectorId) ||
+    sectors.find((s) => s.slug === sectorId || s.id === sectorId) ||
     SECTORS[0];
 
-  const relatedProducts = PRODUCTS.filter(
+  const relatedProducts = products.filter(
     (p) => p.sectorId.toLowerCase() === sector.id.toLowerCase() || p.sectorId.toLowerCase() === sectorId
   );
 

@@ -55,3 +55,32 @@ test('admin requests preserve server validation errors and reject malformed succ
   response = { ok: true, status: 200, json: async () => ({}) };
   await assert.rejects(api.adminRequest('/catalog/products/'), /unexpected response/);
 });
+
+test('content sections match the navbar and vessels are nested under products', () => {
+  const { sections, getContentKind, VESSEL_CATEGORY, contentTypes } = mod.exports;
+  assert.deepEqual(Object.keys(sections), ['products', 'consultancy', 'projects', 'defence', 'industry']);
+  assert.equal(getContentKind('products', VESSEL_CATEGORY), 'vessels');
+  assert.equal(getContentKind('products', '7'), 'products');
+  assert.equal(getContentKind('defence', VESSEL_CATEGORY), 'defence');
+  assert.equal(contentTypes[getContentKind('products', VESSEL_CATEGORY)].endpoint, '/catalog/vessels/');
+  assert.ok(contentTypes.vessels.fields.some(field => field.key === 'length_overall'));
+  assert.ok(!contentTypes.vessels.fields.some(field => field.key === 'sku'));
+});
+
+test('Defence and Industry isolate their lists and assign new entries to the selected sector', () => {
+  const { getListEndpoint } = mod.exports;
+  for (const section of ['defence', 'industry']) {
+    assert.equal(getListEndpoint(section), `/catalog/products/?sector=${section}`);
+    const payload = buildPayload(section, { name: 'Entry', slug: 'entry', sku: 'A-1', description: 'Details' }, '7', 'wrong-sector', [{ label: 'Capacity', value: '20' }], [], false);
+    assert.equal(payload.sector_id, section);
+    assert.equal(payload.category_id, 7);
+    assert.equal(payload.specs[0].label, 'Capacity');
+  }
+});
+
+test('product category list uses the appropriate backend collection', () => {
+  const { getListEndpoint, VESSEL_CATEGORY } = mod.exports;
+  assert.equal(getListEndpoint('products', VESSEL_CATEGORY), '/catalog/vessels/');
+  assert.equal(getListEndpoint('products', 'medical'), '/catalog/products/?category=medical');
+  assert.equal(getListEndpoint('products'), '/catalog/products/');
+});

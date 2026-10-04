@@ -1,7 +1,9 @@
-export type Section = 'products' | 'consultancy' | 'projects' | 'vessels';
+export type Section = 'products' | 'consultancy' | 'projects' | 'defence' | 'industry';
+export type ContentKind = Section | 'vessels';
+export const VESSEL_CATEGORY = '__vessels__';
 export type Field = { key: string; label: string; required?: boolean; kind?: 'text' | 'textarea' | 'lines' | 'number'; maxLength?: number };
 const field = (key: string, label: string, required = false, kind: Field['kind'] = 'text', maxLength?: number): Field => ({ key, label, required, kind, maxLength });
-export const sections: Record<Section, { label: string; singular: string; endpoint: string; identifier: string; fields: Field[] }> = {
+const baseContentTypes: Record<'products' | 'consultancy' | 'projects' | 'vessels', { label: string; singular: string; endpoint: string; identifier: string; fields: Field[] }> = {
   products: { label: 'Products', singular: 'product', endpoint: '/catalog/products/', identifier: 'sku', fields: [
     field('sku', 'SKU', true, 'text', 100), field('tagline', 'Short description', false, 'text', 255), field('description', 'Description', true, 'textarea'), field('origin', 'Origin', false, 'text', 100), field('lead_time', 'Lead time', false, 'text', 100), field('warranty', 'Warranty', false, 'text', 100), field('certifications', 'Certifications', false, 'lines'),
   ] },
@@ -15,22 +17,44 @@ export const sections: Record<Section, { label: string; singular: string; endpoi
     field('vessel_id', 'Vessel reference', true, 'text', 100), field('vessel_type', 'Vessel type', true, 'text', 150), field('tagline', 'Short description', false, 'text', 255), field('description', 'Description', true, 'textarea'), field('length_overall', 'Length overall', true, 'text', 50), field('beam', 'Beam', true, 'text', 50), field('draft', 'Draft', true, 'text', 50), field('max_speed', 'Maximum speed', true, 'text', 50), field('bollard_pull', 'Bollard pull', false, 'text', 50), field('engine_power', 'Engine power', true, 'text', 100), field('hull_material', 'Hull material', true, 'text', 100), field('classification_society', 'Classification society', true, 'text', 100), field('crew_capacity', 'Crew capacity', true, 'number'), field('delivery_lead_time', 'Delivery lead time', true, 'text', 100), field('features', 'Vessel features', false, 'lines'),
   ] },
 };
+export const contentTypes = {
+  ...baseContentTypes,
+  defence: { ...baseContentTypes.products, label: 'Defence', singular: 'defence entry' },
+  industry: { ...baseContentTypes.products, label: 'Industry', singular: 'industry entry' },
+};
+// Only navbar destinations belong in the top-level content selector.
+export const sections: Record<Section, typeof baseContentTypes.products> = {
+  products: contentTypes.products,
+  consultancy: contentTypes.consultancy,
+  projects: contentTypes.projects,
+  defence: contentTypes.defence,
+  industry: contentTypes.industry,
+};
+export const isProductSection = (section: ContentKind) => ['products', 'defence', 'industry'].includes(section);
+export const getContentKind = (section: Section, category: string): ContentKind =>
+  section === 'products' && category === VESSEL_CATEGORY ? 'vessels' : section;
+export function getListEndpoint(section: Section, categorySlug = '') {
+  if (section === 'products' && categorySlug === VESSEL_CATEGORY) return contentTypes.vessels.endpoint;
+  if (section === 'defence' || section === 'industry') return `${contentTypes.products.endpoint}?sector=${section}`;
+  if (section === 'products' && categorySlug) return `${contentTypes.products.endpoint}?category=${encodeURIComponent(categorySlug)}`;
+  return sections[section].endpoint;
+}
 export const projectCategories = [ ['defence', 'Defence'], ['maritime', 'Maritime'], ['industry', 'Industry'], ['consultancy', 'Consultancy'], ['geospatial', 'Geospatial'] ];
 export interface Category { id: number; name: string; slug: string; category_id?: string; sector_id?: string; is_active?: boolean }
 export type Spec = { label: string; value: string };
 export type Step = { step: string; title: string; desc: string };
-export function buildPayload(section: Section, values: Record<string, string>, category: string, sector: string, specs: Spec[], steps: Step[], featured: boolean) {
-  const config = sections[section];
+export function buildPayload(section: ContentKind, values: Record<string, string>, category: string, sector: string, specs: Spec[], steps: Step[], featured: boolean) {
+  const config = contentTypes[section];
   const payload: Record<string, unknown> = { slug: values.slug, [section === 'projects' ? 'title' : 'name']: values.name };
   for (const field of config.fields) {
     const value = (values[field.key] || '').trim();
     if (!value && !field.required) continue;
     payload[field.key] = field.kind === 'lines' ? value.split('\n').map(v => v.trim()).filter(Boolean) : field.kind === 'number' ? Number(value) : value;
   }
-  if (section === 'products') { payload.category_id = Number(category); payload.sector_id = sector; }
+  if (isProductSection(section)) { payload.category_id = Number(category); payload.sector_id = section === 'defence' || section === 'industry' ? section : sector; }
   if (section === 'consultancy') { payload.category_id = category; payload.methodology = steps; }
   if (section === 'projects') { payload.category = category; payload.status = values.status || 'Delivered'; }
-  if (section === 'products' || section === 'projects') payload.specs = specs.map((spec, sort_order) => ({ ...spec, sort_order }));
+  if (isProductSection(section) || section === 'projects') payload.specs = specs.map((spec, sort_order) => ({ ...spec, sort_order }));
   if (section !== 'vessels') payload[section === 'projects' ? 'is_featured' : 'featured'] = featured;
   return payload;
 }
