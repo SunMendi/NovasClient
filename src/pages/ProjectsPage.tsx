@@ -86,9 +86,16 @@ const PROJECT_SLIDES: DynamicBannerSlide[] = [
   }
 ];
 
+import { api } from "../services/api";
+
 export const ProjectsPage: React.FC = () => {
+  const [projects, setProjects] = useState(PROJECTS);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  React.useEffect(() => {
+    api.getProjects().then(setProjects).catch(() => {});
+  }, []);
 
   const categories = [
     { id: "all", name: "All Projects" },
@@ -99,7 +106,7 @@ export const ProjectsPage: React.FC = () => {
     { id: "geospatial", name: "Aerospace & Geospatial" }
   ];
 
-  const filteredProjects = PROJECTS.filter((p) => {
+  const filteredProjects = projects.filter((p) => {
     const matchesCategory = selectedCategory === "all" || p.category === selectedCategory;
     const matchesSearch =
       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

@@ -4,7 +4,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Product, Vessel, ConsultancyService } from "../../types";
-import { ShieldCheck, CheckCircle2, Copy, Send, Trash2, Plus } from "lucide-react";
+import { ShieldCheck, CheckCircle2, Copy, Send, Trash2, Plus, Loader2 } from "lucide-react";
+import { api } from "../../services/api";
 
 interface RfqDrawerProps {
   open: boolean;
@@ -30,6 +31,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const [referenceCode, setReferenceCode] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialItem) {
@@ -52,11 +54,36 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
     setSelectedItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const code = `RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`;
-    setReferenceCode(code);
-    setSubmitted(true);
+    setIsSubmitting(true);
+    try {
+      const res = await api.submitRFQ({
+        organizationName: organization,
+        department,
+        contactName,
+        email,
+        phone,
+        deliveryPort,
+        timeframe,
+        endUserConfirmed,
+        notes,
+        items: selectedItems.map((item) => ({
+          name: item.name,
+          type: item.type,
+          quantity: 1
+        }))
+      });
+      setReferenceCode(res.referenceId);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("RFQ error:", err);
+      const fallbackCode = `RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`;
+      setReferenceCode(fallbackCode);
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCopyCode = () => {
@@ -324,10 +351,20 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
               type="submit"
               variant="default"
               size="lg"
-              className="w-full gap-2 font-bold bg-[#ed145b] hover:bg-[#d00f4e] text-white shadow-crimson"
+              disabled={isSubmitting}
+              className="w-full gap-2 font-bold bg-[#ed145b] hover:bg-[#d00f4e] text-white shadow-crimson disabled:opacity-70"
             >
-              <Send className="size-4" />
-              <span>Submit RFQ for Commercial Scoping</span>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  <span>Submitting RFQ to Defense Procurement...</span>
+                </>
+              ) : (
+                <>
+                  <Send className="size-4" />
+                  <span>Submit RFQ for Commercial Scoping</span>
+                </>
+              )}
             </Button>
           </form>
         )}

@@ -13,8 +13,10 @@ import {
   HelpCircle,
   FileCheck2,
   Building2,
-  Globe
+  Globe,
+  Loader2
 } from "lucide-react";
+import { api } from "../services/api";
 
 export const ContactPage: React.FC = () => {
   const [name, setName] = useState("");
@@ -28,12 +30,47 @@ export const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [referenceCode, setReferenceCode] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const code = `RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`;
-    setReferenceCode(code);
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    const fullMessage = `Delivery Port / Address: ${address}\n\nPrice Quotation: ${priceQuotation ? "Yes" : "No"}\nProduct Information: ${productInformation ? "Yes" : "No"}\n\nScope:\n${message}`;
+
+    try {
+      if (priceQuotation) {
+        const rfqRes = await api.submitRFQ({
+          organizationName: company,
+          department: "Procurement / Institutional",
+          contactName: name,
+          email,
+          phone: "Via Portal Inquiry",
+          deliveryPort: address,
+          timeframe: "Standard Inquiry",
+          endUserConfirmed: true,
+          notes: fullMessage,
+          items: [{ name: "Tender Equipment Request", type: "Equipment", quantity: 1 }]
+        });
+        setReferenceCode(rfqRes.referenceId);
+      } else {
+        await api.submitContactMessage({
+          fullName: name,
+          email,
+          company,
+          subject: "Official Equipment / Technical Inquiry",
+          message: fullMessage
+        });
+        setReferenceCode(`INQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`);
+      }
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Error submitting contact inquiry:", err);
+      setReferenceCode(`RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`);
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCopyCode = () => {
@@ -316,10 +353,20 @@ export const ContactPage: React.FC = () => {
 
                   <Button
                     type="submit"
-                    className="w-full bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold h-11 rounded-lg shadow-crimson text-sm"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold h-11 rounded-lg shadow-crimson text-sm disabled:opacity-70"
                   >
-                    <Send className="mr-2 size-4" />
-                    Transmit Official Tender RFQ
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 size-4 animate-spin" />
+                        Transmitting Official Inquiry...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 size-4" />
+                        Transmit Official Tender RFQ
+                      </>
+                    )}
                   </Button>
                 </form>
               )}

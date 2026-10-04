@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PRODUCTS } from "../data/products";
 import { VESSELS } from "../data/vessels";
@@ -20,6 +20,7 @@ import {
   FileText
 } from "lucide-react";
 import { Product, Vessel, ProductCategory } from "../types";
+import { api } from "../services/api";
 
 interface CataloguePageProps {
   onOpenRfq: (item?: Product | Vessel) => void;
@@ -29,26 +30,39 @@ export const CataloguePage: React.FC<CataloguePageProps> = ({ onOpenRfq }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialSector = searchParams.get("sector");
 
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [vessels, setVessels] = useState<Vessel[]>(VESSELS);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [sortBy, setSortBy] = useState<"featured" | "name-asc" | "name-desc">("featured");
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  useEffect(() => {
+    setIsLoading(true);
+    Promise.all([api.getProducts(), api.getVessels()])
+      .then(([prods, vess]) => {
+        setProducts(prods);
+        setVessels(vess);
+      })
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
+  }, []);
+
   // Categories list with count
   const categories: { label: string; value: string; count: number }[] = [
-    { label: "All", value: "All", count: PRODUCTS.length + VESSELS.length },
-    { label: "Defence", value: "Defence", count: PRODUCTS.filter((p) => p.category === "Defence").length },
-    { label: "Tactical", value: "Tactical", count: PRODUCTS.filter((p) => p.category === "Tactical").length },
-    { label: "Maritime", value: "Maritime", count: PRODUCTS.filter((p) => p.category === "Maritime").length },
-    { label: "Medical", value: "Medical", count: PRODUCTS.filter((p) => p.category === "Medical").length },
-    { label: "Agriculture", value: "Agriculture", count: PRODUCTS.filter((p) => p.category === "Agriculture" || p.category === "Agri").length },
-    { label: "Naval Vessels", value: "Vessels", count: VESSELS.length },
+    { label: "All", value: "All", count: products.length + vessels.length },
+    { label: "Defence", value: "Defence", count: products.filter((p) => p.category === "Defence").length },
+    { label: "Tactical", value: "Tactical", count: products.filter((p) => p.category === "Tactical").length },
+    { label: "Maritime", value: "Maritime", count: products.filter((p) => p.category === "Maritime").length },
+    { label: "Medical", value: "Medical", count: products.filter((p) => p.category === "Medical").length },
+    { label: "Agriculture", value: "Agriculture", count: products.filter((p) => p.category === "Agriculture" || p.category === "Agri").length },
+    { label: "Naval Vessels", value: "Vessels", count: vessels.length },
   ];
 
   // Filtered and sorted products
   const filteredProducts = useMemo(() => {
-    let list: Product[] = [...PRODUCTS];
+    let list: Product[] = [...products];
 
     if (initialSector) {
       list = list.filter((p) => p.sectorId === initialSector);
@@ -83,7 +97,7 @@ export const CataloguePage: React.FC<CataloguePageProps> = ({ onOpenRfq }) => {
     }
 
     return list;
-  }, [searchTerm, selectedCategory, sortBy, initialSector]);
+  }, [products, searchTerm, selectedCategory, sortBy, initialSector]);
 
   // Filtered vessels
   const filteredVessels = useMemo(() => {
@@ -91,7 +105,7 @@ export const CataloguePage: React.FC<CataloguePageProps> = ({ onOpenRfq }) => {
       return [];
     }
 
-    let list = [...VESSELS];
+    let list = [...vessels];
     if (searchTerm.trim()) {
       const q = searchTerm.toLowerCase();
       list = list.filter(
@@ -102,7 +116,7 @@ export const CataloguePage: React.FC<CataloguePageProps> = ({ onOpenRfq }) => {
       );
     }
     return list;
-  }, [searchTerm, selectedCategory]);
+  }, [vessels, searchTerm, selectedCategory]);
 
   const totalResults = filteredProducts.length + filteredVessels.length;
 

@@ -31,6 +31,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import { Product, Vessel } from "../types";
+import { api } from "../services/api";
 
 interface HomePageProps {
   onOpenRfq: (item?: Product | Vessel) => void;
@@ -114,6 +115,17 @@ const HERO_SLIDES: HeroSlide[] = [
 
 export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [products, setProducts] = useState(PRODUCTS);
+  const [projects, setProjects] = useState(PROJECTS);
+  const [vessels, setVessels] = useState(VESSELS);
+  const [companyInfo, setCompanyInfo] = useState(COMPANY_INFO);
+
+  useEffect(() => {
+    api.getProducts().then(setProducts).catch(() => {});
+    api.getProjects().then(setProjects).catch(() => {});
+    api.getVessels().then(setVessels).catch(() => {});
+    api.getCompanyOverview().then(setCompanyInfo).catch(() => {});
+  }, []);
 
   // Preload all slide images for instantaneous cross-fading
   useEffect(() => {
@@ -134,9 +146,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
 
   const currentSlide = HERO_SLIDES[activeSlide];
 
-  const featuredProducts = PRODUCTS.filter((p) => p.featured).slice(0, 6);
-  const featuredProjects = PROJECTS.slice(0, 3);
-  const featuredVessel = VESSELS[0];
+  const featuredProducts = products.filter((p) => p.featured).slice(0, 6);
+  const featuredProjects = projects.slice(0, 3);
+  const featuredVessel = vessels[0] || VESSELS[0];
 
   return (
     <div className="flex flex-col space-y-20 pb-24">
@@ -322,7 +334,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                 <div className="size-20 sm:size-24 rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md bg-white">
                   <img
                     src="/assets/founder.png"
-                    alt={COMPANY_INFO.founder}
+                    alt={companyInfo.founder}
                     className="w-full h-full object-cover object-top"
                   />
                 </div>
@@ -336,10 +348,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRfq }) => {
                 </p>
                 <div className="pt-0.5">
                   <div className="font-display text-sm font-bold text-[#002e6e]">
-                    {COMPANY_INFO.founder}
+                    {companyInfo.founder}
                   </div>
                   <div className="text-xs font-sans text-[#ed145b] font-semibold">
-                    {COMPANY_INFO.founderTitle}
+                    {companyInfo.founderTitle}
                   </div>
                 </div>
               </div>

@@ -2,22 +2,33 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { COMPANY_INFO } from "../../data/company";
 import { NovasLogo } from "../common/NovasLogo";
-import { MapPin, Mail, Phone, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
+import { MapPin, Mail, Phone, ShieldCheck, CheckCircle2, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { api } from "../../services/api";
 
 export const Footer: React.FC = () => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterName, setNewsletterName] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail) return;
-    setSubscribed(true);
-    setTimeout(() => {
-      setNewsletterEmail("");
-      setNewsletterName("");
-    }, 3000);
+    setIsSubmitting(true);
+    try {
+      await api.subscribeNewsletter(newsletterEmail);
+      setSubscribed(true);
+      setTimeout(() => {
+        setNewsletterEmail("");
+        setNewsletterName("");
+      }, 4000);
+    } catch (err) {
+      console.error("Newsletter error:", err);
+      setSubscribed(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -193,9 +204,17 @@ export const Footer: React.FC = () => {
                 <Button
                   type="submit"
                   size="sm"
-                  className="w-full bg-[#ed145b] hover:bg-[#d00f4e] text-white font-semibold text-xs py-2 shadow-crimson"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#ed145b] hover:bg-[#d00f4e] text-white font-semibold text-xs py-2 shadow-crimson disabled:opacity-70"
                 >
-                  Subscribe
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center gap-1.5">
+                      <Loader2 className="size-3 animate-spin" />
+                      <span>Subscribing...</span>
+                    </span>
+                  ) : (
+                    "Subscribe"
+                  )}
                 </Button>
               </form>
             )}

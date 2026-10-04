@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { SECTORS } from "../data/sectors";
 import { PRODUCTS } from "../data/products";
@@ -7,7 +7,7 @@ import { SpecBadge } from "../components/domain/SpecBadge";
 import { EmptyState } from "../components/domain/StateView";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
-import { Product, Vessel } from "../types";
+import { Product, Vessel, Sector } from "../types";
 import {
   ShieldCheck,
   CheckCircle2,
@@ -16,6 +16,7 @@ import {
   FileCheck2,
   ChevronLeft
 } from "lucide-react";
+import { api } from "../services/api";
 
 interface SectorDetailPageProps {
   onOpenRfq: (item?: Product | Vessel) => void;
@@ -23,7 +24,18 @@ interface SectorDetailPageProps {
 
 export const SectorDetailPage: React.FC<SectorDetailPageProps> = ({ onOpenRfq }) => {
   const { slug } = useParams<{ slug: string }>();
-  const sector = SECTORS.find((s) => s.slug === slug);
+
+  const fallbackSector = SECTORS.find((s) => s.slug === slug);
+  const [sector, setSector] = useState<Sector | undefined>(fallbackSector);
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+
+  useEffect(() => {
+    if (!slug) return;
+    api.getSectorBySlug(slug).then((s) => {
+      if (s) setSector(s);
+    }).catch(() => {});
+    api.getProducts().then(setProducts).catch(() => {});
+  }, [slug]);
 
   if (!sector) {
     return (
@@ -36,7 +48,7 @@ export const SectorDetailPage: React.FC<SectorDetailPageProps> = ({ onOpenRfq })
     );
   }
 
-  const sectorProducts = PRODUCTS.filter((p) => p.sectorId === sector.id);
+  const sectorProducts = products.filter((p) => p.sectorId === sector.id);
 
   return (
     <div className="space-y-16 pb-24">

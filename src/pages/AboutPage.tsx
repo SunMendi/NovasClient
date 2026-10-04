@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { COMPANY_INFO } from "../data/company";
 import { Button } from "../components/ui/button";
@@ -15,8 +15,14 @@ import {
   Globe2,
   Factory
 } from "lucide-react";
+import { api } from "../services/api";
 
 export const AboutPage: React.FC = () => {
+  const [companyInfo, setCompanyInfo] = useState(COMPANY_INFO);
+
+  useEffect(() => {
+    api.getCompanyOverview().then(setCompanyInfo).catch(() => {});
+  }, []);
   return (
     <div className="space-y-20 pb-24">
       {/* Hero */}
@@ -92,7 +98,7 @@ export const AboutPage: React.FC = () => {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {Object.entries(COMPANY_INFO.shipyardCapacity).map(([key, value], i) => (
+            {Object.entries(companyInfo.shipyardCapacity || {}).map(([key, value], i) => (
               <div
                 key={i}
                 className="rounded-2xl border border-border/70 bg-navy-950 p-6 space-y-2 shadow-card"
@@ -123,7 +129,7 @@ export const AboutPage: React.FC = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-5">
-          {COMPANY_INFO.blueprintSteps.map((step) => (
+          {(companyInfo.blueprintSteps || []).map((step) => (
             <div
               key={step.step}
               className="rounded-2xl border border-border/60 bg-navy-900 p-6 space-y-3"

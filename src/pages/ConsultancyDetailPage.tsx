@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   CONSULTANCY_SERVICES,
@@ -21,6 +21,7 @@ import {
   Layers,
   Award
 } from "lucide-react";
+import { api } from "../services/api";
 
 interface ConsultancyDetailPageProps {
   onOpenRfq: (service?: ConsultancyService) => void;
@@ -30,7 +31,17 @@ export const ConsultancyDetailPage: React.FC<ConsultancyDetailPageProps> = ({ on
   const { id } = useParams<{ id?: string }>();
   const [downloading, setDownloading] = useState(false);
 
-  const service = getConsultancyServiceById(id);
+  const fallbackService = getConsultancyServiceById(id);
+  const [service, setService] = useState<ConsultancyService | undefined>(fallbackService);
+  const [allServices, setAllServices] = useState<ConsultancyService[]>(CONSULTANCY_SERVICES);
+
+  useEffect(() => {
+    if (!id) return;
+    api.getConsultancyServiceBySlug(id).then((s) => {
+      if (s) setService(s);
+    }).catch(() => {});
+    api.getConsultancyServices().then(setAllServices).catch(() => {});
+  }, [id]);
 
   if (!service) {
     return (
@@ -48,9 +59,8 @@ export const ConsultancyDetailPage: React.FC<ConsultancyDetailPageProps> = ({ on
     );
   }
 
-  const relatedServices = getConsultancyServicesByCategory(service.categoryId).filter(
-    (s) => s.id !== service.id
-  );
+  const relatedServices = allServices
+    .filter((s) => s.categoryId === service.categoryId && s.id !== service.id);
 
   const handleDownloadBrief = () => {
     setDownloading(true);

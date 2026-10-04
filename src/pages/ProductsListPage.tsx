@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { PRODUCTS } from "../data/products";
 import { ProductCard } from "../components/domain/ProductCard";
 import { Button } from "../components/ui/button";
 import { Product } from "../types";
 import { Search, LayoutGrid, List, ShieldCheck } from "lucide-react";
+import { api } from "../services/api";
 
 interface ProductsListPageProps {
   onOpenRfq: (item?: Product) => void;
@@ -14,9 +15,14 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
   const { category_id } = useParams<{ category_id?: string }>();
   const currentCategory = category_id?.toLowerCase() || "all";
 
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSector, setSelectedSector] = useState(currentCategory);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+
+  useEffect(() => {
+    api.getProducts().then(setProducts).catch(() => {});
+  }, []);
 
   const categories = [
     { id: "all", name: "All Products" },
@@ -30,14 +36,14 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
   ];
 
   // Update selected sector if category param changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (category_id) {
       setSelectedSector(category_id.toLowerCase());
     }
   }, [category_id]);
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((p) => {
+    return products.filter((p) => {
       const selected = selectedSector.toLowerCase();
       const matchesCategory =
         selected === "all" ||

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { PROJECTS } from "../data/projects";
+import { PROJECTS, Project } from "../data/projects";
 import { Button } from "../components/ui/button";
 import {
   MapPin,
@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   FileCheck2,
 } from "lucide-react";
+import { api } from "../services/api";
 
 interface ProjectDetailPageProps {
   onOpenRfq: (item?: any) => void;
@@ -17,7 +18,15 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenRfq 
   const { id, _id } = useParams<{ id?: string; _id?: string }>();
   const projectId = id || _id;
 
-  const project = PROJECTS.find((p) => p.id === projectId) || PROJECTS[0];
+  const fallbackProject = PROJECTS.find((p) => p.id === projectId) || PROJECTS[0];
+  const [project, setProject] = useState<Project>(fallbackProject);
+
+  useEffect(() => {
+    if (!projectId) return;
+    api.getProjectBySlug(projectId).then((p) => {
+      if (p) setProject(p);
+    }).catch(() => {});
+  }, [projectId]);
 
   return (
     <div className="flex flex-col space-y-12 pb-24">

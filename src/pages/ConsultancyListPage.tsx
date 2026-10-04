@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 import { DynamicTopBanner, DynamicBannerSlide } from "../components/common/DynamicTopBanner";
+import { api } from "../services/api";
 
 const CONSULTANCY_SLIDES: DynamicBannerSlide[] = [
   {
@@ -100,9 +101,14 @@ export const ConsultancyListPage: React.FC<ConsultancyListPageProps> = ({ onOpen
   const { category_id } = useParams<{ category_id?: string }>();
   const activeCategoryId = category_id?.toLowerCase() || "all";
 
+  const [services, setServices] = useState<ConsultancyService[]>(CONSULTANCY_SERVICES);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(activeCategoryId);
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+
+  useEffect(() => {
+    api.getConsultancyServices().then(setServices).catch(() => {});
+  }, []);
 
   // Keep state in sync if URL route changes
   useEffect(() => {
@@ -121,7 +127,7 @@ export const ConsultancyListPage: React.FC<ConsultancyListPageProps> = ({ onOpen
   const currentCategoryData = getConsultancyCategoryById(selectedCategory);
 
   const filteredServices = useMemo(() => {
-    return CONSULTANCY_SERVICES.filter((service) => {
+    return services.filter((service) => {
       const matchesCategory =
         selectedCategory === "all" ||
         service.categoryId.toLowerCase() === selectedCategory.toLowerCase();

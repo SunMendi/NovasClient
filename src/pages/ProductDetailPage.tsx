@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { PRODUCTS } from "../data/products";
 import { VESSELS } from "../data/vessels";
@@ -13,6 +13,7 @@ import {
   Clock,
   Globe2
 } from "lucide-react";
+import { api } from "../services/api";
 
 interface ProductDetailPageProps {
   onOpenRfq: (item?: Product | Vessel) => void;
@@ -23,8 +24,24 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
   const itemId = id || _id;
   const [downloading, setDownloading] = useState(false);
 
-  const product = PRODUCTS.find((p) => p.slug === itemId || p.id === itemId);
-  const vessel = !product ? VESSELS.find((v) => v.slug === itemId || v.id === itemId) : null;
+  const fallbackProduct = PRODUCTS.find((p) => p.slug === itemId || p.id === itemId);
+  const fallbackVessel = !fallbackProduct ? VESSELS.find((v) => v.slug === itemId || v.id === itemId) : null;
+
+  const [product, setProduct] = useState<Product | undefined>(fallbackProduct);
+  const [vessel, setVessel] = useState<Vessel | null | undefined>(fallbackVessel);
+
+  useEffect(() => {
+    if (!itemId) return;
+    api.getProductBySlug(itemId).then((p) => {
+      if (p) {
+        setProduct(p);
+      } else {
+        api.getVesselBySlug(itemId).then((v) => {
+          if (v) setVessel(v);
+        });
+      }
+    }).catch(() => {});
+  }, [itemId]);
 
   if (!product && !vessel) {
     return (

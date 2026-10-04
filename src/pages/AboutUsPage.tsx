@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { COMPANY_INFO } from "../data/company";
 import { Button } from "../components/ui/button";
@@ -13,8 +13,14 @@ import {
   Calendar,
   Sparkles
 } from "lucide-react";
+import { api } from "../services/api";
 
 export const AboutUsPage: React.FC = () => {
+  const [companyInfo, setCompanyInfo] = useState(COMPANY_INFO);
+
+  useEffect(() => {
+    api.getCompanyOverview().then(setCompanyInfo).catch(() => {});
+  }, []);
   return (
     <div className="flex flex-col space-y-16 pb-24">
       {/* 1. HERO BANNER: Message from Founder & CEO (Matching novasbd.com) */}
@@ -48,8 +54,8 @@ export const AboutUsPage: React.FC = () => {
           <div className="relative shrink-0">
             <div className="w-48 sm:w-56 aspect-[4/5] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-xl bg-slate-100 relative group">
               <img
-                src={COMPANY_INFO.founderImage}
-                alt={COMPANY_INFO.founder}
+                src={companyInfo.founderImage}
+                alt={companyInfo.founder}
                 className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 loading="eager"
               />
@@ -67,10 +73,10 @@ export const AboutUsPage: React.FC = () => {
 
             <div className="space-y-1">
               <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#002e6e] tracking-tight">
-                {COMPANY_INFO.founder}
+                {companyInfo.founder}
               </h2>
               <div className="font-sans text-sm sm:text-base font-semibold text-[#ed145b]">
-                {COMPANY_INFO.founderTitle}
+                {companyInfo.founderTitle}
               </div>
             </div>
 
@@ -106,7 +112,7 @@ export const AboutUsPage: React.FC = () => {
               </h2>
               <div className="w-16 h-1 rounded-full bg-[#ed145b]" />
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
-                {COMPANY_INFO.mission}
+                {companyInfo.mission}
               </p>
             </div>
           </div>
@@ -122,7 +128,7 @@ export const AboutUsPage: React.FC = () => {
               </h2>
               <div className="w-16 h-1 rounded-full bg-[#005f99]" />
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
-                {COMPANY_INFO.vision}
+                {companyInfo.vision}
               </p>
             </div>
           </div>

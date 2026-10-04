@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SECTORS } from "../data/sectors";
 import { Button } from "../components/ui/button";
@@ -14,8 +14,15 @@ import {
   CheckCircle2,
   FileCheck2
 } from "lucide-react";
+import { api } from "../services/api";
 
 export const SectorsPage: React.FC = () => {
+  const [sectors, setSectors] = useState(SECTORS);
+
+  useEffect(() => {
+    api.getSectors().then(setSectors).catch(() => {});
+  }, []);
+
   const getSectorIcon = (name: string) => {
     switch (name) {
       case "Shield": return <Shield className="size-6 text-amber-signal" />;
@@ -50,7 +57,7 @@ export const SectorsPage: React.FC = () => {
       {/* Detailed Sectors Grid */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10">
-          {SECTORS.map((sector) => (
+          {sectors.map((sector) => (
             <div
               key={sector.id}
               className="grid gap-8 rounded-3xl border border-border/70 bg-navy-900 p-6 sm:p-10 lg:grid-cols-12 lg:items-center shadow-card hover:border-amber-signal/40 transition-colors"
