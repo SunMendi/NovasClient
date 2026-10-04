@@ -116,3 +116,14 @@ test('successful deletion accepts an empty 204 response', async () => {
   new Function('exports','require','fetch',source)(api, name => name === './api' ? {API_BASE_URL:'https://example.test'} : {authService:{getToken:()=> 'token'}}, async () => ({ok:true,status:204,json:async()=>{throw new Error('No body');}}));
   assert.equal(await api.adminRequest('/catalog/products/test/',{method:'DELETE'}), undefined);
 });
+
+test('priority defaults to 100, hydrates on edit, and is sent for every record type', () => {
+  const { getEditState } = mod.exports;
+  assert.equal(getEditState('products').values.priority, '100');
+  assert.equal(getEditState('products', {id:1,slug:'entry',priority:3}).values.priority, '3');
+  for (const kind of ['products','consultancy','projects','vessels','defence','industry']) {
+    const data = buildPayload(kind, {name:'Entry',slug:'entry',priority:'2'}, '7', 'defence', [], [], false);
+    assert.equal(data.priority, 2);
+    assert.equal(buildPayload(kind, {name:'Entry',slug:'entry'}, '7', 'defence', [], [], false).priority, 100);
+  }
+});

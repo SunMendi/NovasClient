@@ -45,7 +45,7 @@ export type Spec = { label: string; value: string };
 export type Step = { step: string; title: string; desc: string };
 export function buildPayload(section: ContentKind, values: Record<string, string>, category: string, sector: string, specs: Spec[], steps: Step[], featured: boolean, editing = false) {
   const config = contentTypes[section];
-  const payload: Record<string, unknown> = { slug: values.slug, [section === 'projects' ? 'title' : 'name']: values.name };
+  const payload: Record<string, unknown> = { priority: Number(values.priority || 100), slug: values.slug, [section === 'projects' ? 'title' : 'name']: values.name };
   for (const field of config.fields) {
     const value = (values[field.key] || '').trim();
     if (!value && !field.required && !editing) continue;
@@ -63,7 +63,7 @@ export function buildPayload(section: ContentKind, values: Record<string, string
 export type ContentEntry = Record<string, any> & { id: number; slug: string };
 export function getEditState(section: Section, entry?: ContentEntry) {
   const kind = entry?.vessel_id ? 'vessels' : section;
-  const values: Record<string, string> = {};
+  const values: Record<string, string> = { priority: String(entry?.priority ?? 100) };
   if (entry) {
     values.name = entry.name || entry.title || '';
     values.slug = entry.slug;
