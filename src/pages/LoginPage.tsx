@@ -31,11 +31,10 @@ export const LoginPage: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
-    const user = authService.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
+    if (authService.isAuthenticated()) {
+      navigate("/admin", { replace: true });
     }
-  }, []);
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,8 +42,8 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const user = await authService.login(username, password);
-      setCurrentUser(user);
+      await authService.login(username, password);
+      navigate("/admin", { replace: true });
     } catch (err: any) {
       setError(err.message || "Failed to sign in. Please verify your credentials.");
     } finally {

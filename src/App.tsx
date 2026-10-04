@@ -14,6 +14,7 @@ import { ConsultancyDetailPage } from "./pages/ConsultancyDetailPage";
 import { IndustryPage } from "./pages/IndustryPage";
 import { ContactPage } from "./pages/ContactPage";
 import { LoginPage } from "./pages/LoginPage";
+import { AdminDashboardPage } from "./pages/AdminDashboardPage";
 import { Product, Vessel, ConsultancyService } from "./types";
 
 // Scroll to top automatically when navigating between pages
@@ -84,7 +85,7 @@ export function App() {
 
             {/* 8. Administrative Security Portal */}
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/admin" element={<LoginPage />} />
+            <Route path="/admin" element={<AdminDashboardPage />} />
 
             {/* Catch-all fallback */}
             <Route path="*" element={<HomePage onOpenRfq={handleOpenRfq} />} />

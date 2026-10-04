@@ -83,4 +83,29 @@ export const authService = {
   isAuthenticated(): boolean {
     return !!this.getToken();
   },
+
+  async uploadImage(file: File, folder: string = "novas/uploads"): Promise<string> {
+    const token = this.getToken();
+    if (!token) throw new Error("Authentication required to upload media.");
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("folder", folder);
+
+    const res = await fetch(`${API_BASE_URL}/auth/upload/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Token ${token}`,
+        Accept: "application/json",
+      },
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to upload image to Cloudinary.");
+    }
+
+    return data.data.url;
+  },
 };
