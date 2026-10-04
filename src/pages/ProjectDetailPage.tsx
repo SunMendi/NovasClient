@@ -164,7 +164,7 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenRfq 
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
               <Button
-                onClick={() => onOpenRfq({ name: project.title, sector: project.category } as any)}
+                onClick={() => onOpenRfq({ id: `project:${project.id}`, name: project.title, category: `Project: ${project.category}` })}
                 className="bg-[#ed145b] hover:bg-[#d00f4e] text-white font-bold h-11 px-8 rounded-lg shadow-md shadow-[#ed145b]/25 text-sm"
               >
                 <FileCheck2 className="mr-2 size-4" />

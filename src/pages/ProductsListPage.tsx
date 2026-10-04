@@ -59,7 +59,7 @@ export const ProductsListPage: React.FC<ProductsListPageProps> = ({ onOpenRfq })
 
       return matchesCategory && matchesSearch;
     });
-  }, [selectedSector, searchQuery]);
+  }, [products, selectedSector, searchQuery]);
 
   const currentCategoryName =
     categories.find((c) => c.id === selectedSector)?.name || "Mission Equipment";

@@ -7,10 +7,12 @@ import { Product, Vessel, ConsultancyService } from "../../types";
 import { ShieldCheck, CheckCircle2, Copy, Send, Trash2, Plus, Loader2 } from "lucide-react";
 import { api } from "../../services/api";
 
+export type RfqItem = Product | Vessel | ConsultancyService | { id: string; name: string; category: string };
+
 interface RfqDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  initialItem?: Product | Vessel | ConsultancyService | null;
+  initialItem?: RfqItem | null;
 }
 
 export const RfqDrawer: React.FC<RfqDrawerProps> = ({

@@ -136,6 +136,7 @@ function adaptSector(item: any): Sector {
 function adaptProject(item: any): Project {
   return {
     id: item.project_id || item.slug || String(item.id),
+    slug: item.slug,
     title: item.title,
     category: item.category || "defence",
     sectorName: item.sector_name || item.sectorName || "",
@@ -249,7 +250,7 @@ export const api = {
 
   async getProjectBySlug(idOrSlug: string): Promise<Project | undefined> {
     const projects = await this.getProjects();
-    return projects.find((p) => p.id === idOrSlug || (p as any).slug === idOrSlug);
+    return projects.find((p) => p.id === idOrSlug || p.slug === idOrSlug);
   },
 
   // Consultancy

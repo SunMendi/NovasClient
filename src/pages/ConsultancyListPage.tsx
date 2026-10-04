@@ -144,7 +144,7 @@ export const ConsultancyListPage: React.FC<ConsultancyListPageProps> = ({ onOpen
 
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [services, selectedCategory, searchQuery]);
 
   const currentCategoryTitle =
     categories.find((c) => c.id === selectedCategory)?.name || "Strategic Advisory";

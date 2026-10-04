@@ -46,7 +46,29 @@ export const authService = {
     }
 
     const { token, user } = data.data;
+    if (!user?.is_staff) throw new Error("Administrator access is required.");
     localStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    return user;
+  },
+
+  async validateSession(): Promise<AuthUser | null> {
+    const token = this.getToken();
+    if (!token) return null;
+    const res = await fetch(`${API_BASE_URL}/auth/me/`, {
+      headers: { Authorization: `Token ${token}`, Accept: "application/json" },
+    });
+    if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+      return null;
+    }
+    if (!res.ok) throw new Error("Cannot verify your session. Please try again.");
+    const { data: user } = await res.json();
+    if (!user?.is_staff) {
+      this.logout();
+      return null;
+    }
     localStorage.setItem(USER_KEY, JSON.stringify(user));
     return user;
   },

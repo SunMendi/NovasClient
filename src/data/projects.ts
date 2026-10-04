@@ -1,5 +1,6 @@
 export interface Project {
   id: string;
+  slug?: string;
   title: string;
   category: "defence" | "maritime" | "industry" | "consultancy" | "geospatial";
   sectorName: string;

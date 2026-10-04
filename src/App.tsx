@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
-import { RfqDrawer } from "./components/layout/RfqDrawer";
+import { RfqDrawer, RfqItem } from "./components/layout/RfqDrawer";
 import { HomePage } from "./pages/HomePage";
 import { AboutUsPage } from "./pages/AboutUsPage";
 import { ProjectsPage } from "./pages/ProjectsPage";
@@ -15,7 +15,6 @@ import { IndustryPage } from "./pages/IndustryPage";
 import { ContactPage } from "./pages/ContactPage";
 import { LoginPage } from "./pages/LoginPage";
 import { AdminDashboardPage } from "./pages/AdminDashboardPage";
-import { Product, Vessel, ConsultancyService } from "./types";
 
 // Scroll to top automatically when navigating between pages
 function ScrollToTop() {
@@ -28,9 +27,9 @@ function ScrollToTop() {
 
 export function App() {
   const [rfqOpen, setRfqOpen] = useState(false);
-  const [rfqInitialItem, setRfqInitialItem] = useState<Product | Vessel | ConsultancyService | null>(null);
+  const [rfqInitialItem, setRfqInitialItem] = useState<RfqItem | null>(null);
 
-  const handleOpenRfq = (item?: Product | Vessel | ConsultancyService) => {
+  const handleOpenRfq = (item?: RfqItem) => {
     setRfqInitialItem(item || null);
     setRfqOpen(true);
   };

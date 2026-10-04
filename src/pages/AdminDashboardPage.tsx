@@ -27,9 +27,13 @@ export const AdminDashboardPage: React.FC = () => {
   const [message, setMessage] = useState('');
   const [refresh, setRefresh] = useState(0);
   useEffect(() => {
-    const current = authService.getCurrentUser();
-    if (!current || !authService.isAuthenticated()) navigate('/login', { replace: true });
-    else setUser(current);
+    let active = true;
+    authService.validateSession().then(current => {
+      if (!active) return;
+      if (!current) navigate('/login', { replace: true });
+      else setUser(current);
+    }).catch(() => { if (active) setError('Cannot verify your session. Check your connection and retry.'); });
+    return () => { active = false; };
   }, [navigate]);
   useEffect(() => {
     if (!user || area !== 'content') return;
@@ -60,7 +64,7 @@ export const AdminDashboardPage: React.FC = () => {
     } catch (e) { setActionError(e instanceof Error ? e.message : 'Could not delete this entry.'); }
     finally { setDeleting(null); }
   };
-  if (!user) return null;
+  if (!user) return <div className="p-8 text-center" role="status">{error || 'Checking your session…'}{error && <button className="ml-4 underline" onClick={() => window.location.reload()}>Retry</button>}</div>;
   const config = section === 'products' && productCategory === VESSEL_CATEGORY ? contentTypes.vessels : sections[section];
   const filtered = entries.filter(entry => [entry.name, entry.title, entry.sku, entry.service_id, entry.project_id, entry.vessel_id, entry.summary, entry.tagline, typeof entry.category === 'object' ? entry.category.name : entry.category].join(' ').toLowerCase().includes(search.toLowerCase()));
   return <div className="min-h-screen bg-[#f8f9fc] text-[#133057]">
