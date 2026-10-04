@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, RefreshCw, Search, ShieldCheck, LogOut } from 'lucide-react';
+import { Plus, RefreshCw, Search, ShieldCheck, LogOut, Pencil, Trash2 } from 'lucide-react';
 import { NovasLogo } from '../components/common/NovasLogo';
 import { ContentForm } from '../components/admin/ContentForm';
-import { Category, Section, sections, contentTypes, VESSEL_CATEGORY, getListEndpoint } from '../components/admin/contentConfig';
+import { Category, Section, sections, contentTypes, VESSEL_CATEGORY, getListEndpoint, ContentEntry, getEntryEndpoint } from '../components/admin/contentConfig';
 import { authService, AuthUser } from '../services/auth';
 import { adminRequest } from '../services/admin';
 
-type Entry = { id: number; name?: string; title?: string; sku?: string; service_id?: string; project_id?: string; vessel_id?: string; vessel_type?: string; category?: string | { name: string }; image_url?: string; image?: string; tagline?: string; summary?: string };
+type Entry = ContentEntry;
 export const AdminDashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -15,6 +15,9 @@ export const AdminDashboardPage: React.FC = () => {
   const [productCategory, setProductCategory] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
   const [adding, setAdding] = useState(false);
+  const [editing, setEditing] = useState<Entry | undefined>();
+  const [deleting, setDeleting] = useState<string | null>(null);
+  const [actionError, setActionError] = useState('');
   const [entries, setEntries] = useState<Entry[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -45,6 +48,16 @@ export const AdminDashboardPage: React.FC = () => {
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
   }, [section, productCategory, refresh, user]);
+  const removeEntry = async (entry: Entry) => {
+    if (deleting || !window.confirm(`Delete “${entry.name || entry.title}”? This cannot be undone.`)) return;
+    const endpoint = getEntryEndpoint(section, entry);
+    setDeleting(endpoint); setActionError(''); setMessage('');
+    try {
+      await adminRequest(endpoint, { method: 'DELETE' });
+      setMessage('Entry deleted successfully.'); setRefresh(value => value + 1);
+    } catch (e) { setActionError(e instanceof Error ? e.message : 'Could not delete this entry.'); }
+    finally { setDeleting(null); }
+  };
   if (!user) return null;
   const config = section === 'products' && productCategory === VESSEL_CATEGORY ? contentTypes.vessels : sections[section];
   const filtered = entries.filter(entry => [entry.name, entry.title, entry.sku, entry.service_id, entry.project_id, entry.vessel_id, entry.summary, entry.tagline, typeof entry.category === 'object' ? entry.category.name : entry.category].join(' ').toLowerCase().includes(search.toLowerCase()));
@@ -54,13 +67,14 @@ export const AdminDashboardPage: React.FC = () => {
       <div className="flex items-center gap-4 text-sm"><Link to="/" className="font-semibold">View website</Link><span className="hidden md:block text-slate-500">{user.username}</span><button onClick={() => { authService.logout(); navigate('/login', { replace: true }); }} className="flex items-center gap-2 border rounded-lg px-3 py-2"><LogOut size={15} />Sign out</button></div>
     </div></header>
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4"><div><h1 className="text-2xl font-bold">Manage website content</h1><p className="text-sm text-slate-500 mt-2">Add an entry with its category, details and image in one place.</p></div>{!adding && <button onClick={() => { setAdding(true); setMessage(''); }} className="flex items-center justify-center gap-2 rounded-xl bg-[#ed145b] px-5 py-3 text-white font-bold text-sm"><Plus size={18} />Add {config.singular}</button>}</div>
-      <label className="block max-w-sm space-y-2 text-sm font-semibold"><span>Content section</span><select disabled={adding} value={section} onChange={e => { setSection(e.target.value as Section); setProductCategory(''); setSearch(''); setMessage(''); }} className="w-full border border-slate-300 bg-white rounded-lg px-3 py-3 disabled:opacity-60">{Object.entries(sections).map(([key, value]) => <option key={key} value={key}>{value.label}</option>)}</select>{adding && <span className="block text-xs text-slate-500 font-normal">Save or cancel this entry before changing sections.</span>}</label>
-      {section === 'products' && !adding && <label className="block max-w-sm space-y-2 text-sm font-semibold"><span>Product category</span><select value={productCategory} onChange={e => { setProductCategory(e.target.value); setSearch(''); setMessage(''); }} className="w-full border border-slate-300 bg-white rounded-lg px-3 py-3"><option value="">All products</option>{categories.map(c => <option key={c.id} value={c.slug}>{c.name}</option>)}<option value={VESSEL_CATEGORY}>Vessels</option></select></label>}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4"><div><h1 className="text-2xl font-bold">Manage website content</h1><p className="text-sm text-slate-500 mt-2">Add an entry with its category, details and image in one place.</p></div>{!adding && <button onClick={() => { setEditing(undefined); setAdding(true); setMessage(''); setActionError(''); }} className="flex items-center justify-center gap-2 rounded-xl bg-[#ed145b] px-5 py-3 text-white font-bold text-sm"><Plus size={18} />Add {config.singular}</button>}</div>
+      <label className="block max-w-sm space-y-2 text-sm font-semibold"><span>Content section</span><select disabled={adding || !!deleting} value={section} onChange={e => { setSection(e.target.value as Section); setProductCategory(''); setSearch(''); setMessage(''); }} className="w-full border border-slate-300 bg-white rounded-lg px-3 py-3 disabled:opacity-60">{Object.entries(sections).map(([key, value]) => <option key={key} value={key}>{value.label}</option>)}</select>{adding && <span className="block text-xs text-slate-500 font-normal">Save or cancel this entry before changing sections.</span>}</label>
+      {section === 'products' && !adding && <label className="block max-w-sm space-y-2 text-sm font-semibold"><span>Product category</span><select disabled={!!deleting} value={productCategory} onChange={e => { setProductCategory(e.target.value); setSearch(''); setMessage(''); }} className="w-full border border-slate-300 bg-white rounded-lg px-3 py-3"><option value="">All products</option>{categories.map(c => <option key={c.id} value={c.slug}>{c.name}</option>)}<option value={VESSEL_CATEGORY}>Vessels</option></select></label>}
+      {actionError && <p role="alert" className="rounded-lg bg-red-50 text-red-700 p-4 text-sm">{actionError}</p>}
       {message && <p role="status" className="rounded-lg bg-emerald-50 text-emerald-800 p-4 text-sm">{message}</p>}
-      {adding ? <ContentForm key={section} section={section} initialCategory={section === 'products' ? productCategory === VESSEL_CATEGORY ? VESSEL_CATEGORY : String(categories.find(c => c.slug === productCategory)?.id || '') : ''} onCancel={() => setAdding(false)} onSaved={() => { setAdding(false); setMessage('Entry saved successfully.'); setProductCategory(''); setRefresh(r => r + 1); }} /> : <>
+      {adding ? <ContentForm key={`${section}-${editing?.slug || 'new'}`} section={section} initialEntry={editing} initialCategory={section === 'products' ? productCategory === VESSEL_CATEGORY ? VESSEL_CATEGORY : String(categories.find(c => c.slug === productCategory)?.id || '') : ''} onCancel={() => { setAdding(false); setEditing(undefined); }} onSaved={() => { setAdding(false); setMessage('Entry saved successfully.'); setEditing(undefined); setProductCategory(''); setRefresh(r => r + 1); }} /> : <>
         <div className="flex gap-3 rounded-xl bg-white border border-slate-200 p-4"><label className="relative flex-1"><span className="sr-only">Search {config.label}</span><Search className="absolute left-3 top-3 text-slate-400" size={18} /><input value={search} onChange={e => setSearch(e.target.value)} placeholder={`Search ${config.label.toLowerCase()} by name or reference…`} className="w-full pl-10 pr-3 py-2.5 rounded-lg border text-sm" /></label><button type="button" aria-label="Refresh entries" onClick={() => setRefresh(r => r + 1)} disabled={loading} className="border rounded-lg px-3 text-sm font-semibold flex items-center gap-2 disabled:opacity-50"><RefreshCw size={16} className={loading ? 'animate-spin' : ''} /><span className="hidden sm:inline">Refresh</span></button></div>
-        {error ? <p role="alert" className="bg-red-50 text-red-700 rounded-lg p-4 text-sm">{error} Use Refresh to try again.</p> : loading ? <p role="status" className="py-12 text-center text-slate-500">Loading {config.label.toLowerCase()}…</p> : filtered.length === 0 ? <p className="rounded-xl border bg-white p-12 text-center text-slate-500">{search ? 'No entries match your search.' : `No ${config.label.toLowerCase()} yet. Add your first entry above.`}</p> : <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-xs uppercase text-slate-500"><tr><th className="p-5">{config.label}</th><th className="p-5">Reference</th><th className="p-5">Category / type</th></tr></thead><tbody>{filtered.map(entry => <tr key={`${entry.vessel_id ? 'vessel' : 'entry'}-${entry.id}`} className="border-t border-slate-100"><td className="p-5"><div className="flex items-center gap-3">{(entry.image_url || entry.image) && <img src={entry.image_url || entry.image} alt="" className="w-14 h-14 rounded-lg object-cover shrink-0" />}<div><p className="font-semibold">{entry.name || entry.title}</p><p className="text-xs text-slate-500 line-clamp-2 max-w-md mt-1">{entry.tagline || entry.summary}</p></div></div></td><td className="p-5 font-mono text-xs">{entry.sku || entry.service_id || entry.project_id || entry.vessel_id}</td><td className="p-5">{typeof entry.category === 'object' ? entry.category.name : entry.category || entry.vessel_type}</td></tr>)}</tbody></table></div>}
+        {error ? <p role="alert" className="bg-red-50 text-red-700 rounded-lg p-4 text-sm">{error} Use Refresh to try again.</p> : loading ? <p role="status" className="py-12 text-center text-slate-500">Loading {config.label.toLowerCase()}…</p> : filtered.length === 0 ? <p className="rounded-xl border bg-white p-12 text-center text-slate-500">{search ? 'No entries match your search.' : `No ${config.label.toLowerCase()} yet. Add your first entry above.`}</p> : <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white"><table className="w-full text-sm text-left"><thead className="bg-slate-50 text-xs uppercase text-slate-500"><tr><th className="p-5">{config.label}</th><th className="p-5">Reference</th><th className="p-5">Category / type</th><th className="p-5">Actions</th></tr></thead><tbody>{filtered.map(entry => <tr key={`${entry.vessel_id ? 'vessel' : 'entry'}-${entry.id}`} className="border-t border-slate-100"><td className="p-5"><div className="flex items-center gap-3">{(entry.image_url || entry.image) && <img src={entry.image_url || entry.image} alt="" className="w-14 h-14 rounded-lg object-cover shrink-0" />}<div><p className="font-semibold">{entry.name || entry.title}</p><p className="text-xs text-slate-500 line-clamp-2 max-w-md mt-1">{entry.tagline || entry.summary}</p></div></div></td><td className="p-5 font-mono text-xs">{entry.sku || entry.service_id || entry.project_id || entry.vessel_id}</td><td className="p-5">{typeof entry.category === 'object' ? entry.category.name : entry.category || entry.vessel_type}</td><td className="p-5"><div className="flex gap-3"><button type="button" disabled={!!deleting} onClick={() => { setEditing(entry); setAdding(true); setMessage(''); setActionError(''); }} className="inline-flex items-center gap-1 text-sm font-semibold disabled:opacity-50"><Pencil size={15} />Edit</button><button type="button" disabled={!!deleting} onClick={() => void removeEntry(entry)} className="inline-flex items-center gap-1 text-sm font-semibold text-red-600 disabled:opacity-50"><Trash2 size={15} />{deleting === getEntryEndpoint(section, entry) ? 'Deleting…' : 'Delete'}</button></div></td></tr>)}</tbody></table></div>}
       </>}
     </main>
   </div>;

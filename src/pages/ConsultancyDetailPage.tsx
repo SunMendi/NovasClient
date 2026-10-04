@@ -31,17 +31,21 @@ export const ConsultancyDetailPage: React.FC<ConsultancyDetailPageProps> = ({ on
   const { id } = useParams<{ id?: string }>();
   const [downloading, setDownloading] = useState(false);
 
-  const fallbackService = getConsultancyServiceById(id);
-  const [service, setService] = useState<ConsultancyService | undefined>(fallbackService);
-  const [allServices, setAllServices] = useState<ConsultancyService[]>(CONSULTANCY_SERVICES);
-
+  const [service, setService] = useState<ConsultancyService | undefined>();
+  const [allServices, setAllServices] = useState<ConsultancyService[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (!id) return;
-    api.getConsultancyServiceBySlug(id).then((s) => {
-      if (s) setService(s);
-    }).catch(() => {});
-    api.getConsultancyServices().then(setAllServices).catch(() => {});
+    let active = true;
+    setLoading(true); setService(undefined);
+    api.getConsultancyServices().then(services => {
+      if (active) {
+        setAllServices(services);
+        setService(services.find(s => s.id === id || s.slug === id));
+      }
+    }).catch(() => {}).finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, [id]);
+  if (loading) return <p role="status" className="container mx-auto p-12">Loading service…</p>;
 
   if (!service) {
     return (

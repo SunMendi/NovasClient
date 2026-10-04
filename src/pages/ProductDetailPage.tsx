@@ -24,24 +24,29 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ onOpenRfq 
   const itemId = id || _id;
   const [downloading, setDownloading] = useState(false);
 
-  const fallbackProduct = PRODUCTS.find((p) => p.slug === itemId || p.id === itemId);
-  const fallbackVessel = !fallbackProduct ? VESSELS.find((v) => v.slug === itemId || v.id === itemId) : null;
-
-  const [product, setProduct] = useState<Product | undefined>(fallbackProduct);
-  const [vessel, setVessel] = useState<Vessel | null | undefined>(fallbackVessel);
+  const [product, setProduct] = useState<Product | undefined>();
+  const [vessel, setVessel] = useState<Vessel | undefined>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!itemId) return;
-    api.getProductBySlug(itemId).then((p) => {
-      if (p) {
-        setProduct(p);
-      } else {
-        api.getVesselBySlug(itemId).then((v) => {
-          if (v) setVessel(v);
-        });
-      }
-    }).catch(() => {});
+    let active = true;
+    setLoading(true); setProduct(undefined); setVessel(undefined);
+    const load = async () => {
+      try {
+        if (!itemId) return;
+        const foundProduct = await api.getProductBySlug(itemId);
+        if (foundProduct) { if (active) setProduct(foundProduct); }
+        else {
+          const foundVessel = await api.getVesselBySlug(itemId);
+          if (active) setVessel(foundVessel);
+        }
+      } finally { if (active) setLoading(false); }
+    };
+    void load().catch(() => {});
+    return () => { active = false; };
   }, [itemId]);
+
+  if (loading) return <p role="status" className="container mx-auto p-12">Loading details…</p>;
 
   if (!product && !vessel) {
     return (

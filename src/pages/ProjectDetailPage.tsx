@@ -18,15 +18,17 @@ export const ProjectDetailPage: React.FC<ProjectDetailPageProps> = ({ onOpenRfq 
   const { id, _id } = useParams<{ id?: string; _id?: string }>();
   const projectId = id || _id;
 
-  const fallbackProject = PROJECTS.find((p) => p.id === projectId) || PROJECTS[0];
-  const [project, setProject] = useState<Project>(fallbackProject);
-
+  const [project, setProject] = useState<Project | undefined>();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (!projectId) return;
-    api.getProjectBySlug(projectId).then((p) => {
-      if (p) setProject(p);
-    }).catch(() => {});
+    let active = true;
+    setLoading(true); setProject(undefined);
+    api.getProjectBySlug(projectId || '').then(p => { if (active) setProject(p); })
+      .catch(() => {}).finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, [projectId]);
+  if (loading) return <p role="status" className="container mx-auto p-12">Loading project…</p>;
+  if (!project) return <div className="container mx-auto p-12"><h1 className="text-2xl font-bold">Project not found</h1><Link to="/projects">View all projects</Link></div>;
 
   return (
     <div className="flex flex-col space-y-12 pb-24">

@@ -84,3 +84,35 @@ test('product category list uses the appropriate backend collection', () => {
   assert.equal(getListEndpoint('products', 'medical'), '/catalog/products/?category=medical');
   assert.equal(getListEndpoint('products'), '/catalog/products/');
 });
+
+test('editing hydrates fields, specifications, image and category for every content type', () => {
+  const { getEditState, getEntryEndpoint, VESSEL_CATEGORY } = mod.exports;
+  const entry = { id: 1, slug: 'original', name: 'Name', sku: 'SKU', category: { id: 7, category_id: 'project', slug: 'project' }, image_url: 'https://example.com/image.png', certifications: ['A','B'], specs: [{id: 22, label:'Capacity',value:'20'}], sector_id:'industry' };
+  const product = getEditState('products', entry);
+  assert.equal(product.category, '7');
+  assert.equal(product.values.certifications, 'A\nB');
+  assert.equal(product.image, entry.image_url);
+  assert.deepEqual(product.specs, [{label:'Capacity',value:'20'}]);
+  assert.equal(getEditState('consultancy', entry).category, 'project');
+  assert.equal(getEditState('projects', { ...entry, title:'Project', name:undefined, category:'defence', image:'image.png', image_url:undefined }).image, 'image.png');
+  const vessel = { ...entry, vessel_id:'V-1', crew_capacity:3 };
+  assert.equal(getEditState('products', vessel).category, VESSEL_CATEGORY);
+  assert.equal(getEditState('products', vessel).values.crew_capacity, '3');
+  assert.equal(getEntryEndpoint('products', vessel), '/catalog/vessels/original/');
+  assert.equal(getEntryEndpoint('defence', entry), '/catalog/products/original/');
+});
+
+test('edits send empty optional fields so existing values can be cleared', () => {
+  const payload = buildPayload('products', {name:'Name',slug:'name',sku:'SKU',description:'Details'}, '7', 'defence', [], [], false, true);
+  assert.equal(payload.warranty, '');
+  assert.deepEqual(payload.certifications, []);
+  assert.deepEqual(payload.specs, []);
+  assert.equal(payload.featured, false);
+});
+
+test('successful deletion accepts an empty 204 response', async () => {
+  const api = {};
+  const source = ts.transpileModule(fs.readFileSync('src/services/admin.ts','utf8'), {compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
+  new Function('exports','require','fetch',source)(api, name => name === './api' ? {API_BASE_URL:'https://example.test'} : {authService:{getToken:()=> 'token'}}, async () => ({ok:true,status:204,json:async()=>{throw new Error('No body');}}));
+  assert.equal(await api.adminRequest('/catalog/products/test/',{method:'DELETE'}), undefined);
+});

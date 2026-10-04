@@ -13,6 +13,7 @@ export async function adminRequest<T>(path: string, options: RequestInit = {}): 
     if (res.status === 401) throw new Error('Your session has expired. Sign out and sign in again.');
     throw new Error(errorText(data?.errors || data || 'The request failed. Please try again.'));
   }
+  if (res.status === 204) return undefined as T;
   if (!data || !('data' in data)) throw new Error('The server returned an unexpected response. Please try again.');
   return data.data as T;
 }

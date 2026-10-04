@@ -47,8 +47,8 @@ async function fetchWithFallback<T>(
     const json: ApiResponse<any> = await res.json();
     const payload = json.data;
 
-    if (!payload || (Array.isArray(payload) && payload.length === 0)) {
-      // Empty array in remote DB; fall back to static dataset to keep UI rich
+    if (payload == null) {
+      // Missing data is an invalid response; an empty list is valid.
       return fallbackData;
     }
 

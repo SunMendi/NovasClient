@@ -43,12 +43,12 @@ export const projectCategories = [ ['defence', 'Defence'], ['maritime', 'Maritim
 export interface Category { id: number; name: string; slug: string; category_id?: string; sector_id?: string; is_active?: boolean }
 export type Spec = { label: string; value: string };
 export type Step = { step: string; title: string; desc: string };
-export function buildPayload(section: ContentKind, values: Record<string, string>, category: string, sector: string, specs: Spec[], steps: Step[], featured: boolean) {
+export function buildPayload(section: ContentKind, values: Record<string, string>, category: string, sector: string, specs: Spec[], steps: Step[], featured: boolean, editing = false) {
   const config = contentTypes[section];
   const payload: Record<string, unknown> = { slug: values.slug, [section === 'projects' ? 'title' : 'name']: values.name };
   for (const field of config.fields) {
     const value = (values[field.key] || '').trim();
-    if (!value && !field.required) continue;
+    if (!value && !field.required && !editing) continue;
     payload[field.key] = field.kind === 'lines' ? value.split('\n').map(v => v.trim()).filter(Boolean) : field.kind === 'number' ? Number(value) : value;
   }
   if (isProductSection(section)) { payload.category_id = Number(category); payload.sector_id = section === 'defence' || section === 'industry' ? section : sector; }
@@ -57,4 +57,25 @@ export function buildPayload(section: ContentKind, values: Record<string, string
   if (isProductSection(section) || section === 'projects') payload.specs = specs.map((spec, sort_order) => ({ ...spec, sort_order }));
   if (section !== 'vessels') payload[section === 'projects' ? 'is_featured' : 'featured'] = featured;
   return payload;
+}
+
+
+export type ContentEntry = Record<string, any> & { id: number; slug: string };
+export function getEditState(section: Section, entry?: ContentEntry) {
+  const kind = entry?.vessel_id ? 'vessels' : section;
+  const values: Record<string, string> = {};
+  if (entry) {
+    values.name = entry.name || entry.title || '';
+    values.slug = entry.slug;
+    values.status = entry.status || 'Delivered';
+    for (const field of contentTypes[kind].fields) {
+      const value = entry[field.key];
+      values[field.key] = field.kind === 'lines' ? (Array.isArray(value) ? value.join('\n') : '') : String(value ?? '');
+    }
+  }
+  const category = kind === 'vessels' ? VESSEL_CATEGORY : section === 'projects' ? entry?.category || '' : section === 'consultancy' ? entry?.category?.category_id || entry?.category?.slug || '' : String(entry?.category?.id || '');
+  return { values, category, sector: entry?.sector_id || '', specs: (entry?.specs || []).map((s: Spec) => ({ label: s.label, value: s.value })), steps: (entry?.methodology || []).map((s: Step) => ({ ...s })), featured: Boolean(entry?.featured || entry?.is_featured), image: entry?.image_url || entry?.image || '' };
+}
+export function getEntryEndpoint(section: Section, entry: ContentEntry) {
+  return `${contentTypes[entry.vessel_id ? 'vessels' : section].endpoint}${encodeURIComponent(entry.slug)}/`;
 }
