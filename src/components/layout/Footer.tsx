@@ -10,11 +10,13 @@ export const Footer: React.FC = () => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterName, setNewsletterName] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail) return;
+    setSubmitError("");
     setIsSubmitting(true);
     try {
       await api.subscribeNewsletter(newsletterEmail);
@@ -24,8 +26,7 @@ export const Footer: React.FC = () => {
         setNewsletterName("");
       }, 4000);
     } catch (err) {
-      console.error("Newsletter error:", err);
-      setSubscribed(true);
+      setSubmitError(err instanceof Error ? err.message : 'Could not submit. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -185,6 +186,7 @@ export const Footer: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="space-y-2">
+                {submitError && <p role="alert" className="text-sm text-rose-300 whitespace-pre-line">{submitError}</p>}
                 <input
                   type="text"
                   placeholder="Your Name"

@@ -30,10 +30,12 @@ export const ContactPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [referenceCode, setReferenceCode] = useState("");
   const [copied, setCopied] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError("");
     setIsSubmitting(true);
 
     const fullMessage = `Delivery Port / Address: ${address}\n\nPrice Quotation: ${priceQuotation ? "Yes" : "No"}\nProduct Information: ${productInformation ? "Yes" : "No"}\n\nScope:\n${message}`;
@@ -54,20 +56,18 @@ export const ContactPage: React.FC = () => {
         });
         setReferenceCode(rfqRes.referenceId);
       } else {
-        await api.submitContactMessage({
+        const result = await api.submitContactMessage({
           fullName: name,
           email,
           company,
           subject: "Official Equipment / Technical Inquiry",
           message: fullMessage
         });
-        setReferenceCode(`INQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`);
+        setReferenceCode(result.referenceId);
       }
       setSubmitted(true);
     } catch (err) {
-      console.error("Error submitting contact inquiry:", err);
-      setReferenceCode(`RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`);
-      setSubmitted(true);
+      setSubmitError(err instanceof Error ? err.message : 'Could not submit. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -223,7 +223,7 @@ export const ContactPage: React.FC = () => {
                   </div>
                   <div className="space-y-2">
                     <h4 className="font-display text-xl font-bold text-[#002e6e]">
-                      RFQ Transmitted Successfully!
+                      {priceQuotation ? 'RFQ submitted successfully!' : 'Message sent successfully!'}
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
                       Your procurement request has been routed to our technical desk at Mohakhali DOHS, Dhaka.
@@ -232,7 +232,7 @@ export const ContactPage: React.FC = () => {
 
                   <div className="mx-auto max-w-sm rounded-xl border border-slate-200 bg-slate-50 p-4 text-center">
                     <span className="font-mono text-[10px] text-slate-500 uppercase font-semibold">
-                      Official RFQ Reference Code
+                      {priceQuotation ? 'Official RFQ reference code' : 'Message reference'}
                     </span>
                     <div className="mt-1 flex items-center justify-center gap-2">
                       <span className="font-mono text-base font-bold text-[#ed145b]">
@@ -267,6 +267,7 @@ export const ContactPage: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {submitError && <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-700 whitespace-pre-line">{submitError}</p>}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-1.5">
                       <label className="text-xs font-sans font-semibold text-slate-700">Your Full Name *</label>

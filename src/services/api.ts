@@ -1,3 +1,4 @@
+import { readSavedSubmission } from './submissionResponse';
 import {
   Product,
   Vessel,
@@ -352,24 +353,16 @@ export const api = {
         body: JSON.stringify(body)
       });
 
-      const json = await res.json();
-      if (!res.ok) {
-        throw new Error(json.message || "Failed to submit RFQ");
-      }
+      const json = await readSavedSubmission(res, true);
 
       return {
         success: true,
-        referenceId: json.data?.reference_id || `RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`,
+        referenceId: json.data.reference_id,
         message: json.message || "RFQ submitted successfully"
       };
     } catch (err: any) {
       console.error("[API] RFQ submission error:", err);
-      // Fallback local tracking code so the client user always has a reference
-      return {
-        success: true,
-        referenceId: `RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`,
-        message: "RFQ recorded and dispatched to procurement queue."
-      };
+      throw err instanceof Error ? err : new Error('Could not send your request. Please try again.');
     }
   },
 
@@ -381,7 +374,7 @@ export const api = {
     company?: string;
     subject: string;
     message: string;
-  }): Promise<{ success: boolean; message: string }> {
+  }): Promise<{ success: boolean; message: string; referenceId: string }> {
     try {
       const body = {
         full_name: payload.fullName,
@@ -398,21 +391,16 @@ export const api = {
         body: JSON.stringify(body)
       });
 
-      const json = await res.json();
-      if (!res.ok) {
-        throw new Error(json.message || "Failed to submit contact message");
-      }
+      const json = await readSavedSubmission(res);
 
       return {
         success: true,
+        referenceId: `INQ-${json.data.id}`,
         message: json.message || "Message sent successfully"
       };
     } catch (err: any) {
       console.error("[API] Contact message error:", err);
-      return {
-        success: true,
-        message: "Your message has been received and logged."
-      };
+      throw err instanceof Error ? err : new Error('Could not send your message. Please try again.');
     }
   },
 
@@ -425,12 +413,7 @@ export const api = {
         body: JSON.stringify({ email })
       });
 
-      const json = await res.json();
-      if (!res.ok) {
-        // e.g. already subscribed or validation error
-        const msg = json.email?.[0] || json.message || "Subscription could not be processed";
-        return { success: false, message: msg };
-      }
+      const json = await readSavedSubmission(res);
 
       return {
         success: true,
@@ -438,10 +421,7 @@ export const api = {
       };
     } catch (err: any) {
       console.error("[API] Newsletter subscription error:", err);
-      return {
-        success: true,
-        message: "Subscribed to intelligence updates."
-      };
+      throw err instanceof Error ? err : new Error('Could not subscribe. Please try again.');
     }
   }
 };

@@ -31,6 +31,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const [referenceCode, setReferenceCode] = useState("");
   const [copied, setCopied] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError("");
     setIsSubmitting(true);
     try {
       const res = await api.submitRFQ({
@@ -77,10 +79,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
       setReferenceCode(res.referenceId);
       setSubmitted(true);
     } catch (err) {
-      console.error("RFQ error:", err);
-      const fallbackCode = `RFQ-NOVAS-${Math.floor(100000 + Math.random() * 900000)}`;
-      setReferenceCode(fallbackCode);
-      setSubmitted(true);
+      setSubmitError(err instanceof Error ? err.message : 'Could not submit. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -156,6 +155,7 @@ export const RfqDrawer: React.FC<RfqDrawerProps> = ({
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex-1 space-y-6 pt-4">
+            {submitError && <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-700 whitespace-pre-line">{submitError}</p>}
             {/* Selected Items / Cart */}
             <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-3">
               <div className="flex items-center justify-between">
