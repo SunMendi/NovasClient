@@ -103,7 +103,7 @@ export const authService = {
 
     const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.message || "Failed to upload image to Cloudinary.");
+      throw new Error(data.message || "Failed to upload the image. Please try again.");
     }
 
     return data.data.url;
