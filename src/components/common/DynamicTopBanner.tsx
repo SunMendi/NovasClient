@@ -77,9 +77,14 @@ export const DynamicTopBanner: React.FC<DynamicTopBannerProps> = ({
     return () => clearInterval(timer);
   }, [normalizedSlides.length, intervalMs]);
 
+  // Reset active slide when slides prop changes
+  useEffect(() => {
+    setActiveSlide(0);
+  }, [slides]);
+
   if (normalizedSlides.length === 0) return null;
 
-  const currentSlide = normalizedSlides[activeSlide];
+  const currentSlide = normalizedSlides[activeSlide] || normalizedSlides[0];
   const isLeft = align === "left";
 
   return (
